@@ -4,6 +4,14 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+// Additional Modules
+import "../node_modules/video-react/dist/video-react.css";
+import "../node_modules/video-react/dist/video-react.css";
+import "../node_modules/spectre.css/dist/spectre.css";
+import "../node_modules/spectre.css/dist/spectre-icons.css";
+import "./stylesheet/smu-hci.css"
+import "./stylesheet/customad-specific.css"
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
