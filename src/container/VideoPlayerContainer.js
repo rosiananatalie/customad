@@ -1,16 +1,16 @@
-import React from "react";
-import VideoPlayerComponent from "../component/VideoPlayerComponent";
+import React, {useState, useEffect, useRef} from "react";
+import VideoPlayerComponent from "../component/VideoPlayerComponent"
 
 const VideoPlayerContainer = (props) => {
     
-    // const videoType = "ed"
-    // const videoId = 1
+    const videoType = "ed" // need to change to be props
+    const videoId = 1 // need to change to be props
 
     return(
         <div>
             <VideoPlayerComponent  
-                videoType = "ed"
-                videoId = "1"
+                videoType = {videoType}
+                videoId = {videoId}
             />
         </div>
     )

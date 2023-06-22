@@ -2,10 +2,14 @@
 import React from 'react';
 import './App.css';
 import DashboardComponent from './component/DashboardComponent'
+import KeyboardTest from './component/KeyboardTest'
 
 function App() {
   return (
-    <DashboardComponent />
+    <div>
+      <DashboardComponent />
+    </div>
+    
   );
 }
 

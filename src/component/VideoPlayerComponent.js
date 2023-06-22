@@ -17,7 +17,7 @@ function VideoPlayerComponent(props) {
                 poster = {"../../assets/ed1.png"}
             >
                     {/* <source src={require("../assets/" + videoId + ".mp4")} type="video/mp4"/> */}
-                    <source src={"assets/ed1.mp4"} type="video/mp4"/>
+                    <source src={"assets/" + videoType + videoId + ".mp4"} type="video/mp4"/>
                     <BigPlayButton position="center" />
 
 

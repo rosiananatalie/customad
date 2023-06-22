@@ -1,10 +1,12 @@
 import React from 'react'
-import CustomizationComponent from '../component/CustomizationComponent'
+// import CustomizationComponent from '../component/CustomizationComponent'
+import CustomizationComponentForm from '../component/CustomizationFormComponent'
 
 function CustomizationContainer(props) {
     return (
         <div>
-            <CustomizationComponent />
+            {/* <CustomizationComponent /> */}
+            <CustomizationComponentForm />
         </div>
     )
 }

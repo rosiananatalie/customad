@@ -9,7 +9,7 @@ function CustomizationComponent(props) {
                     <h1>Customisation Setup</h1>
                 </div>
 
-                {/* First customization */}
+                {/* Speed customization */}
                 <div className='column col-5'>
                     <h2>Speed</h2>
                 </div>
@@ -17,7 +17,7 @@ function CustomizationComponent(props) {
                     <input class="slider" type="range" min="0" max="100"/> 
                 </div>
 
-                {/* Second customization */}
+                {/* Language customization */}
                 <div className='column col-5'>
                     <h2>Language</h2>
                 </div>
@@ -35,7 +35,7 @@ function CustomizationComponent(props) {
                     />
                 </div>
 
-                {/* Third customization */}
+                {/* Tone customization */}
                 <div className='column col-5'>
                     <h2>Tone</h2>
                 </div>
@@ -48,7 +48,7 @@ function CustomizationComponent(props) {
                     </label>
                 </div>
 
-                {/* Forth customization */}
+                {/* Voice customization */}
                 <div className='column col-5'>
                     <h2>Voice</h2>
                 </div>
@@ -63,7 +63,7 @@ function CustomizationComponent(props) {
                     </div>
                 </div>
 
-                {/* Fifth customization */}
+                {/* Gender customization */}
                 <div className='column col-5'>
                     <h2>Gender</h2>
                 </div>
