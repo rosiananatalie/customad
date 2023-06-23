@@ -3,7 +3,7 @@ import VideoPlayerComponent from "../component/VideoPlayerComponent"
 
 const VideoPlayerContainer = (props) => {
     
-    const videoType = "ed" // need to change to be props
+    const videoType = "trial" // need to change to be props
     const videoId = 1 // need to change to be props
     const videoRef = useRef(null);
 

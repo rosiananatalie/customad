@@ -9,13 +9,12 @@ function VideoPlayerComponent(props) {
     const videoId = props.videoId
     const videoType = props.videoType
     const videoRef = props.videoRef
-    
     return (
         <div>
             <Player
                 ref={props.videoRef}
                 playsInline
-                poster = {"../../assets/ed1.png"}
+                poster = {"../../assets/trial1.png"}
                 controls
             >
                     {/* <source src={require("../assets/" + videoId + ".mp4")} type="video/mp4"/> */}
