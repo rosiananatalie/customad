@@ -1,6 +1,6 @@
-import React from 'react'
-// import CustomizationComponent from '../component/CustomizationComponent'
-import CustomizationComponentForm from '../component/CustomizationFormComponent'
+import React from 'react';
+// import CustomizationComponent from '../component/CustomizationComponent';
+import CustomizationComponentForm from '../component/CustomizationFormComponent';
 
 function CustomizationContainer(props) {
     return (
@@ -11,4 +11,4 @@ function CustomizationContainer(props) {
     )
 }
 
-export default CustomizationContainer
+export default CustomizationContainer;

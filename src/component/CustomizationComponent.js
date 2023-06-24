@@ -1,5 +1,5 @@
-import React from 'react'
-import Dropdown from 'react-dropdown-aria'
+import React from 'react';
+import Dropdown from 'react-dropdown-aria';
 
 function CustomizationComponent(props) {
     return (
@@ -25,8 +25,8 @@ function CustomizationComponent(props) {
                     <Dropdown
                         options= {
                             [
-                                {value : "English"},
-                                {value : "Chinese"}
+                                { value: "English" },
+                                { value: "Chinese" },
                             ]
                         }   
                         placeholder = "Select Language.."
@@ -138,10 +138,9 @@ function CustomizationComponent(props) {
                         </label>
                     </div>
                 </div>
-
             </div>
         </div>
     )
 }
 
-export default CustomizationComponent
+export default CustomizationComponent;

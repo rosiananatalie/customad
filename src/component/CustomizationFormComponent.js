@@ -1,5 +1,5 @@
 import React from "react";
-import Dropdown from 'react-dropdown-aria'
+import Dropdown from 'react-dropdown-aria';
 
 function CustomizationComponentForm(props) {
     return (
@@ -9,9 +9,7 @@ function CustomizationComponentForm(props) {
                 <div>
                     <h2>Content Customization</h2>
                 </div>
-
                 <div className="form-group">
-                    
                     {/* Length Customization */}
                     <div className="col-3 col-sm-12">
                         <label className="form-label" htmlFor="length">Length</label>
@@ -129,11 +127,9 @@ function CustomizationComponentForm(props) {
                         </label>
                     </div>
                 </div>
-
-            
             </form>
         </div>
     )
 }
 
-export default CustomizationComponentForm
+export default CustomizationComponentForm;

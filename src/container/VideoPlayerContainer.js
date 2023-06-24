@@ -1,14 +1,13 @@
-import React, {useState, useEffect, useRef} from "react";
-import VideoPlayerComponent from "../component/VideoPlayerComponent"
+import React, { useState, useEffect, useRef } from "react";
+import VideoPlayerComponent from "../component/VideoPlayerComponent";
 
 const VideoPlayerContainer = (props) => {
-    
     const videoType = "trial" // need to change to be props
     const videoId = 1 // need to change to be props
     const videoRef = useRef(null);
 
     useEffect(()=> {
-        const handleKeyPress = (event) =>{
+        const handleKeyPress = (event) => {
             if (event.code === 'ArrowUp') {
                 event.preventDefault();
                 increasePlaybackSpeed();
@@ -18,9 +17,9 @@ const VideoPlayerContainer = (props) => {
             }
         }
 
-        document.addEventListener('keydown',handleKeyPress);
+        document.addEventListener('keydown', handleKeyPress);
         return () => {
-            document.removeEventListener('keydown',handleKeyPress)
+            document.removeEventListener('keydown', handleKeyPress);
         }
     }, []);
 
@@ -49,4 +48,4 @@ const VideoPlayerContainer = (props) => {
     )
 }
 
-export default VideoPlayerContainer
+export default VideoPlayerContainer;

@@ -1,8 +1,7 @@
 import React from 'react';
 
-import CustomizationContainer from '../container/CustomizationContainer'
+import CustomizationContainer from '../container/CustomizationContainer';
 import VideoPlayerContainer from '../container/VideoPlayerContainer';
-
 
 function Dashboard() {
   return (
@@ -19,8 +18,6 @@ function Dashboard() {
             </div>
         </div>
     </div>
-    
-    
   );
 }
 
