@@ -5,45 +5,45 @@ function CustomizationComponentForm(props) {
     return (
         <div>
             <h1>Customization Setups</h1>
-            <form class="form-horizontal">
+            <form className="form-horizontal">
                 <div>
                     <h2>Content Customization</h2>
                 </div>
 
-                <div class="form-group">
+                <div className="form-group">
                     
                     {/* Length Customization */}
-                    <div class="col-3 col-sm-12">
-                        <label class="form-label" htmlFor="length">Length</label>
+                    <div className="col-3 col-sm-12">
+                        <label className="form-label" htmlFor="length">Length</label>
                     </div>
-                    <div class="col-9 col-sm-12">
-                        <label class="form-radio form-inline">
-                            <input type="radio" name="length" checked/><i class="form-icon"></i> Succinct
+                    <div className="col-9 col-sm-12">
+                        <label className="form-radio form-inline">
+                            <input type="radio" name="length" checked/><i className="form-icon"></i> Succinct
                         </label>
-                        <label class="form-radio form-inline">
-                            <input type="radio" name="length"/><i class="form-icon"></i> Verbose
+                        <label className="form-radio form-inline">
+                            <input type="radio" name="length"/><i className="form-icon"></i> Verbose
                         </label>
-                        <label class="form-radio form-inline">
-                            <input type="radio" name="length"/><i class="form-icon"></i> Very Verbose
+                        <label className="form-radio form-inline">
+                            <input type="radio" name="length"/><i className="form-icon"></i> Very Verbose
                         </label>
                     </div>
 
                     {/* Information Preference Customization */}
-                    <div class="col-3 col-sm-12">
-                        <label class="form-label" htmlFor="preference">Information Preference</label>
+                    <div className="col-3 col-sm-12">
+                        <label className="form-label" htmlFor="preference">Information Preference</label>
                     </div>
-                    <div class="col-9 col-sm-12">
-                        <label class="form-checkbox form-inline">
-                            <input type="checkbox"/><i class="form-icon"></i> Activity
+                    <div className="col-9 col-sm-12">
+                        <label className="form-checkbox form-inline">
+                            <input type="checkbox"/><i className="form-icon"></i> Activity
                         </label>
-                        <label class="form-checkbox form-inline">
-                            <input type="checkbox"/><i class="form-icon"></i> Person
+                        <label className="form-checkbox form-inline">
+                            <input type="checkbox"/><i className="form-icon"></i> Person
                         </label>
-                        <label class="form-checkbox form-inline">
-                            <input type="checkbox"/><i class="form-icon"></i> Object
+                        <label className="form-checkbox form-inline">
+                            <input type="checkbox"/><i className="form-icon"></i> Object
                         </label>
-                        <label class="form-checkbox form-inline">
-                            <input type="checkbox"/><i class="form-icon"></i> Setting
+                        <label className="form-checkbox form-inline">
+                            <input type="checkbox"/><i className="form-icon"></i> Setting
                         </label>
                     </div>
 
@@ -52,18 +52,18 @@ function CustomizationComponentForm(props) {
                     </div>
 
                     {/* Speed Customization */}
-                    <div class="col-3 col-sm-12">
-                        <label class="form-label" htmlFor="speed">Speed</label>
+                    <div className="col-3 col-sm-12">
+                        <label className="form-label" htmlFor="speed">Speed</label>
                     </div>
-                    <div class="col-9 col-sm-12">
-                        <input class="slider" type="range" id="speed" min="0" max="100"/>
+                    <div className="col-9 col-sm-12">
+                        <input className="slider" type="range" id="speed" min="0" max="100"/>
                     </div>
 
                     {/* Language Customization
-                    <div class="col-3 col-sm-12">
-                        <label class="form-label" htmlFor="language">Language</label>
+                    <div className="col-3 col-sm-12">
+                        <label className="form-label" htmlFor="language">Language</label>
                     </div>
-                    <div class="col-9 col-sm-12">
+                    <div className="col-9 col-sm-12">
                         <Dropdown
                             options= {
                                 [
@@ -78,54 +78,54 @@ function CustomizationComponentForm(props) {
                     </div> */}
 
                     {/* Tone Customization */}
-                    <div class="col-3 col-sm-12">
-                        <label class="form-label" htmlFor="tone">Tone</label>
+                    <div className="col-3 col-sm-12">
+                        <label className="form-label" htmlFor="tone">Tone</label>
                     </div>
-                    <div class="col-9 col-sm-12">
-                        <label class="form-radio form-inline">
-                            <input type="radio" name="tone" checked/><i class="form-icon"></i> Monotonous
+                    <div className="col-9 col-sm-12">
+                        <label className="form-radio form-inline">
+                            <input type="radio" name="tone" checked/><i className="form-icon"></i> Monotonous
                         </label>
-                        <label class="form-radio form-inline">
-                            <input type="radio" name="tone"/><i class="form-icon"></i> Dynamic
+                        <label className="form-radio form-inline">
+                            <input type="radio" name="tone"/><i className="form-icon"></i> Dynamic
                         </label>
                     </div>
 
                     {/* Voice Customization */}
-                    <div class="col-3 col-sm-12">
-                        <label class="form-label" htmlFor="voice">Voice</label>
+                    <div className="col-3 col-sm-12">
+                        <label className="form-label" htmlFor="voice">Voice</label>
                     </div>
-                    <div class="col-9 col-sm-12">
-                        <label class="form-radio form-inline">
-                            <input type="radio" name="voice" checked/><i class="form-icon"></i> Human
+                    <div className="col-9 col-sm-12">
+                        <label className="form-radio form-inline">
+                            <input type="radio" name="voice" checked/><i className="form-icon"></i> Human
                         </label>
-                        <label class="form-radio form-inline">
-                            <input type="radio" name="voice"/><i class="form-icon"></i> Synthesizer
+                        <label className="form-radio form-inline">
+                            <input type="radio" name="voice"/><i className="form-icon"></i> Synthesizer
                         </label>
                     </div>
 
                     {/* Gender Customization */}
-                    <div class="col-3 col-sm-12">
-                        <label class="form-label" htmlFor="gender">Gender</label>
+                    <div className="col-3 col-sm-12">
+                        <label className="form-label" htmlFor="gender">Gender</label>
                     </div>
-                    <div class="col-9 col-sm-12">
-                        <label class="form-radio form-inline">
-                            <input type="radio" name="gender" checked/><i class="form-icon"></i> Male
+                    <div className="col-9 col-sm-12">
+                        <label className="form-radio form-inline">
+                            <input type="radio" name="gender" checked/><i className="form-icon"></i> Male
                         </label>
-                        <label class="form-radio form-inline">
-                            <input type="radio" name="gender"/><i class="form-icon"></i> Female
+                        <label className="form-radio form-inline">
+                            <input type="radio" name="gender"/><i className="form-icon"></i> Female
                         </label>
                     </div>
 
                     {/* Syntax Customization */}
-                    <div class="col-3 col-sm-12">
-                        <label class="form-label" htmlFor="syntax">Syntax</label>
+                    <div className="col-3 col-sm-12">
+                        <label className="form-label" htmlFor="syntax">Syntax</label>
                     </div>
-                    <div class="col-9 col-sm-12">
-                        <label class="form-radio form-inline">
-                            <input type="radio" name="syntax" checked/><i class="form-icon"></i> Past
+                    <div className="col-9 col-sm-12">
+                        <label className="form-radio form-inline">
+                            <input type="radio" name="syntax" checked/><i className="form-icon"></i> Past
                         </label>
-                        <label class="form-radio form-inline">
-                            <input type="radio" name="Syntax"/><i class="form-icon"></i> Present
+                        <label className="form-radio form-inline">
+                            <input type="radio" name="Syntax"/><i className="form-icon"></i> Present
                         </label>
                     </div>
                 </div>
