@@ -14,7 +14,7 @@ function CustomizationComponentForm(props) {
                     
                     {/* Length Customization */}
                     <div class="col-3 col-sm-12">
-                        <label class="form-label" for="length">Length</label>
+                        <label class="form-label" htmlFor="length">Length</label>
                     </div>
                     <div class="col-9 col-sm-12">
                         <label class="form-radio form-inline">
@@ -30,7 +30,7 @@ function CustomizationComponentForm(props) {
 
                     {/* Information Preference Customization */}
                     <div class="col-3 col-sm-12">
-                        <label class="form-label" for="preference">Information Preference</label>
+                        <label class="form-label" htmlFor="preference">Information Preference</label>
                     </div>
                     <div class="col-9 col-sm-12">
                         <label class="form-checkbox form-inline">
@@ -53,7 +53,7 @@ function CustomizationComponentForm(props) {
 
                     {/* Speed Customization */}
                     <div class="col-3 col-sm-12">
-                        <label class="form-label" for="speed">Speed</label>
+                        <label class="form-label" htmlFor="speed">Speed</label>
                     </div>
                     <div class="col-9 col-sm-12">
                         <input class="slider" type="range" id="speed" min="0" max="100"/>
@@ -61,7 +61,7 @@ function CustomizationComponentForm(props) {
 
                     {/* Language Customization
                     <div class="col-3 col-sm-12">
-                        <label class="form-label" for="language">Language</label>
+                        <label class="form-label" htmlFor="language">Language</label>
                     </div>
                     <div class="col-9 col-sm-12">
                         <Dropdown
@@ -79,7 +79,7 @@ function CustomizationComponentForm(props) {
 
                     {/* Tone Customization */}
                     <div class="col-3 col-sm-12">
-                        <label class="form-label" for="tone">Tone</label>
+                        <label class="form-label" htmlFor="tone">Tone</label>
                     </div>
                     <div class="col-9 col-sm-12">
                         <label class="form-radio form-inline">
@@ -92,7 +92,7 @@ function CustomizationComponentForm(props) {
 
                     {/* Voice Customization */}
                     <div class="col-3 col-sm-12">
-                        <label class="form-label" for="voice">Voice</label>
+                        <label class="form-label" htmlFor="voice">Voice</label>
                     </div>
                     <div class="col-9 col-sm-12">
                         <label class="form-radio form-inline">
@@ -105,7 +105,7 @@ function CustomizationComponentForm(props) {
 
                     {/* Gender Customization */}
                     <div class="col-3 col-sm-12">
-                        <label class="form-label" for="gender">Gender</label>
+                        <label class="form-label" htmlFor="gender">Gender</label>
                     </div>
                     <div class="col-9 col-sm-12">
                         <label class="form-radio form-inline">
@@ -118,7 +118,7 @@ function CustomizationComponentForm(props) {
 
                     {/* Syntax Customization */}
                     <div class="col-3 col-sm-12">
-                        <label class="form-label" for="syntax">Syntax</label>
+                        <label class="form-label" htmlFor="syntax">Syntax</label>
                     </div>
                     <div class="col-9 col-sm-12">
                         <label class="form-radio form-inline">
