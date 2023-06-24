@@ -18,7 +18,7 @@ function CustomizationComponentForm(props) {
                     </div>
                     <div class="col-9 col-sm-12">
                         <label class="form-radio form-inline">
-                            <input type="radio" name="length" checked/><i class="form-icon"></i> Sunccinct
+                            <input type="radio" name="length" checked/><i class="form-icon"></i> Succinct
                         </label>
                         <label class="form-radio form-inline">
                             <input type="radio" name="length"/><i class="form-icon"></i> Verbose
@@ -34,7 +34,7 @@ function CustomizationComponentForm(props) {
                     </div>
                     <div class="col-9 col-sm-12">
                         <label class="form-checkbox form-inline">
-                            <input type="checkbox"/><i class="form-icon"></i> Action
+                            <input type="checkbox"/><i class="form-icon"></i> Activity
                         </label>
                         <label class="form-checkbox form-inline">
                             <input type="checkbox"/><i class="form-icon"></i> Person
