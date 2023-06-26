@@ -1,7 +1,45 @@
-import React from "react";
+import React, { useCallback } from "react";
 import Dropdown from 'react-dropdown-aria';
+import { VideoLength, InformationPreference, Tone, Voice, Gender, Syntax } from "./DashboardComponent";
 
-function CustomizationComponentForm(props) {
+function CustomizationComponentForm({
+    videoLength,
+    informationPreference,
+    tone,
+    voice,
+    gender,
+    syntax,
+    onVideoLengthChange,
+    onInformationPreferenceChange,
+    onToneChange,
+    onVoiceChange,
+    onGenderChange,
+    onSyntaxChange,
+}) {
+    const handleVideoLengthChange = useCallback((event) => {
+        onVideoLengthChange(event.target.value);
+    }, [onVideoLengthChange]);
+
+    const handleInformationPreferenceChange = useCallback((event) => {
+        onInformationPreferenceChange(event.target.value);
+    }, [onInformationPreferenceChange]);
+
+    const handleToneChange = useCallback((event) => {
+        onToneChange(event.target.value);
+    }, [onToneChange]);
+
+    const handleVoiceChange = useCallback((event) => {
+        onVoiceChange(event.target.value);
+    }, [onVoiceChange]);
+
+    const handleGenderChange = useCallback((event) => {
+        onGenderChange(event.target.value);
+    }, [onGenderChange]);
+
+    const handleSyntaxChange = useCallback((event) => {
+        onSyntaxChange(event.target.value);
+    }, [onSyntaxChange]);
+
     return (
         <div>
             <h1>Customization Setups</h1>
@@ -16,13 +54,34 @@ function CustomizationComponentForm(props) {
                     </div>
                     <div className="col-9 col-sm-12">
                         <label className="form-radio form-inline">
-                            <input type="radio" name="length" checked/><i className="form-icon"></i> Succinct
+                            <input
+                                type="radio"
+                                name="length"
+                                value={VideoLength.Succinct}
+                                checked={videoLength === VideoLength.Succinct}
+                                onChange={handleVideoLengthChange}
+                            />
+                            <i className="form-icon"></i> Succinct
                         </label>
                         <label className="form-radio form-inline">
-                            <input type="radio" name="length"/><i className="form-icon"></i> Verbose
+                            <input
+                                type="radio"
+                                name="length"
+                                value={VideoLength.Verbose}
+                                checked={videoLength === VideoLength.Verbose}
+                                onChange={handleVideoLengthChange}
+                            />
+                            <i className="form-icon"></i> Verbose
                         </label>
                         <label className="form-radio form-inline">
-                            <input type="radio" name="length"/><i className="form-icon"></i> Very Verbose
+                            <input
+                                type="radio"
+                                name="length"
+                                value={VideoLength.VeryVerbose}
+                                checked={videoLength === VideoLength.VeryVerbose}
+                                onChange={handleVideoLengthChange}
+                            />
+                            <i className="form-icon"></i> Very Verbose
                         </label>
                     </div>
 
@@ -32,16 +91,44 @@ function CustomizationComponentForm(props) {
                     </div>
                     <div className="col-9 col-sm-12">
                         <label className="form-radio form-inline">
-                            <input type="radio" name="preference" checked/><i className="form-icon"></i> Activity
+                            <input
+                                type="radio"
+                                name="preference"
+                                value={InformationPreference.Activity}
+                                checked={informationPreference === InformationPreference.Activity}
+                                onChange={handleInformationPreferenceChange}
+                            />
+                            <i className="form-icon"></i> Activity
                         </label>
                         <label className="form-radio form-inline">
-                            <input type="radio" name="preference"/><i className="form-icon"></i> Person
+                            <input
+                                type="radio"
+                                name="preference"
+                                value={InformationPreference.Person}
+                                checked={informationPreference === InformationPreference.Person}
+                                onChange={handleInformationPreferenceChange}
+                            />
+                            <i className="form-icon"></i> Person
                         </label>
                         <label className="form-radio form-inline">
-                            <input type="radio" name="preference"/><i className="form-icon"></i> Object
+                            <input
+                                type="radio"
+                                name="preference"
+                                value={InformationPreference.Object}
+                                checked={informationPreference === InformationPreference.Object}
+                                onChange={handleInformationPreferenceChange}
+                            />
+                            <i className="form-icon"></i> Object
                         </label>
                         <label className="form-radio form-inline">
-                            <input type="radio" name="preference"/><i className="form-icon"></i> Setting
+                            <input
+                                type="radio"
+                                name="preference"
+                                value={InformationPreference.Setting}
+                                checked={informationPreference === InformationPreference.Setting}
+                                onChange={handleInformationPreferenceChange}
+                            />
+                            <i className="form-icon"></i> Setting
                         </label>
                     </div>
 
@@ -81,10 +168,24 @@ function CustomizationComponentForm(props) {
                     </div>
                     <div className="col-9 col-sm-12">
                         <label className="form-radio form-inline">
-                            <input type="radio" name="tone" checked/><i className="form-icon"></i> Monotonous
+                            <input
+                                type="radio"
+                                name="tone"
+                                value={Tone.Monotonous}
+                                checked={tone === Tone.Monotonous}
+                                onChange={handleToneChange}
+                            />
+                            <i className="form-icon"></i> Monotonous
                         </label>
                         <label className="form-radio form-inline">
-                            <input type="radio" name="tone"/><i className="form-icon"></i> Dynamic
+                            <input
+                                type="radio"
+                                name="tone"
+                                value={Tone.Dynamic}
+                                checked={tone === Tone.Dynamic}
+                                onChange={handleToneChange}
+                            />
+                            <i className="form-icon"></i> Dynamic
                         </label>
                     </div>
 
@@ -94,10 +195,24 @@ function CustomizationComponentForm(props) {
                     </div>
                     <div className="col-9 col-sm-12">
                         <label className="form-radio form-inline">
-                            <input type="radio" name="voice" checked/><i className="form-icon"></i> Human
+                            <input
+                                type="radio"
+                                name="voice"
+                                value={Voice.Human}
+                                checked={voice === Voice.Human}
+                                onChange={handleVoiceChange}
+                            />
+                            <i className="form-icon"></i> Human
                         </label>
                         <label className="form-radio form-inline">
-                            <input type="radio" name="voice"/><i className="form-icon"></i> Synthesizer
+                            <input
+                                type="radio"
+                                name="voice"
+                                value={Voice.Synthesizer}
+                                checked={voice === Voice.Synthesizer}
+                                onChange={handleVoiceChange}
+                            />
+                            <i className="form-icon"></i> Synthesizer
                         </label>
                     </div>
 
@@ -107,10 +222,24 @@ function CustomizationComponentForm(props) {
                     </div>
                     <div className="col-9 col-sm-12">
                         <label className="form-radio form-inline">
-                            <input type="radio" name="gender" checked/><i className="form-icon"></i> Male
+                            <input
+                                type="radio"
+                                name="gender"
+                                value={Gender.Male}
+                                checked={gender === Gender.Male}
+                                onChange={handleGenderChange}
+                            />
+                            <i className="form-icon"></i> Male
                         </label>
                         <label className="form-radio form-inline">
-                            <input type="radio" name="gender"/><i className="form-icon"></i> Female
+                            <input
+                                type="radio"
+                                name="gender"
+                                value={Gender.Female}
+                                checked={gender === Gender.Female}
+                                onChange={handleGenderChange}
+                            />
+                            <i className="form-icon"></i> Female
                         </label>
                     </div>
 
@@ -120,10 +249,24 @@ function CustomizationComponentForm(props) {
                     </div>
                     <div className="col-9 col-sm-12">
                         <label className="form-radio form-inline">
-                            <input type="radio" name="syntax" checked/><i className="form-icon"></i> Past
+                            <input
+                                type="radio"
+                                name="syntax"
+                                value={Syntax.Past}
+                                checked={syntax === Syntax.Past}
+                                onChange={handleSyntaxChange}
+                            />
+                            <i className="form-icon"></i> Past
                         </label>
                         <label className="form-radio form-inline">
-                            <input type="radio" name="Syntax"/><i className="form-icon"></i> Present
+                            <input
+                                type="radio"
+                                name="syntax"
+                                value={Syntax.Present}
+                                checked={syntax === Syntax.Present}
+                                onChange={handleSyntaxChange}
+                            />
+                            <i className="form-icon"></i> Present
                         </label>
                     </div>
                 </div>

@@ -6,7 +6,7 @@ function CustomizationContainer(props) {
     return (
         <div>
             {/* <CustomizationComponent /> */}
-            <CustomizationComponentForm />
+            <CustomizationComponentForm {...props} />
         </div>
     )
 }
