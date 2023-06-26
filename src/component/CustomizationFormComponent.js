@@ -31,17 +31,17 @@ function CustomizationComponentForm(props) {
                         <label className="form-label" htmlFor="preference">Information Preference</label>
                     </div>
                     <div className="col-9 col-sm-12">
-                        <label className="form-checkbox form-inline">
-                            <input type="checkbox"/><i className="form-icon"></i> Activity
+                        <label className="form-radio form-inline">
+                            <input type="radio" name="preference" checked/><i className="form-icon"></i> Activity
                         </label>
-                        <label className="form-checkbox form-inline">
-                            <input type="checkbox"/><i className="form-icon"></i> Person
+                        <label className="form-radio form-inline">
+                            <input type="radio" name="preference"/><i className="form-icon"></i> Person
                         </label>
-                        <label className="form-checkbox form-inline">
-                            <input type="checkbox"/><i className="form-icon"></i> Object
+                        <label className="form-radio form-inline">
+                            <input type="radio" name="preference"/><i className="form-icon"></i> Object
                         </label>
-                        <label className="form-checkbox form-inline">
-                            <input type="checkbox"/><i className="form-icon"></i> Setting
+                        <label className="form-radio form-inline">
+                            <input type="radio" name="preference"/><i className="form-icon"></i> Setting
                         </label>
                     </div>
 
