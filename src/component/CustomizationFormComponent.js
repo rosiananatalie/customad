@@ -1,16 +1,18 @@
 import React, { useCallback } from "react";
 import Dropdown from 'react-dropdown-aria';
-import { VideoLength, InformationPreference, Tone, Voice, Gender, Syntax } from "./DashboardComponent";
+import { VideoLength, InformationPreference, Speed, Tone, Voice, Gender, Syntax } from "./DashboardComponent";
 
 function CustomizationComponentForm({
     videoLength,
     informationPreference,
+    speed,
     tone,
     voice,
     gender,
     syntax,
     onVideoLengthChange,
     onInformationPreferenceChange,
+    onSpeedChange,
     onToneChange,
     onVoiceChange,
     onGenderChange,
@@ -23,6 +25,10 @@ function CustomizationComponentForm({
     const handleInformationPreferenceChange = useCallback((event) => {
         onInformationPreferenceChange(event.target.value);
     }, [onInformationPreferenceChange]);
+
+    const handleSpeedChange = useCallback((event) => {
+        onSpeedChange(event.target.value);
+    }, [onSpeedChange]);
 
     const handleToneChange = useCallback((event) => {
         onToneChange(event.target.value);
@@ -141,7 +147,16 @@ function CustomizationComponentForm({
                         <label className="form-label" htmlFor="speed">Speed</label>
                     </div>
                     <div className="col-9 col-sm-12">
-                        <input className="slider" type="range" id="speed" min="0" max="100"/>
+                        <input
+                            className="slider"
+                            type="range"
+                            id="speed"
+                            min={Speed.MIN}
+                            max={Speed.MAX}
+                            step={Speed.STEP}
+                            value={speed}
+                            onChange={handleSpeedChange}
+                        />
                     </div>
 
                     {/* Language Customization
