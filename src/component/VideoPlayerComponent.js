@@ -48,7 +48,7 @@ function VideoPlayerComponent({
     videoRef,
     speed,
 }) {
-    const [audioDescriptions, setAudioDescriptions] = useState(verboseTrialAD);
+    const [audioDescriptions, setAudioDescriptions] = useState(inlineTrialAD);
 
     const handleStateChange = useCallback((state, prevState) => {
         const currentAD = audioDescriptions.findLast(ad => ad.startTime <= state.currentTime);

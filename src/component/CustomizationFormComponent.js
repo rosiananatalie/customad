@@ -49,6 +49,7 @@ function CustomizationComponentForm({
     return (
         <div>
             <h1>Customization Setups</h1>
+
             <form className="form-horizontal">
                 <div>
                     <h2>Content Customization</h2>
@@ -137,10 +138,14 @@ function CustomizationComponentForm({
                             <i className="form-icon"></i> Setting
                         </label>
                     </div>
+                </div>
 
-                    <div>
-                        <h2>Presentation Customization</h2>
-                    </div>
+                <div>
+                    <h2>Presentation Customization</h2>
+                </div>
+
+                <div className="form-group">   
+                    
 
                     {/* Speed Customization */}
                     <div className="col-3 col-sm-12">
