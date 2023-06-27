@@ -46,6 +46,7 @@ function VideoPlayerComponent({
     videoId,
     videoType,
     videoRef,
+    speed,
 }) {
     const [audioDescriptions, setAudioDescriptions] = useState(verboseTrialAD);
 
@@ -53,6 +54,7 @@ function VideoPlayerComponent({
         const currentAD = audioDescriptions.findLast(ad => ad.startTime <= state.currentTime);
         const afterGapStartTime = VIDEO_AUDIO_START_TIME_AFTER_GAP.findLast(time => state.currentTime >= time && state.currentTime < Math.floor(time + 1));
         if (currentAD) {
+            currentAD.audio.playbackRate = speed;
             if (state.seeking) {
                 // Pause all audios other than current audio
                 audioDescriptions.forEach((ad) => {
@@ -81,7 +83,7 @@ function VideoPlayerComponent({
                 }
             }
         }
-    }, [audioDescriptions, videoRef]);
+    }, [audioDescriptions, videoRef, speed]);
 
     useEffect(() => {
         if (videoRef.current) {

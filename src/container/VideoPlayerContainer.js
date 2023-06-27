@@ -20,6 +20,7 @@ const VideoPlayerContainer = ({
             videoType={videoType}
             videoId={videoId}
             videoRef={videoRef}
+            speed={speed}
         />
     )
 }
