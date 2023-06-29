@@ -6,9 +6,7 @@ import KeyboardTest from './component/KeyboardTest';
 
 function App() {
   return (
-    <div>
-      <DashboardComponent />
-    </div>
+    <DashboardComponent />
   );
 }
 

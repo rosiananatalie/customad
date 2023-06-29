@@ -194,32 +194,30 @@ function Dashboard() {
     }, [handleKeyPress]);
 
     return (
-        <div>
-            <div className='container'>
-                <div className='columns'>
-                    <div className='column col-8'>
-                        <VideoPlayerContainer speed={speed} />
-                    </div>
-                    <div className='column col-4'>
-                        <CustomizationContainer
-                            videoLength={videoLength}
-                            informationPreference={informationPreference}
-                            speed={speed}
-                            tone={tone}
-                            voice={voice}
-                            gender={gender}
-                            syntax={syntax}
-                            onVideoLengthChange={setVideoLength}
-                            onInformationPreferenceChange={setInformationPreference}
-                            onSpeedChange={setSpeed}
-                            onToneChange={setTone}
-                            onVoiceChange={setVoice}
-                            onGenderChange={setGender}
-                            onSyntaxChange={setSyntax}
-                        />
-                    </div>
-                    
+        <div className='container'>
+            <div className='columns'>
+                <div className='column col-8'>
+                    <VideoPlayerContainer speed={speed} />
                 </div>
+                <div className='column col-4'>
+                    <CustomizationContainer
+                        videoLength={videoLength}
+                        informationPreference={informationPreference}
+                        speed={speed}
+                        tone={tone}
+                        voice={voice}
+                        gender={gender}
+                        syntax={syntax}
+                        onVideoLengthChange={setVideoLength}
+                        onInformationPreferenceChange={setInformationPreference}
+                        onSpeedChange={setSpeed}
+                        onToneChange={setTone}
+                        onVoiceChange={setVoice}
+                        onGenderChange={setGender}
+                        onSyntaxChange={setSyntax}
+                    />
+                </div>
+                
             </div>
         </div>
     );
