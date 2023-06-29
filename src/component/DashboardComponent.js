@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 import CustomizationContainer from '../container/CustomizationContainer';
 import VideoPlayerContainer from '../container/VideoPlayerContainer';
@@ -21,17 +21,27 @@ export const PresentationCustomization = Object.freeze({
     Syntax: 'Syntax',
 });
 
+export const Content = Object.freeze({
+    Succinct: 'inline',
+    Verbose: 'verbose',
+    VeryVerbose: 'veryVerbose',
+    Activity: 'activity',
+    Person: 'person',
+    Object: 'object',
+    Setting: 'setting',
+});
+
 export const VideoLength = Object.freeze({
-    Succinct: 'Succinct',
-    Verbose: 'Verbose',
-    VeryVerbose: 'VeryVerbose',
+    Succinct: 'inline',
+    Verbose: 'verbose',
+    VeryVerbose: 'veryVerbose',
 });
 
 export const InformationPreference = Object.freeze({
-    Activity: 'Activity',
-    Person: 'Person',
-    Object: 'Object',
-    Setting: 'Setting',
+    Activity: 'activity',
+    Person: 'person',
+    Object: 'object',
+    Setting: 'setting',
 });
 
 export const Speed = Object.freeze({
@@ -46,23 +56,30 @@ export const Tone = Object.freeze({
 });
 
 export const Voice = Object.freeze({
-    Human: 'Human',
-    Synthesizer: 'Synthesizer',
+    Human: 'human',
+    Synthesizer: 'syn',
 });
 
 export const Gender = Object.freeze({
-    Male: 'Male',
-    Female: 'Female',
+    Male: 'male',
+    Female: 'female',
 });
 
 export const Syntax = Object.freeze({
-    Past: 'Past',
-    Present: 'Present',
+    Past: 'past',
+    Present: 'present',
+});
+
+// https://developer.mozilla.org/en-US/docs/Web/API/SpeechSynthesisUtterance/rate
+export const utterThisProps = Object.freeze({
+    rate: 2, // 0.1 ~ 10
+    volume: 0.8, // 0 ~ 1
 });
 
 function Dashboard() {
     const [customizationGroup, setCustomizationGroup] = useState(null);
     const [customization, setCustomization] = useState(null);
+    const [content, setContent] = useState(Content.Succinct);
     const [videoLength, setVideoLength] = useState(VideoLength.Succinct);
     const [informationPreference, setInformationPreference] = useState(InformationPreference.Activity);
     const [speed, setSpeed] = useState(1);
@@ -88,17 +105,25 @@ function Dashboard() {
     const handleKeyPress = useCallback((event) => {
         let selected = null;
         switch (event.key) {
-            case 'a':
+            case 'a': {
                 setCustomizationGroup(CustomizationGroup.Content);
                 setCustomization(null);
-                speechSynthesis.speak(new SpeechSynthesisUtterance('Content customization is selected.'));
+                const utterThis = new SpeechSynthesisUtterance('Content customization is selected.');
+                utterThis.rate = utterThisProps.rate;
+                utterThis.volume = utterThisProps.volume;
+                speechSynthesis.speak(utterThis);
                 break;
-            case 's':
+            }
+            case 's': {
                 setCustomizationGroup(CustomizationGroup.Presentation);
                 setCustomization(null);
-                speechSynthesis.speak(new SpeechSynthesisUtterance('Presentation customization is selected.'));
+                const utterThis = new SpeechSynthesisUtterance('Presentation customization is selected.');
+                utterThis.rate = utterThisProps.rate;
+                utterThis.volume = utterThisProps.volume;
+                speechSynthesis.speak(utterThis);
                 break;
-            case 'ArrowUp':
+            }
+            case 'ArrowUp': {
                 selected = (() => {
                     if (customizationGroup === CustomizationGroup.Content) {
                         return customization ? getPreviousValue(ContentCustomization, customization) : ContentCustomization.VideoLength;
@@ -108,9 +133,13 @@ function Dashboard() {
                     return null;
                 })();
                 setCustomization(selected);
-                speechSynthesis.speak(new SpeechSynthesisUtterance(`${selected} is selected.`));
+                const utterThis = new SpeechSynthesisUtterance(`${selected} is selected.`);
+                utterThis.rate = utterThisProps.rate;
+                utterThis.volume = utterThisProps.volume;
+                speechSynthesis.speak(utterThis);
                 break;
-            case 'ArrowDown':
+            }
+            case 'ArrowDown': {
                 selected = (() => {
                     if (customizationGroup === CustomizationGroup.Content) {
                         return customization ? getNextValue(ContentCustomization, customization) : ContentCustomization.VideoLength;
@@ -120,19 +149,28 @@ function Dashboard() {
                     return null;
                 })();
                 setCustomization(selected);
-                speechSynthesis.speak(new SpeechSynthesisUtterance(`${selected} is selected.`));
+                const utterThis = new SpeechSynthesisUtterance(`${selected} is selected.`);
+                utterThis.rate = utterThisProps.rate;
+                utterThis.volume = utterThisProps.volume;
+                speechSynthesis.speak(utterThis);
                 break;
+            }
             case 'ArrowLeft':
                 if (customization === ContentCustomization.VideoLength) {
                     selected = videoLength ? getPreviousValue(VideoLength, videoLength) : VideoLength.Succinct;
                     setVideoLength(selected);
+                    setContent(selected);
                 } else if (customization === ContentCustomization.InformationPreference) {
                     selected = informationPreference ? getPreviousValue(InformationPreference, informationPreference) : InformationPreference.Activity;
                     setInformationPreference(selected);
+                    setContent(selected);
                 } else if (customization === PresentationCustomization.Speed && speed > Speed.MIN) {
                     const newSpeed = speed - Speed.STEP;
                     setSpeed(newSpeed);
-                    speechSynthesis.speak(new SpeechSynthesisUtterance(`Speed is ${newSpeed}`));
+                    const utterThis = new SpeechSynthesisUtterance(`Speed is ${newSpeed}`);
+                    utterThis.rate = utterThisProps.rate;
+                    utterThis.volume = utterThisProps.volume;
+                    speechSynthesis.speak(utterThis);
                 } else if (customization === PresentationCustomization.Tone) {
                     selected = tone ? getPreviousValue(Tone, tone) : Tone.Monotonous;
                     setTone(selected);
@@ -147,20 +185,28 @@ function Dashboard() {
                     setSyntax(selected);
                 }
                 if (selected) {
-                    speechSynthesis.speak(new SpeechSynthesisUtterance(`${selected} is selected.`));
+                    const utterThis = new SpeechSynthesisUtterance(`${selected} is selected.`);
+                    utterThis.rate = utterThisProps.rate;
+                    utterThis.volume = utterThisProps.volume;
+                    speechSynthesis.speak(utterThis);
                 }
                 break;
             case 'ArrowRight':
                 if (customization === ContentCustomization.VideoLength) {
                     selected = videoLength ? getNextValue(VideoLength, videoLength) : VideoLength.Succinct;
                     setVideoLength(selected);
+                    setContent(selected);
                 } else if (customization === ContentCustomization.InformationPreference) {
                     selected = informationPreference ? getNextValue(InformationPreference, informationPreference) : InformationPreference.Activity;
                     setInformationPreference(selected);
+                    setContent(selected);
                 } else if (customization === PresentationCustomization.Speed && speed < Speed.MAX) {
                     const newSpeed = speed + Speed.STEP;
                     setSpeed(newSpeed);
-                    speechSynthesis.speak(new SpeechSynthesisUtterance(`Speed is ${newSpeed}`));
+                    const utterThis = new SpeechSynthesisUtterance(`Speed is ${newSpeed}`);
+                    utterThis.rate = utterThisProps.rate;
+                    utterThis.volume = utterThisProps.volume;
+                    speechSynthesis.speak(utterThis);
                 } else if (customization === PresentationCustomization.Tone) {
                     selected = tone ? getNextValue(Tone, tone) : Tone.Monotonous;
                     setTone(selected);
@@ -175,7 +221,10 @@ function Dashboard() {
                     setSyntax(selected);
                 }
                 if (selected) {
-                    speechSynthesis.speak(new SpeechSynthesisUtterance(`${selected} is selected.`));
+                    const utterThis = new SpeechSynthesisUtterance(`${selected} is selected.`);
+                    utterThis.rate = utterThisProps.rate;
+                    utterThis.volume = utterThisProps.volume;
+                    speechSynthesis.speak(utterThis);
                 }
                 break;
             default:
@@ -197,19 +246,28 @@ function Dashboard() {
         <div className='container'>
             <div className='columns'>
                 <div className='column col-8'>
-                    <VideoPlayerContainer videoLength={videoLength} speed={speed} />
+                    <VideoPlayerContainer
+                        // videoLength={videoLength}
+                        content={content}
+                        speed={speed}
+                        voice={voice}
+                        gender={gender}
+                        syntax={syntax}
+                    />
                 </div>
                 <div className='column col-4'>
                     <CustomizationContainer
-                        videoLength={videoLength}
-                        informationPreference={informationPreference}
+                        // videoLength={videoLength}
+                        // informationPreference={informationPreference}
+                        content={content}
                         speed={speed}
                         tone={tone}
                         voice={voice}
                         gender={gender}
                         syntax={syntax}
-                        onVideoLengthChange={setVideoLength}
-                        onInformationPreferenceChange={setInformationPreference}
+                        // onVideoLengthChange={setVideoLength}
+                        // onInformationPreferenceChange={setInformationPreference}
+                        onContentChange={setContent}
                         onSpeedChange={setSpeed}
                         onToneChange={setTone}
                         onVoiceChange={setVoice}
