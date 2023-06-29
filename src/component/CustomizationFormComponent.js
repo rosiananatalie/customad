@@ -1,5 +1,4 @@
 import React, { useCallback } from "react";
-import Dropdown from 'react-dropdown-aria';
 import { VideoLength, InformationPreference, Speed, Tone, Voice, Gender, Syntax } from "./DashboardComponent";
 
 function CustomizationComponentForm({
@@ -27,7 +26,7 @@ function CustomizationComponentForm({
     }, [onInformationPreferenceChange]);
 
     const handleSpeedChange = useCallback((event) => {
-        onSpeedChange(event.target.value);
+        onSpeedChange(Number(event.target.value));
     }, [onSpeedChange]);
 
     const handleToneChange = useCallback((event) => {
