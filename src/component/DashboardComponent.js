@@ -106,6 +106,7 @@ function Dashboard() {
         let selected = null;
         switch (event.key) {
             case 'a': {
+                console.log('a is pressed');
                 setCustomizationGroup(CustomizationGroup.Content);
                 setCustomization(null);
                 const utterThis = new SpeechSynthesisUtterance('Content customization is selected.');
@@ -115,6 +116,7 @@ function Dashboard() {
                 break;
             }
             case 's': {
+                console.log('s is pressed');
                 setCustomizationGroup(CustomizationGroup.Presentation);
                 setCustomization(null);
                 const utterThis = new SpeechSynthesisUtterance('Presentation customization is selected.');
@@ -124,6 +126,7 @@ function Dashboard() {
                 break;
             }
             case 'ArrowUp': {
+                console.log('arrow up is pressed');
                 selected = (() => {
                     if (customizationGroup === CustomizationGroup.Content) {
                         return customization ? getPreviousValue(ContentCustomization, customization) : ContentCustomization.VideoLength;
@@ -140,6 +143,7 @@ function Dashboard() {
                 break;
             }
             case 'ArrowDown': {
+                console.log('arrow down is pressed');
                 selected = (() => {
                     if (customizationGroup === CustomizationGroup.Content) {
                         return customization ? getNextValue(ContentCustomization, customization) : ContentCustomization.VideoLength;
@@ -156,6 +160,7 @@ function Dashboard() {
                 break;
             }
             case 'ArrowLeft':
+                console.log('arrow left is pressed');
                 if (customization === ContentCustomization.VideoLength) {
                     selected = videoLength ? getPreviousValue(VideoLength, videoLength) : VideoLength.Succinct;
                     setVideoLength(selected);
@@ -192,6 +197,7 @@ function Dashboard() {
                 }
                 break;
             case 'ArrowRight':
+                console.log('arrow right is pressed');
                 if (customization === ContentCustomization.VideoLength) {
                     selected = videoLength ? getNextValue(VideoLength, videoLength) : VideoLength.Succinct;
                     setVideoLength(selected);

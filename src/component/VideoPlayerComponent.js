@@ -75,7 +75,6 @@ function VideoPlayerComponent({
             const currentAD = audioDescriptions.findLast(ad => ad.startTime <= state.currentTime);
             const currentADIndex = audioDescriptions.indexOf(currentAD);
             const videoGapEndTime = VIDEO_GAP_END_TIME.findLast(time => time <= state.currentTime);
-            console.log(currentAD);
             setAudioDescription(currentAD);
             setAudioDescriptionIndex(currentADIndex)
 
