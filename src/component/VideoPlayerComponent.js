@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Player, BigPlayButton, ControlBar, ProgressControl, CurrentTimeDisplay, TimeDivider, DurationDisplay } from 'video-react';
 import PlayToggle from 'video-react/lib/components/control-bar/PlayToggle';
 // import videos from '../../assets/ed1.mp4';
@@ -45,10 +45,16 @@ const veryVerboseTrialAD = [
 function VideoPlayerComponent({
     videoId,
     videoType,
-    videoRef,
     speed,
 }) {
+    const videoRef = useRef(null);
     const [audioDescriptions, setAudioDescriptions] = useState(inlineTrialAD);
+
+    useEffect(()=> {
+        if (videoRef.current.video) {
+            videoRef.current.video.playbackRate = speed;
+        }
+    }, [speed]);
 
     const handleStateChange = useCallback((state, prevState) => {
         const currentAD = audioDescriptions.findLast(ad => ad.startTime <= state.currentTime);
