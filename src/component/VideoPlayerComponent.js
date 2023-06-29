@@ -64,7 +64,7 @@ function VideoPlayerComponent({
         }
     }, [audioDescription, videoRef]);
 
-    useEffect(()=> {
+    useEffect(() => {
         if (videoRef.current.video) {
             videoRef.current.video.playbackRate = speed;
         }
@@ -73,22 +73,24 @@ function VideoPlayerComponent({
     const handleStateChange = useCallback((state, prevState) => {
         if (audioDescriptions) {
             const currentAD = audioDescriptions.findLast(ad => ad.startTime <= state.currentTime);
-            const currentADIndex = audioDescriptions.indexOf(currentAD);
-            const videoGapEndTime = VIDEO_GAP_END_TIME.findLast(time => time <= state.currentTime);
-            setAudioDescription(currentAD);
-            setAudioDescriptionIndex(currentADIndex)
+            if (currentAD) {
+                const currentADIndex = audioDescriptions.indexOf(currentAD);
+                const videoGapEndTime = VIDEO_GAP_END_TIME.findLast(time => time <= state.currentTime);
+                setAudioDescription(currentAD);
+                setAudioDescriptionIndex(currentADIndex)
 
-            if (state.seeking) {
-                if (state.currentTime > currentAD.startTime) {
-                    audioRef.current.currentTime = 0;
-                    videoRef.current.seek(currentAD.startTime);
-                } else if (state.currentTime < videoGapEndTime) {
-                    audioRef.current.pause();
+                if (state.seeking) {
+                    if (state.currentTime > currentAD.startTime) {
+                        audioRef.current.currentTime = 0;
+                        videoRef.current.seek(currentAD.startTime);
+                    } else if (state.currentTime < videoGapEndTime) {
+                        audioRef.current.pause();
+                    }
                 }
-            }
-            if (!audioRef.current.ended) {
-                if (state.currentTime < Math.floor(videoGapEndTime + 1) && audioRef.current.currentTime > 0) {
-                    videoRef.current.pause();
+                if (!audioRef.current.ended) {
+                    if (state.currentTime < Math.floor(videoGapEndTime + 1) && audioRef.current.currentTime > 0) {
+                        videoRef.current.pause();
+                    }
                 }
             }
         }
@@ -111,7 +113,7 @@ function VideoPlayerComponent({
             videoRef.current.video.handlePause = () => {
                 const videoCurrentTime = videoRef.current.getState().player.currentTime;
                 const videoGapEndTime = VIDEO_GAP_END_TIME.findLast(time => time <= videoCurrentTime);
-                if (!(videoCurrentTime < Math.floor(videoGapEndTime + 1) && audioRef.current.currentTime > 0)) {
+                if (audioRef.current.src !== "" && !(videoCurrentTime < Math.floor(videoGapEndTime + 1) && audioRef.current.currentTime > 0)) {
                     audioRef.current.pause();
                 }
                 prevPauseHandler();
