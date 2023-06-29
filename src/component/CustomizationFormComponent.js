@@ -293,16 +293,6 @@ function CustomizationComponentForm({
                         <label id={PresentationCustomization.Syntax} className="form-label" htmlFor="syntax">Syntax</label>
                     </div>
                     <div className="col-9 col-sm-12">
-                        <label id={Syntax.Past} className="form-radio form-inline">
-                            <input
-                                type="radio"
-                                name="syntax"
-                                value={Syntax.Past}
-                                checked={syntax === Syntax.Past}
-                                onChange={handleSyntaxChange}
-                            />
-                            <i className="form-icon"></i> Past
-                        </label>
                         <label id={Syntax.Present} className="form-radio form-inline">
                             <input
                                 type="radio"
@@ -312,6 +302,16 @@ function CustomizationComponentForm({
                                 onChange={handleSyntaxChange}
                             />
                             <i className="form-icon"></i> Present
+                        </label>
+                        <label id={Syntax.Past} className="form-radio form-inline">
+                            <input
+                                type="radio"
+                                name="syntax"
+                                value={Syntax.Past}
+                                checked={syntax === Syntax.Past}
+                                onChange={handleSyntaxChange}
+                            />
+                            <i className="form-icon"></i> Past
                         </label>
                     </div>
                 </div>

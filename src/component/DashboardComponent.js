@@ -67,8 +67,8 @@ export const Gender = Object.freeze({
 });
 
 export const Syntax = Object.freeze({
-    Past: 'past',
     Present: 'present',
+    Past: 'past',
 });
 
 // https://developer.mozilla.org/en-US/docs/Web/API/SpeechSynthesisUtterance/rate
@@ -87,7 +87,7 @@ function Dashboard() {
     const [tone, setTone] = useState(Tone.Monotonous);
     const [voice, setVoice] = useState(Voice.Human);
     const [gender, setGender] = useState(Gender.Male);
-    const [syntax, setSyntax] = useState(Syntax.Past);
+    const [syntax, setSyntax] = useState(Syntax.Present);
 
     const getPreviousValue = useCallback((items, currentItem) => {
         const values = Object.values(items);
@@ -208,7 +208,7 @@ function Dashboard() {
                     selected = gender ? getPreviousValue(Gender, gender) : Gender.Male;
                     setGender(selected);
                 } else if (customization === PresentationCustomization.Syntax) {
-                    selected = syntax ? getPreviousValue(Syntax, syntax) : Syntax.Past;
+                    selected = syntax ? getPreviousValue(Syntax, syntax) : Syntax.Present;
                     setSyntax(selected);
                 }
                 if (selected) {
@@ -249,7 +249,7 @@ function Dashboard() {
                     selected = gender ? getNextValue(Gender, gender) : Gender.Male;
                     setGender(selected);
                 } else if (customization === PresentationCustomization.Syntax) {
-                    selected = syntax ? getNextValue(Syntax, syntax) : Syntax.Past;
+                    selected = syntax ? getNextValue(Syntax, syntax) : Syntax.Present;
                     setSyntax(selected);
                 }
                 if (selected) {
