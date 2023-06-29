@@ -1,11 +1,11 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import CustomizationContainer from '../container/CustomizationContainer';
 import VideoPlayerContainer from '../container/VideoPlayerContainer';
 
 export const CustomizationGroup = Object.freeze({
-    Content: 'Content',
-    Presentation: 'Presentation',
+    Content: 'content',
+    Presentation: 'presentation',
 });
 
 export const ContentCustomization = Object.freeze({
@@ -45,6 +45,7 @@ export const InformationPreference = Object.freeze({
 });
 
 export const Speed = Object.freeze({
+    ID: 'speed',
     MIN: 0.5,
     MAX: 2,
     STEP: 0.25,
@@ -103,7 +104,18 @@ function Dashboard() {
     }, []);
 
     const handleKeyPress = useCallback((event) => {
-        let selected = null;
+        [
+            CustomizationGroup,
+            ContentCustomization,
+            PresentationCustomization,
+            VideoLength,
+            InformationPreference,
+            Tone,
+            Voice,
+            Gender,
+            Syntax,
+        ].forEach(e => Object.values(e).forEach(id => document.getElementById(id).style.border = 'none'));
+        document.getElementById(Speed.ID).parentElement.style.border = 'none';
         switch (event.key) {
             case 'a': {
                 console.log('a is pressed');
@@ -113,6 +125,7 @@ function Dashboard() {
                 utterThis.rate = utterThisProps.rate;
                 utterThis.volume = utterThisProps.volume;
                 speechSynthesis.speak(utterThis);
+                document.getElementById(CustomizationGroup.Content).style.border = '1px solid #0095B5';
                 break;
             }
             case 's': {
@@ -123,11 +136,12 @@ function Dashboard() {
                 utterThis.rate = utterThisProps.rate;
                 utterThis.volume = utterThisProps.volume;
                 speechSynthesis.speak(utterThis);
+                document.getElementById(CustomizationGroup.Presentation).style.border = '1px solid #0095B5';
                 break;
             }
             case 'ArrowUp': {
                 console.log('arrow up is pressed');
-                selected = (() => {
+                const selected = (() => {
                     if (customizationGroup === CustomizationGroup.Content) {
                         return customization ? getPreviousValue(ContentCustomization, customization) : ContentCustomization.VideoLength;
                     } else if (customizationGroup === CustomizationGroup.Presentation) {
@@ -135,16 +149,19 @@ function Dashboard() {
                     }
                     return null;
                 })();
-                setCustomization(selected);
-                const utterThis = new SpeechSynthesisUtterance(`${selected} is selected.`);
-                utterThis.rate = utterThisProps.rate;
-                utterThis.volume = utterThisProps.volume;
-                speechSynthesis.speak(utterThis);
+                if (selected) {
+                    setCustomization(selected);
+                    const utterThis = new SpeechSynthesisUtterance(`${selected} is selected.`);
+                    utterThis.rate = utterThisProps.rate;
+                    utterThis.volume = utterThisProps.volume;
+                    speechSynthesis.speak(utterThis);
+                    document.getElementById(selected).style.border = '1px solid #0095B5';
+                }
                 break;
             }
             case 'ArrowDown': {
                 console.log('arrow down is pressed');
-                selected = (() => {
+                const selected = (() => {
                     if (customizationGroup === CustomizationGroup.Content) {
                         return customization ? getNextValue(ContentCustomization, customization) : ContentCustomization.VideoLength;
                     } else if (customizationGroup === CustomizationGroup.Presentation) {
@@ -152,15 +169,19 @@ function Dashboard() {
                     }
                     return null;
                 })();
-                setCustomization(selected);
-                const utterThis = new SpeechSynthesisUtterance(`${selected} is selected.`);
-                utterThis.rate = utterThisProps.rate;
-                utterThis.volume = utterThisProps.volume;
-                speechSynthesis.speak(utterThis);
+                if (selected) {
+                    setCustomization(selected);
+                    const utterThis = new SpeechSynthesisUtterance(`${selected} is selected.`);
+                    utterThis.rate = utterThisProps.rate;
+                    utterThis.volume = utterThisProps.volume;
+                    speechSynthesis.speak(utterThis);
+                    document.getElementById(selected).style.border = '1px solid #0095B5';
+                }
                 break;
             }
-            case 'ArrowLeft':
+            case 'ArrowLeft': {
                 console.log('arrow left is pressed');
+                let selected;
                 if (customization === ContentCustomization.VideoLength) {
                     selected = videoLength ? getPreviousValue(VideoLength, videoLength) : VideoLength.Succinct;
                     setVideoLength(selected);
@@ -176,6 +197,7 @@ function Dashboard() {
                     utterThis.rate = utterThisProps.rate;
                     utterThis.volume = utterThisProps.volume;
                     speechSynthesis.speak(utterThis);
+                    document.getElementById(Speed.ID).parentElement.style.border = '1px solid #0095B5';
                 } else if (customization === PresentationCustomization.Tone) {
                     selected = tone ? getPreviousValue(Tone, tone) : Tone.Monotonous;
                     setTone(selected);
@@ -194,10 +216,13 @@ function Dashboard() {
                     utterThis.rate = utterThisProps.rate;
                     utterThis.volume = utterThisProps.volume;
                     speechSynthesis.speak(utterThis);
+                    document.getElementById(selected).style.border = '1px solid #0095B5';
                 }
                 break;
-            case 'ArrowRight':
+            }
+            case 'ArrowRight': {
                 console.log('arrow right is pressed');
+                let selected;
                 if (customization === ContentCustomization.VideoLength) {
                     selected = videoLength ? getNextValue(VideoLength, videoLength) : VideoLength.Succinct;
                     setVideoLength(selected);
@@ -213,6 +238,8 @@ function Dashboard() {
                     utterThis.rate = utterThisProps.rate;
                     utterThis.volume = utterThisProps.volume;
                     speechSynthesis.speak(utterThis);
+                    console.log(document.getElementById(Speed.ID));
+                    document.getElementById(Speed.ID).parentElement.style.border = '1px solid #0095B5';
                 } else if (customization === PresentationCustomization.Tone) {
                     selected = tone ? getNextValue(Tone, tone) : Tone.Monotonous;
                     setTone(selected);
@@ -231,8 +258,10 @@ function Dashboard() {
                     utterThis.rate = utterThisProps.rate;
                     utterThis.volume = utterThisProps.volume;
                     speechSynthesis.speak(utterThis);
+                    document.getElementById(selected).style.border = '1px solid #0095B5';
                 }
                 break;
+            }
             default:
                 break;
         }

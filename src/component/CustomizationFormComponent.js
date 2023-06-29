@@ -1,5 +1,5 @@
 import React, { useCallback } from "react";
-import { Content, Speed, Tone, Voice, Gender, Syntax } from "./DashboardComponent";
+import { CustomizationGroup, ContentCustomization, PresentationCustomization, VideoLength, InformationPreference, Content, Speed, Tone, Voice, Gender, Syntax } from "./DashboardComponent";
 
 function CustomizationComponentForm({
     // videoLength,
@@ -54,20 +54,19 @@ function CustomizationComponentForm({
     }, [onSyntaxChange]);
 
     return (
-        <div>
+        <div id="customization-form-component">
             <h1>Customization Setups</h1>
-
             <form className="form-horizontal">
                 <div>
-                    <h2>Content Customization</h2>
+                    <h2 id={CustomizationGroup.Content}>Content Customization</h2>
                 </div>
                 <div className="form-group">
                     {/* Length Customization */}
                     <div className="col-3 col-sm-12">
-                        <label className="form-label" htmlFor="length">Length</label>
+                        <label id={ContentCustomization.VideoLength} className="form-label" htmlFor="length">Length</label>
                     </div>
                     <div className="col-9 col-sm-12">
-                        <label className="form-radio form-inline">
+                        <label id={VideoLength.Succinct} className="form-radio form-inline">
                             <input
                                 type="radio"
                                 name="content"
@@ -80,7 +79,7 @@ function CustomizationComponentForm({
                             />
                             <i className="form-icon"></i> Succinct
                         </label>
-                        <label className="form-radio form-inline">
+                        <label id={VideoLength.Verbose} className="form-radio form-inline">
                             <input
                                 type="radio"
                                 name="content"
@@ -93,7 +92,7 @@ function CustomizationComponentForm({
                             />
                             <i className="form-icon"></i> Verbose
                         </label>
-                        <label className="form-radio form-inline">
+                        <label id={VideoLength.VeryVerbose} className="form-radio form-inline">
                             <input
                                 type="radio"
                                 name="content"
@@ -110,10 +109,10 @@ function CustomizationComponentForm({
 
                     {/* Information Preference Customization */}
                     <div className="col-3 col-sm-12">
-                        <label className="form-label" htmlFor="preference">Information Preference</label>
+                        <label id={ContentCustomization.InformationPreference} className="form-label" htmlFor="preference">Information Preference</label>
                     </div>
                     <div className="col-9 col-sm-12">
-                        <label className="form-radio form-inline">
+                        <label id={InformationPreference.Activity} className="form-radio form-inline">
                             <input
                                 type="radio"
                                 name="content"
@@ -126,7 +125,7 @@ function CustomizationComponentForm({
                             />
                             <i className="form-icon"></i> Activity
                         </label>
-                        <label className="form-radio form-inline">
+                        <label id={InformationPreference.Person} className="form-radio form-inline">
                             <input
                                 type="radio"
                                 name="content"
@@ -139,7 +138,7 @@ function CustomizationComponentForm({
                             />
                             <i className="form-icon"></i> Person
                         </label>
-                        <label className="form-radio form-inline">
+                        <label id={InformationPreference.Object} className="form-radio form-inline">
                             <input
                                 type="radio"
                                 name="content"
@@ -152,7 +151,7 @@ function CustomizationComponentForm({
                             />
                             <i className="form-icon"></i> Object
                         </label>
-                        <label className="form-radio form-inline">
+                        <label id={InformationPreference.Setting} className="form-radio form-inline">
                             <input
                                 type="radio"
                                 name="content"
@@ -168,24 +167,26 @@ function CustomizationComponentForm({
                     </div>
                 </div>
                 <div>
-                    <h2>Presentation Customization</h2>
+                    <h2 id={CustomizationGroup.Presentation}>Presentation Customization</h2>
                 </div>
                 <div className="form-group">   
                     {/* Speed Customization */}
                     <div className="col-3 col-sm-12">
-                        <label className="form-label" htmlFor="speed">Speed</label>
+                        <label id={PresentationCustomization.Speed} className="form-label" htmlFor={Speed.ID}>Speed</label>
                     </div>
                     <div className="col-9 col-sm-12">
-                        <input
-                            className="slider"
-                            type="range"
-                            id="speed"
-                            min={Speed.MIN}
-                            max={Speed.MAX}
-                            step={Speed.STEP}
-                            value={speed}
-                            onChange={handleSpeedChange}
-                        />
+                        <div style={{ width: 'fit-content' }}>
+                            <input
+                                id={Speed.ID}
+                                className="slider"
+                                type="range"
+                                min={Speed.MIN}
+                                max={Speed.MAX}
+                                step={Speed.STEP}
+                                value={speed}
+                                onChange={handleSpeedChange}
+                            />
+                        </div>
                     </div>
 
                     {/* Language Customization
@@ -208,10 +209,10 @@ function CustomizationComponentForm({
 
                     {/* Tone Customization */}
                     <div className="col-3 col-sm-12">
-                        <label className="form-label" htmlFor="tone">Tone</label>
+                        <label id={PresentationCustomization.Tone} className="form-label" htmlFor="tone">Tone</label>
                     </div>
                     <div className="col-9 col-sm-12">
-                        <label className="form-radio form-inline">
+                        <label id={Tone.Monotonous} className="form-radio form-inline">
                             <input
                                 type="radio"
                                 name="tone"
@@ -221,7 +222,7 @@ function CustomizationComponentForm({
                             />
                             <i className="form-icon"></i> Monotonous
                         </label>
-                        <label className="form-radio form-inline">
+                        <label id={Tone.Dynamic} className="form-radio form-inline">
                             <input
                                 type="radio"
                                 name="tone"
@@ -235,10 +236,10 @@ function CustomizationComponentForm({
 
                     {/* Voice Customization */}
                     <div className="col-3 col-sm-12">
-                        <label className="form-label" htmlFor="voice">Voice</label>
+                        <label id={PresentationCustomization.Voice} className="form-label" htmlFor="voice">Voice</label>
                     </div>
                     <div className="col-9 col-sm-12">
-                        <label className="form-radio form-inline">
+                        <label id={Voice.Human} className="form-radio form-inline">
                             <input
                                 type="radio"
                                 name="voice"
@@ -248,7 +249,7 @@ function CustomizationComponentForm({
                             />
                             <i className="form-icon"></i> Human
                         </label>
-                        <label className="form-radio form-inline">
+                        <label id={Voice.Synthesizer} className="form-radio form-inline">
                             <input
                                 type="radio"
                                 name="voice"
@@ -262,10 +263,10 @@ function CustomizationComponentForm({
 
                     {/* Gender Customization */}
                     <div className="col-3 col-sm-12">
-                        <label className="form-label" htmlFor="gender">Gender</label>
+                        <label id={PresentationCustomization.Gender} className="form-label" htmlFor="gender">Gender</label>
                     </div>
                     <div className="col-9 col-sm-12">
-                        <label className="form-radio form-inline">
+                        <label id={Gender.Male} className="form-radio form-inline">
                             <input
                                 type="radio"
                                 name="gender"
@@ -275,7 +276,7 @@ function CustomizationComponentForm({
                             />
                             <i className="form-icon"></i> Male
                         </label>
-                        <label className="form-radio form-inline">
+                        <label id={Gender.Female} className="form-radio form-inline">
                             <input
                                 type="radio"
                                 name="gender"
@@ -289,10 +290,10 @@ function CustomizationComponentForm({
 
                     {/* Syntax Customization */}
                     <div className="col-3 col-sm-12">
-                        <label className="form-label" htmlFor="syntax">Syntax</label>
+                        <label id={PresentationCustomization.Syntax} className="form-label" htmlFor="syntax">Syntax</label>
                     </div>
                     <div className="col-9 col-sm-12">
-                        <label className="form-radio form-inline">
+                        <label id={Syntax.Past} className="form-radio form-inline">
                             <input
                                 type="radio"
                                 name="syntax"
@@ -302,7 +303,7 @@ function CustomizationComponentForm({
                             />
                             <i className="form-icon"></i> Past
                         </label>
-                        <label className="form-radio form-inline">
+                        <label id={Syntax.Present} className="form-radio form-inline">
                             <input
                                 type="radio"
                                 name="syntax"
