@@ -197,7 +197,7 @@ function Dashboard() {
         <div className='container'>
             <div className='columns'>
                 <div className='column col-8'>
-                    <VideoPlayerContainer speed={speed} />
+                    <VideoPlayerContainer videoLength={videoLength} speed={speed} />
                 </div>
                 <div className='column col-4'>
                     <CustomizationContainer

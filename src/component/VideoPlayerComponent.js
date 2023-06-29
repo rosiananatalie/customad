@@ -2,8 +2,9 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Player, BigPlayButton, ControlBar, ProgressControl, CurrentTimeDisplay, TimeDivider, DurationDisplay } from 'video-react';
 import PlayToggle from 'video-react/lib/components/control-bar/PlayToggle';
 // import videos from '../../assets/ed1.mp4';
+import { VideoLength } from "./DashboardComponent";
 
-const VIDEO_AUDIO_START_TIME_AFTER_GAP = [
+const VIDEO_GAP_END_TIME = [
     10.400,
     32.500,
     46.500,
@@ -13,42 +14,93 @@ const VIDEO_AUDIO_START_TIME_AFTER_GAP = [
 ];
 
 const inlineTrialAD = [
-    { audio: new Audio('assets/inlineTrialAD/4.513569.mp3'), startTime: 4.513569 },
-    { audio: new Audio('assets/inlineTrialAD/24.540732.mp3'), startTime: 24.540732 },
-    { audio: new Audio('assets/inlineTrialAD/41.894735.mp3'), startTime: 41.894735 },
-    { audio: new Audio('assets/inlineTrialAD/56.394445.mp3'), startTime: 56.394445 },
-    { audio: new Audio('assets/inlineTrialAD/71.mp3'), startTime: 71 },
-    { audio: new Audio('assets/inlineTrialAD/80.mp3'), startTime: 80 },
-    { audio: new Audio('assets/inlineTrialAD/92.3.mp3'), startTime: 92.3 },
+    { src: 'assets/inlineTrialAD/4.513569.mp3', startTime: 4.513569 },
+    { src: 'assets/inlineTrialAD/24.540732.mp3', startTime: 24.540732 },
+    { src: 'assets/inlineTrialAD/41.894735.mp3', startTime: 41.894735 },
+    { src: 'assets/inlineTrialAD/56.394445.mp3', startTime: 56.394445 },
+    { src: 'assets/inlineTrialAD/71.mp3', startTime: 71 },
+    { src: 'assets/inlineTrialAD/80.mp3', startTime: 80 },
+    { src: 'assets/inlineTrialAD/92.3.mp3', startTime: 92.3 },
 ];
 
 const verboseTrialAD = [
-    { audio: new Audio('assets/verboseTrialAD/4.513569.mp3'), startTime: 4.513569 },
-    { audio: new Audio('assets/verboseTrialAD/24.540732.mp3'), startTime: 24.540732 },
-    { audio: new Audio('assets/verboseTrialAD/41.894735.mp3'), startTime: 41.894735 },
-    { audio: new Audio('assets/verboseTrialAD/56.394445.mp3'), startTime: 56.394445 },
-    { audio: new Audio('assets/verboseTrialAD/71.mp3'), startTime: 71 },
-    { audio: new Audio('assets/verboseTrialAD/80.mp3'), startTime: 80 },
-    { audio: new Audio('assets/verboseTrialAD/92.3.mp3'), startTime: 92.3 },
+    { src: 'assets/verboseTrialAD/4.513569.mp3', startTime: 4.513569 },
+    { src: 'assets/verboseTrialAD/24.540732.mp3', startTime: 24.540732 },
+    { src: 'assets/verboseTrialAD/41.894735.mp3', startTime: 41.894735 },
+    { src: 'assets/verboseTrialAD/56.394445.mp3', startTime: 56.394445 },
+    { src: 'assets/verboseTrialAD/71.mp3', startTime: 71 },
+    { src: 'assets/verboseTrialAD/80.mp3', startTime: 80 },
+    { src: 'assets/verboseTrialAD/92.3.mp3', startTime: 92.3 },
 ];
 
 const veryVerboseTrialAD = [
-    { audio: new Audio('assets/veryVerboseTrialAD/4.513569.mp3'), startTime: 4.513569 },
-    { audio: new Audio('assets/veryVerboseTrialAD/24.540732.mp3'), startTime: 24.540732 },
-    { audio: new Audio('assets/veryVerboseTrialAD/41.894735.mp3'), startTime: 41.894735 },
-    { audio: new Audio('assets/veryVerboseTrialAD/56.394445.mp3'), startTime: 56.394445 },
-    { audio: new Audio('assets/veryVerboseTrialAD/71.mp3'), startTime: 71 },
-    { audio: new Audio('assets/veryVerboseTrialAD/80.mp3'), startTime: 80 },
-    { audio: new Audio('assets/veryVerboseTrialAD/92.3.mp3'), startTime: 92.3 },
+    { src: 'assets/veryVerboseTrialAD/4.513569.mp3', startTime: 4.513569 },
+    { src: 'assets/veryVerboseTrialAD/24.540732.mp3', startTime: 24.540732 },
+    { src: 'assets/veryVerboseTrialAD/41.894735.mp3', startTime: 41.894735 },
+    { src: 'assets/veryVerboseTrialAD/56.394445.mp3', startTime: 56.394445 },
+    { src: 'assets/veryVerboseTrialAD/71.mp3', startTime: 71 },
+    { src: 'assets/veryVerboseTrialAD/80.mp3', startTime: 80 },
+    { src: 'assets/veryVerboseTrialAD/92.3.mp3', startTime: 92.3 },
 ];
 
 function VideoPlayerComponent({
     videoId,
     videoType,
+    videoLength,
     speed,
 }) {
-    const videoRef = useRef(null);
+    const videoRef = useRef();
+
+    const audioRef = useRef(new Audio());
+    audioRef.current.addEventListener('ended', () => {
+        if (!videoRef.current.getState().player.ended) {
+            videoRef.current.play();
+        }
+    });
+
+    useEffect(()=> {
+        if (videoRef.current.video) {
+            videoRef.current.video.playbackRate = speed;
+        }
+        audioRef.current.playbackRate = speed
+    }, [speed]);
+
     const [audioDescriptions, setAudioDescriptions] = useState(inlineTrialAD);
+    const [audioDescription, setAudioDescription] = useState();
+    const [audioDescriptionIndex, setAudioDescriptionIndex] = useState();
+
+    useEffect(() => {
+        switch (videoLength) {
+            default:
+            case VideoLength.Succinct:
+                setAudioDescriptions(inlineTrialAD);
+                if (audioDescriptionIndex || audioDescriptionIndex === 0) {
+                    setAudioDescription(inlineTrialAD[audioDescriptionIndex]);
+                }
+                break;
+            case VideoLength.Verbose:
+                setAudioDescriptions(verboseTrialAD);
+                if (audioDescriptionIndex || audioDescriptionIndex === 0) {
+                    setAudioDescription(verboseTrialAD[audioDescriptionIndex]);
+                }
+                break;
+            case VideoLength.VeryVerbose:
+                setAudioDescriptions(veryVerboseTrialAD);
+                if (audioDescriptionIndex || audioDescriptionIndex === 0) {
+                    setAudioDescription(veryVerboseTrialAD[audioDescriptionIndex]);
+                }
+                break;
+        }
+    }, [videoLength, audioDescriptionIndex]);
+
+    useEffect(() => {
+        if (audioDescription) {
+            audioRef.current.src = audioDescription.src;
+            audioRef.current.playbackRate = speed;
+            audioRef.current.play();
+            videoRef.current.seek(audioDescription.startTime);
+        }
+    }, [audioDescription, videoRef]);
 
     useEffect(()=> {
         if (videoRef.current.video) {
@@ -58,44 +110,51 @@ function VideoPlayerComponent({
 
     const handleStateChange = useCallback((state, prevState) => {
         const currentAD = audioDescriptions.findLast(ad => ad.startTime <= state.currentTime);
-        const afterGapStartTime = VIDEO_AUDIO_START_TIME_AFTER_GAP.findLast(time => state.currentTime >= time && state.currentTime < Math.floor(time + 1));
-        if (currentAD) {
-            currentAD.audio.playbackRate = speed;
-            if (state.seeking) {
-                // Pause all audios other than current audio
-                audioDescriptions.forEach((ad) => {
-                    if (ad !== currentAD) {
-                        ad.audio.pause();
-                        ad.audio.currentTime = 0;
-                    }
-                });
-                currentAD.audio.currentTime = state.currentTime - currentAD.startTime;
-            }
-            if (!currentAD.audio.ended) {
-                if (afterGapStartTime && currentAD.audio.currentTime > 0) {
-                    videoRef.current.pause();
-                    document.getElementsByClassName('.video-react-play-control').disabled = true;
-                } else {
-                    if (state.paused && !state.ended) {
-                        currentAD.audio.pause();
-                    } else {
-                        currentAD.audio.addEventListener('ended', () => {
-                            if (!videoRef.current.getState().player.ended) {
-                                videoRef.current.play();
-                            }
-                        });
-                        currentAD.audio.play();
-                    }
-                }
+        const currentADIndex = audioDescriptions.indexOf(currentAD);
+        const videoGapEndTime = VIDEO_GAP_END_TIME.findLast(time => time <= state.currentTime);
+        setAudioDescription(currentAD);
+        setAudioDescriptionIndex(currentADIndex)
+
+        if (state.seeking) {
+            if (state.currentTime > currentAD.startTime) {
+                audioRef.current.currentTime = 0;
+                videoRef.current.seek(currentAD.startTime);
+            } else if (state.currentTime < videoGapEndTime) {
+                audioRef.current.pause();
             }
         }
-    }, [audioDescriptions, videoRef, speed]);
+        if (!audioRef.current.ended) {
+            if (state.currentTime < Math.floor(videoGapEndTime + 1) && audioRef.current.currentTime > 0) {
+                videoRef.current.pause();
+            }
+        }
+    }, [audioDescriptions]);
 
+    const unsubscribe = useRef(null);
     useEffect(() => {
         if (videoRef.current) {
-            videoRef.current.subscribeToStateChange(handleStateChange);
+            if (unsubscribe.current) {
+                unsubscribe.current();
+            }
+            const prevHandlePlay = videoRef.current.video.handlePlay;
+            videoRef.current.video.handlePlay = () => {
+                if (videoRef.current.getState().player.paused && !audioRef.current.ended) {
+                    audioRef.current.play();
+                }
+                prevHandlePlay();
+            };
+            const prevPauseHandler = videoRef.current.video.handlePause;
+            videoRef.current.video.handlePause = () => {
+                const videoCurrentTime = videoRef.current.getState().player.currentTime;
+                const videoGapEndTime = VIDEO_GAP_END_TIME.findLast(time => time <= videoCurrentTime);
+                if (!(videoCurrentTime < Math.floor(videoGapEndTime + 1) && audioRef.current.currentTime > 0)) {
+                    audioRef.current.pause();
+                }
+                prevPauseHandler();
+            };
+            unsubscribe.current = videoRef.current.subscribeToStateChange(handleStateChange);
         }
-    }, [handleStateChange, videoRef]);
+    }, [videoRef, handleStateChange]);
 
     return (
         <div>

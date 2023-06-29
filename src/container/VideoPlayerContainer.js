@@ -1,7 +1,8 @@
-import React, { useEffect, useRef } from "react";
+import React from "react";
 import VideoPlayerComponent from "../component/VideoPlayerComponent";
 
 const VideoPlayerContainer = ({
+    videoLength,
     speed,
 }) => {
     const videoType = "trial" // need to change to be props
@@ -11,6 +12,7 @@ const VideoPlayerContainer = ({
         <VideoPlayerComponent  
             videoType={videoType}
             videoId={videoId}
+            videoLength={videoLength}
             speed={speed}
         />
     )
