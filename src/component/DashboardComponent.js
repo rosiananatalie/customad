@@ -238,7 +238,6 @@ function Dashboard() {
                     utterThis.rate = utterThisProps.rate;
                     utterThis.volume = utterThisProps.volume;
                     speechSynthesis.speak(utterThis);
-                    console.log(document.getElementById(Speed.ID));
                     document.getElementById(Speed.ID).parentElement.style.border = '1px solid #0095B5';
                 } else if (customization === PresentationCustomization.Tone) {
                     selected = tone ? getNextValue(Tone, tone) : Tone.Monotonous;
