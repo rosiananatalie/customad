@@ -108,9 +108,14 @@ function VideoPlayerComponent({
             };
             const prevPauseHandler = videoRef.current.video.handlePause;
             videoRef.current.video.handlePause = () => {
-                const videoCurrentTime = videoRef.current.getState().player.currentTime;
+                const videoState = videoRef.current.getState().player;
+                const videoCurrentTime = videoState.currentTime;
                 const videoGapEndTime = VIDEO_GAP_END_TIME.findLast(time => time <= videoCurrentTime);
-                if (audioRef.current.src !== "" && !(videoCurrentTime < Math.floor(videoGapEndTime + 1) && audioRef.current.currentTime > 0)) {
+                if (
+                    audioRef.current.src !== ""
+                    && !(videoCurrentTime < Math.floor(videoGapEndTime + 1) && audioRef.current.currentTime > 0)
+                    && !videoState.ended
+                ) {
                     audioRef.current.pause();
                 }
                 prevPauseHandler();
