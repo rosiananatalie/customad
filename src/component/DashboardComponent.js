@@ -46,6 +46,7 @@ export const InformationPreference = Object.freeze({
 
 export const Speed = Object.freeze({
     ID: 'speed',
+    DEFAULT: 1,
     MIN: 0.5,
     MAX: 2,
     STEP: 0.25,
@@ -83,7 +84,7 @@ function Dashboard() {
     const [content, setContent] = useState(Content.Succinct);
     const [videoLength, setVideoLength] = useState(VideoLength.Succinct);
     const [informationPreference, setInformationPreference] = useState(InformationPreference.Activity);
-    const [speed, setSpeed] = useState(1);
+    const [speed, setSpeed] = useState(Speed.DEFAULT);
     const [tone, setTone] = useState(Tone.Monotonous);
     const [voice, setVoice] = useState(Voice.Human);
     const [gender, setGender] = useState(Gender.Male);
