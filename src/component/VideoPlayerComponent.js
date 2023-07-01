@@ -18,11 +18,7 @@ function VideoPlayerComponent({
     srcPath,
     speed,
 }) {
-    const [audioDescriptions, setAudioDescriptions] = useState();
-    const [audioDescription, setAudioDescription] = useState();
-    const [audioDescriptionIndex, setAudioDescriptionIndex] = useState();
-
-    const list = useMemo(() => [
+    const audioDescriptions = useMemo(() => [
         { src: `${srcPath}/4.513569.mp3`, startTime: 4.513569 },
         { src: `${srcPath}/24.540732.mp3`, startTime: 24.540732 },
         { src: `${srcPath}/41.894735.mp3`, startTime: 41.894735 },
@@ -31,6 +27,8 @@ function VideoPlayerComponent({
         { src: `${srcPath}/80.mp3`, startTime: 80 },
         { src: `${srcPath}/92.3.mp3`, startTime: 92.3 },
     ], [srcPath]);
+    const [audioDescription, setAudioDescription] = useState();
+    const [audioDescriptionIndex, setAudioDescriptionIndex] = useState();
 
     const videoRef = useRef();
 
@@ -49,11 +47,10 @@ function VideoPlayerComponent({
     }, [speed]);
 
     useEffect(() => {
-        setAudioDescriptions(list);
         if (audioDescriptionIndex || audioDescriptionIndex === 0) {
-            setAudioDescription(list[audioDescriptionIndex]);
+            setAudioDescription(audioDescriptions[audioDescriptionIndex]);
         }
-    }, [list, audioDescriptionIndex]);
+    }, [audioDescriptions, audioDescriptionIndex]);
 
     useEffect(() => {
         if (audioDescription) {
