@@ -28,7 +28,6 @@ function VideoPlayerComponent({
         { src: `${srcPath}/92.3.mp3`, startTime: 92.3 },
     ], [srcPath]);
     const [audioDescription, setAudioDescription] = useState();
-    const [audioDescriptionIndex, setAudioDescriptionIndex] = useState();
 
     const videoRef = useRef();
 
@@ -47,34 +46,20 @@ function VideoPlayerComponent({
     }, [speed]);
 
     useEffect(() => {
-        if (audioDescriptionIndex || audioDescriptionIndex === 0) {
-            setAudioDescription(audioDescriptions[audioDescriptionIndex]);
-        }
-    }, [audioDescriptions, audioDescriptionIndex]);
-
-    useEffect(() => {
         if (audioDescription) {
             audioRef.current.src = audioDescription.src;
             audioRef.current.playbackRate = speed;
             audioRef.current.play();
             videoRef.current.seek(audioDescription.startTime);
         }
-    }, [audioDescription, videoRef]);
-
-    useEffect(() => {
-        if (videoRef.current.video) {
-            videoRef.current.video.playbackRate = speed;
-        }
-    }, [speed]);
+    }, [audioDescription]);
 
     const handleStateChange = useCallback((state, prevState) => {
         if (audioDescriptions) {
             const currentAD = audioDescriptions.findLast(ad => ad.startTime <= state.currentTime);
             if (currentAD) {
-                const currentADIndex = audioDescriptions.indexOf(currentAD);
                 const videoGapEndTime = VIDEO_GAP_END_TIME.findLast(time => time <= state.currentTime);
                 setAudioDescription(currentAD);
-                setAudioDescriptionIndex(currentADIndex)
 
                 if (state.seeking) {
                     if (state.currentTime > currentAD.startTime) {
@@ -122,7 +107,7 @@ function VideoPlayerComponent({
             };
             unsubscribe.current = videoRef.current.subscribeToStateChange(handleStateChange);
         }
-    }, [videoRef, handleStateChange]);
+    }, [handleStateChange]);
 
     return (
         <div>

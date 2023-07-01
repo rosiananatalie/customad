@@ -310,7 +310,6 @@ function Dashboard() {
                         onSyntaxChange={setSyntax}
                     />
                 </div>
-                
             </div>
         </div>
     );
