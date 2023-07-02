@@ -15,6 +15,7 @@ const VIDEO_GAP_END_TIME = [
 function VideoPlayerComponent({
     videoId,
     videoType,
+    isAudioDescriptionEnabled,
     srcPath,
     speed,
 }) {
@@ -39,6 +40,13 @@ function VideoPlayerComponent({
         }
     });
 
+    const playAudio = useCallback(() => {
+        console.log('playAudio', audioRef.current.src, !!audioRef.current.src);
+        if (isAudioDescriptionEnabled && audioRef.current.src) {
+            audioRef.current.play();
+        }
+    }, [isAudioDescriptionEnabled]);
+
     // Set audio descriptions
     useEffect(() => {
         if (audioDescriptions) {
@@ -56,11 +64,18 @@ function VideoPlayerComponent({
         audioRef.current.playbackRate = speed
     }, [speed]);
 
+    // Pause audio if audio description is disabled
+    useEffect(()=> {
+        if (!isAudioDescriptionEnabled) {
+            audioRef.current.pause();
+        }
+    }, [isAudioDescriptionEnabled]);
+
     // Set audio description
     useEffect(() => {
         if (audioDescription) {
             audioRef.current.src = audioDescription.src;
-            audioRef.current.play();
+            playAudio();
             const videoState = videoRef.current.getState().player;
             // Make time comparison less sensitive to prevent unnecessary seeking
             if (Math.floor(videoState.currentTime) > Math.ceil(audioDescription.startTime)) {
@@ -71,7 +86,7 @@ function VideoPlayerComponent({
             audioRef.current.removeAttribute('src');
             audioRef.current.pause();
         }
-    }, [audioDescription]);
+    }, [audioDescription, playAudio]);
 
     const handleStateChange = useCallback((state, prevState) => {
         if (audioDescriptions) {
@@ -108,8 +123,8 @@ function VideoPlayerComponent({
             }
             const prevHandlePlay = videoRef.current.video.handlePlay;
             videoRef.current.video.handlePlay = () => {
-                if (videoRef.current.getState().player.paused && !audioRef.current.ended && audioRef.current.src !== "") {
-                    audioRef.current.play();
+                if (videoRef.current.getState().player.paused && !audioRef.current.ended) {
+                    playAudio();
                 }
                 prevHandlePlay();
             };
@@ -129,7 +144,7 @@ function VideoPlayerComponent({
             };
             unsubscribe.current = videoRef.current.subscribeToStateChange(handleStateChange);
         }
-    }, [handleStateChange]);
+    }, [handleStateChange, playAudio]);
 
     return (
         <div>

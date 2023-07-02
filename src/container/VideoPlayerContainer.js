@@ -2,6 +2,7 @@ import React from "react";
 import VideoPlayerComponent from "../component/VideoPlayerComponent";
 
 const VideoPlayerContainer = ({
+    isAudioDescriptionEnabled,
     videoLength,
     informationPreference,
     speed,
@@ -14,12 +15,12 @@ const VideoPlayerContainer = ({
     const presentation = [syntax, voice, gender].join('_');
     const content = [videoLength, informationPreference].filter(x => x).join('_');
     const srcPath = `assets/audios/${presentation}/${content}`;
-    console.log(srcPath);
 
     return(
-        <VideoPlayerComponent  
+        <VideoPlayerComponent
             videoType={videoType}
             videoId={videoId}
+            isAudioDescriptionEnabled={isAudioDescriptionEnabled}
             srcPath={srcPath}
             speed={speed}
         />

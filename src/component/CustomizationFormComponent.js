@@ -2,6 +2,7 @@ import React, { useCallback } from "react";
 import { CustomizationGroup, ContentCustomization, PresentationCustomization, VideoLength, InformationPreference, Speed, Tone, Voice, Gender, Syntax } from "./DashboardComponent";
 
 function CustomizationComponentForm({
+    isAudioDescriptionEnabled,
     videoLength,
     informationPreference,
     speed,
@@ -9,6 +10,7 @@ function CustomizationComponentForm({
     voice,
     gender,
     syntax,
+    onAudioDescriptionIsEnabledChange,
     onVideoLengthChange,
     onInformationPreferenceChange,
     onSpeedChange,
@@ -17,6 +19,10 @@ function CustomizationComponentForm({
     onGenderChange,
     onSyntaxChange,
 }) {
+    const handleAudioDescriptionIsEnabledChange = useCallback((event) => {
+        onAudioDescriptionIsEnabledChange(event.target.checked);
+    }, [onAudioDescriptionIsEnabledChange]);
+
     const handleVideoLengthChange = useCallback((event) => {
         onVideoLengthChange(event.target.value);
     }, [onVideoLengthChange]);
@@ -45,10 +51,22 @@ function CustomizationComponentForm({
         onSyntaxChange(event.target.value);
     }, [onSyntaxChange]);
 
+    const audioDescriptionToggleLabel = isAudioDescriptionEnabled ? 'Audio Description ON' : 'Audio Description OFF';
+
     return (
         <div id="customization-form-component">
             <h1>Customization Setups</h1>
             <form className="form-horizontal">
+                <div className="form-group">
+                    <label className="form-switch">
+                        <input
+                            type="checkbox"
+                            checked={isAudioDescriptionEnabled}
+                            onChange={handleAudioDescriptionIsEnabledChange}
+                        />
+                        <i className="form-icon"></i> {audioDescriptionToggleLabel}
+                    </label>
+                </div>
                 <div>
                     <h2 id={CustomizationGroup.Content}>Content Customization</h2>
                 </div>

@@ -69,6 +69,7 @@ export const utterThisProps = Object.freeze({
 });
 
 function Dashboard() {
+    const [isAudioDescriptionEnabled, setAudioDescriptionIsEnabled] = useState(true);
     const [customizationGroup, setCustomizationGroup] = useState(null);
     const [customization, setCustomization] = useState(null);
     const [videoLength, setVideoLength] = useState(VideoLength.Succinct);
@@ -267,6 +268,7 @@ function Dashboard() {
             <div className='columns'>
                 <div className='column col-8'>
                     <VideoPlayerContainer
+                        isAudioDescriptionEnabled={isAudioDescriptionEnabled}                        
                         videoLength={videoLength}
                         informationPreference={informationPreference}
                         speed={speed}
@@ -277,6 +279,7 @@ function Dashboard() {
                 </div>
                 <div className='column col-4'>
                     <CustomizationContainer
+                        isAudioDescriptionEnabled={isAudioDescriptionEnabled}
                         videoLength={videoLength}
                         informationPreference={informationPreference}
                         speed={speed}
@@ -284,6 +287,7 @@ function Dashboard() {
                         voice={voice}
                         gender={gender}
                         syntax={syntax}
+                        onAudioDescriptionIsEnabledChange={setAudioDescriptionIsEnabled}                        
                         onVideoLengthChange={setVideoLength}
                         onInformationPreferenceChange={setInformationPreference}
                         onSpeedChange={setSpeed}
