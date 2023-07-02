@@ -32,12 +32,23 @@ function VideoPlayerComponent({
     const videoRef = useRef();
 
     const audioRef = useRef(new Audio());
+    audioRef.current.playbackRate = speed;
     audioRef.current.addEventListener('ended', () => {
         if (!videoRef.current.getState().player.ended) {
             videoRef.current.play();
         }
     });
 
+    // Set audio descriptions
+    useEffect(() => {
+        if (audioDescriptions) {
+            const videoCurrentTime = videoRef.current.getState().player.currentTime;
+            const audioDescription = audioDescriptions.findLast(ad => ad.startTime <= videoCurrentTime);
+            setAudioDescription(audioDescription);
+        }
+    }, [audioDescriptions]);
+
+    // Set video and audio playback rate
     useEffect(()=> {
         if (videoRef.current.video) {
             videoRef.current.video.playbackRate = speed;
@@ -45,34 +56,45 @@ function VideoPlayerComponent({
         audioRef.current.playbackRate = speed
     }, [speed]);
 
+    // Set audio description
     useEffect(() => {
         if (audioDescription) {
             audioRef.current.src = audioDescription.src;
-            audioRef.current.playbackRate = speed;
             audioRef.current.play();
-            videoRef.current.seek(audioDescription.startTime);
+            const videoState = videoRef.current.getState().player;
+            // Make time comparison less sensitive to prevent unnecessary seeking
+            if (Math.floor(videoState.currentTime) > Math.ceil(audioDescription.startTime)) {
+                videoRef.current.seek(audioDescription.startTime);
+            }
+            videoRef.current.play();
+        } else {
+            audioRef.current.removeAttribute('src');
+            audioRef.current.pause();
         }
     }, [audioDescription]);
 
     const handleStateChange = useCallback((state, prevState) => {
         if (audioDescriptions) {
             const currentAD = audioDescriptions.findLast(ad => ad.startTime <= state.currentTime);
-            if (currentAD) {
-                const videoGapEndTime = VIDEO_GAP_END_TIME.findLast(time => time <= state.currentTime);
-                setAudioDescription(currentAD);
+            const videoGapEndTime = VIDEO_GAP_END_TIME.findLast(time => time <= state.currentTime);
+            setAudioDescription(currentAD);
 
-                if (state.seeking) {
+            if (state.seeking) {
+                if (currentAD) {
                     if (state.currentTime > currentAD.startTime) {
                         audioRef.current.currentTime = 0;
                         videoRef.current.seek(currentAD.startTime);
+                        videoRef.current.play();
                     } else if (state.currentTime < videoGapEndTime) {
                         audioRef.current.pause();
                     }
+                } else {
+                    audioRef.current.pause();
                 }
-                if (!audioRef.current.ended) {
-                    if (state.currentTime < Math.floor(videoGapEndTime + 1) && audioRef.current.currentTime > 0) {
-                        videoRef.current.pause();
-                    }
+            }
+            if (!audioRef.current.ended) {
+                if (state.currentTime < Math.floor(videoGapEndTime + 1) && audioRef.current.currentTime > 0) {
+                    videoRef.current.pause();
                 }
             }
         }
@@ -86,7 +108,7 @@ function VideoPlayerComponent({
             }
             const prevHandlePlay = videoRef.current.video.handlePlay;
             videoRef.current.video.handlePlay = () => {
-                if (videoRef.current.getState().player.paused && !audioRef.current.ended) {
+                if (videoRef.current.getState().player.paused && !audioRef.current.ended && audioRef.current.src !== "") {
                     audioRef.current.play();
                 }
                 prevHandlePlay();
