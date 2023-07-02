@@ -1,5 +1,5 @@
 import React, { useCallback } from "react";
-import { CustomizationGroup, ContentCustomization, PresentationCustomization, VideoLength, InformationPreference, Speed, Tone, Voice, Gender, Syntax } from "./DashboardComponent";
+import { ToggleAudioDescription, CustomizationGroup, ContentCustomization, PresentationCustomization, VideoLength, InformationPreference, Speed, Tone, Voice, Gender, Syntax } from "./DashboardComponent";
 
 function CustomizationComponentForm({
     isAudioDescriptionEnabled,
@@ -60,6 +60,7 @@ function CustomizationComponentForm({
                 <div className="form-group">
                     <label className="form-switch">
                         <input
+                            id={ToggleAudioDescription.ID}
                             type="checkbox"
                             checked={isAudioDescriptionEnabled}
                             onChange={handleAudioDescriptionIsEnabledChange}
@@ -76,8 +77,9 @@ function CustomizationComponentForm({
                         <label id={ContentCustomization.VideoLength} className="form-label" htmlFor="length">Length</label>
                     </div>
                     <div className="col-9 col-sm-12">
-                        <label id={VideoLength.Succinct} className="form-radio form-inline">
+                        <label className="form-radio form-inline">
                             <input
+                                id={VideoLength.Succinct} 
                                 type="radio"
                                 name="length"
                                 value={VideoLength.Succinct}
@@ -86,8 +88,9 @@ function CustomizationComponentForm({
                             />
                             <i className="form-icon"></i> Succinct
                         </label>
-                        <label id={VideoLength.Verbose} className="form-radio form-inline">
+                        <label className="form-radio form-inline">
                             <input
+                                id={VideoLength.Verbose}
                                 type="radio"
                                 name="length"
                                 value={VideoLength.Verbose}
@@ -96,8 +99,9 @@ function CustomizationComponentForm({
                             />
                             <i className="form-icon"></i> Verbose
                         </label>
-                        <label id={VideoLength.VeryVerbose} className="form-radio form-inline">
+                        <label className="form-radio form-inline">
                             <input
+                                id={VideoLength.VeryVerbose}
                                 type="radio"
                                 name="length"
                                 value={VideoLength.VeryVerbose}
@@ -113,8 +117,9 @@ function CustomizationComponentForm({
                         <label id={ContentCustomization.InformationPreference} className="form-label" htmlFor="preference">Information Preference</label>
                     </div>
                     <div className="col-9 col-sm-12">
-                        <label id={InformationPreference.Activity} className="form-checkbox form-inline">
+                        <label className="form-checkbox form-inline">
                             <input
+                                id={InformationPreference.Activity}
                                 type="checkbox"
                                 name="preference"
                                 value={InformationPreference.Activity}
@@ -123,8 +128,9 @@ function CustomizationComponentForm({
                             />
                             <i className="form-icon"></i> Activity
                         </label>
-                        <label id={InformationPreference.Person} className="form-checkbox form-inline">
+                        <label className="form-checkbox form-inline">
                             <input
+                                id={InformationPreference.Person}
                                 type="checkbox"
                                 name="preference"
                                 value={InformationPreference.Person}
@@ -133,8 +139,9 @@ function CustomizationComponentForm({
                             />
                             <i className="form-icon"></i> Person
                         </label>
-                        <label id={InformationPreference.Object} className="form-checkbox form-inline">
+                        <label className="form-checkbox form-inline">
                             <input
+                                id={InformationPreference.Object}
                                 type="checkbox"
                                 name="preference"
                                 value={InformationPreference.Object}
@@ -143,8 +150,9 @@ function CustomizationComponentForm({
                             />
                             <i className="form-icon"></i> Object
                         </label>
-                        <label id={InformationPreference.Setting} className="form-checkbox form-inline">
+                        <label className="form-checkbox form-inline">
                             <input
+                                id={InformationPreference.Setting}
                                 type="checkbox"
                                 name="preference"
                                 value={InformationPreference.Setting}
@@ -201,8 +209,9 @@ function CustomizationComponentForm({
                         <label id={PresentationCustomization.Tone} className="form-label" htmlFor="tone">Tone</label>
                     </div>
                     <div className="col-9 col-sm-12">
-                        <label id={Tone.Monotonous} className="form-radio form-inline">
+                        <label className="form-radio form-inline">
                             <input
+                                id={Tone.Monotonous}
                                 type="radio"
                                 name="tone"
                                 value={Tone.Monotonous}
@@ -211,8 +220,9 @@ function CustomizationComponentForm({
                             />
                             <i className="form-icon"></i> Monotonous
                         </label>
-                        <label id={Tone.Dynamic} className="form-radio form-inline">
+                        <label className="form-radio form-inline">
                             <input
+                                id={Tone.Dynamic}
                                 type="radio"
                                 name="tone"
                                 value={Tone.Dynamic}
@@ -228,8 +238,9 @@ function CustomizationComponentForm({
                         <label id={PresentationCustomization.Voice} className="form-label" htmlFor="voice">Voice</label>
                     </div>
                     <div className="col-9 col-sm-12">
-                        <label id={Voice.Human} className="form-radio form-inline">
+                        <label className="form-radio form-inline">
                             <input
+                                id={Voice.Human}
                                 type="radio"
                                 name="voice"
                                 value={Voice.Human}
@@ -238,8 +249,9 @@ function CustomizationComponentForm({
                             />
                             <i className="form-icon"></i> Human
                         </label>
-                        <label id={Voice.Synthesizer} className="form-radio form-inline">
+                        <label className="form-radio form-inline">
                             <input
+                                id={Voice.Synthesizer}
                                 type="radio"
                                 name="voice"
                                 value={Voice.Synthesizer}
@@ -255,8 +267,9 @@ function CustomizationComponentForm({
                         <label id={PresentationCustomization.Gender} className="form-label" htmlFor="gender">Gender</label>
                     </div>
                     <div className="col-9 col-sm-12">
-                        <label id={Gender.Male} className="form-radio form-inline">
+                        <label className="form-radio form-inline">
                             <input
+                                id={Gender.Male}
                                 type="radio"
                                 name="gender"
                                 value={Gender.Male}
@@ -265,8 +278,9 @@ function CustomizationComponentForm({
                             />
                             <i className="form-icon"></i> Male
                         </label>
-                        <label id={Gender.Female} className="form-radio form-inline">
+                        <label className="form-radio form-inline">
                             <input
+                                id={Gender.Female}
                                 type="radio"
                                 name="gender"
                                 value={Gender.Female}
@@ -282,8 +296,9 @@ function CustomizationComponentForm({
                         <label id={PresentationCustomization.Syntax} className="form-label" htmlFor="syntax">Syntax</label>
                     </div>
                     <div className="col-9 col-sm-12">
-                        <label id={Syntax.Present} className="form-radio form-inline">
+                        <label className="form-radio form-inline">
                             <input
+                                id={Syntax.Present}
                                 type="radio"
                                 name="syntax"
                                 value={Syntax.Present}
@@ -292,8 +307,9 @@ function CustomizationComponentForm({
                             />
                             <i className="form-icon"></i> Present
                         </label>
-                        <label id={Syntax.Past} className="form-radio form-inline">
+                        <label className="form-radio form-inline">
                             <input
+                                id={Syntax.Past}
                                 type="radio"
                                 name="syntax"
                                 value={Syntax.Past}

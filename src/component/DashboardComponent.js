@@ -21,6 +21,10 @@ export const PresentationCustomization = Object.freeze({
     Syntax: 'Syntax',
 });
 
+export const ToggleAudioDescription = Object.freeze({
+    ID: 'toggleAudioDescription',
+});
+
 export const VideoLength = Object.freeze({
     Succinct: 'succinct',
     Verbose: 'verbose',
@@ -99,10 +103,14 @@ function Dashboard() {
         };
 
         const removeSelections = () => {
-            const ids = [
-                CustomizationGroup,
-                ContentCustomization,
-                PresentationCustomization,
+            const labelIds = [CustomizationGroup, ContentCustomization, PresentationCustomization].map(e => Object.values(e)).flat();
+            labelIds.forEach((id) => {
+                const element = document.getElementById(id);
+                if (element) {
+                    element.style.border = 'none';
+                }
+            });
+            const inputIds = [
                 VideoLength,
                 InformationPreference,
                 Tone,
@@ -110,12 +118,13 @@ function Dashboard() {
                 Gender,
                 Syntax,
             ].map(e => Object.values(e)).flat();
-            ids.forEach((id) => {
-                const element = document.getElementById(id)
+            inputIds.forEach((id) => {
+                const element = document.getElementById(id);
                 if (element) {
-                    element.style.border = 'none';
+                    element.parentElement.style.border = 'none';
                 }
             });
+            document.getElementById(ToggleAudioDescription.ID).parentElement.style.border = 'none';
             document.getElementById(Speed.ID).parentElement.style.border = 'none';
         };
 
@@ -146,15 +155,26 @@ function Dashboard() {
                     document.getElementById(CustomizationGroup.Presentation).style.border = BORDER_STYLE;
                     break;
                 }
+                case 'd': {
+                    console.log(`d is pressed. (${new Date().toLocaleString()})`);
+                    removeSelections();
+                    setCustomizationGroup(null);
+                    setCustomization(null);
+                    setAudioDescriptionIsEnabled(!isAudioDescriptionEnabled);
+                    utterThis(`Audio description is turn ${isAudioDescriptionEnabled ? 'off' : 'on'}.`);
+                    document.getElementById(ToggleAudioDescription.ID).parentElement.style.border = BORDER_STYLE;
+                    break;
+                }
                 case 'arrowup': {
                     console.log(`arrow up is pressed. (${new Date().toLocaleString()})`);
-                    removeSelections();
                     if (customizationGroup === CustomizationGroup.Content) {
+                        removeSelections();
                         const selected = customization ? getPreviousValue(ContentCustomization, customization) : ContentCustomization.VideoLength;
                         setCustomization(selected);
                         utterThis(`${selected} is selected.`);
                         document.getElementById(selected).style.border = BORDER_STYLE;
                     } else if (customizationGroup === CustomizationGroup.Presentation) {
+                        removeSelections();
                         const selected = customization ? getPreviousValue(PresentationCustomization, customization) : PresentationCustomization.Speed;
                         setCustomization(selected);
                         utterThis(`${selected} is selected.`);
@@ -164,13 +184,14 @@ function Dashboard() {
                 }
                 case 'arrowdown': {
                     console.log(`arrow down is pressed. (${new Date().toLocaleString()})`);
-                    removeSelections();
                     if (customizationGroup === CustomizationGroup.Content) {
+                        removeSelections();
                         const selected = customization ? getNextValue(ContentCustomization, customization) : ContentCustomization.VideoLength;
                         setCustomization(selected);
                         utterThis(`${selected} is selected.`);
                         document.getElementById(selected).style.border = BORDER_STYLE;
                     } else if (customizationGroup === CustomizationGroup.Presentation) {
+                        removeSelections();
                         const selected = customization ? getNextValue(PresentationCustomization, customization) : PresentationCustomization.Speed;
                         setCustomization(selected);
                         utterThis(`${selected} is selected.`);
@@ -180,91 +201,103 @@ function Dashboard() {
                 }
                 case 'arrowleft': {
                     console.log(`arrow left is pressed. (${new Date().toLocaleString()})`);
-                    removeSelections();
                     if (customization === ContentCustomization.VideoLength) {
+                        removeSelections();
                         const selected = videoLength ? getPreviousValue(VideoLength, videoLength) : VideoLength.Succinct;
                         setVideoLength(selected);
                         utterThis(`${selected} is selected.`);
-                        document.getElementById(selected).style.border = BORDER_STYLE;
+                        document.getElementById(selected).parentElement.style.border = BORDER_STYLE;
                     } else if (customization === ContentCustomization.InformationPreference) {
+                        removeSelections();
                         const selected = informationPreference ? getPreviousValue(InformationPreference, informationPreference) : InformationPreference.Activity;
                         setInformationPreference(selected);
                         if (selected === InformationPreference.None) {
                             utterThis('No information preference is selected.');
                         } else {
                             utterThis(`${selected} is selected.`);
-                            document.getElementById(selected).style.border = BORDER_STYLE;
+                            document.getElementById(selected).parentElement.style.border = BORDER_STYLE;
                         }
                     } else if (customization === PresentationCustomization.Speed && speed > Speed.MIN) {
+                        removeSelections();
                         const newSpeed = speed - Speed.STEP;
                         setSpeed(newSpeed);
                         utterThis(`Speed is ${newSpeed}`);
                         document.getElementById(Speed.ID).parentElement.style.border = BORDER_STYLE;
                     } else if (customization === PresentationCustomization.Tone) {
+                        removeSelections();
                         const selected = tone ? getPreviousValue(Tone, tone) : Tone.Monotonous;
                         setTone(selected);
                         utterThis(`${selected} is selected.`);
-                        document.getElementById(selected).style.border = BORDER_STYLE;
+                        document.getElementById(selected).parentElement.style.border = BORDER_STYLE;
                     } else if (customization === PresentationCustomization.Voice) {
+                        removeSelections();
                         const selected = voice ? getPreviousValue(Voice, voice) : Voice.Human;
                         setVoice(selected);
                         utterThis(`${selected} is selected.`);
-                        document.getElementById(selected).style.border = BORDER_STYLE;
+                        document.getElementById(selected).parentElement.style.border = BORDER_STYLE;
                     } else if (customization === PresentationCustomization.Gender) {
+                        removeSelections();
                         const selected = gender ? getPreviousValue(Gender, gender) : Gender.Male;
                         setGender(selected);
                         utterThis(`${selected} is selected.`);
-                        document.getElementById(selected).style.border = BORDER_STYLE;
+                        document.getElementById(selected).parentElement.style.border = BORDER_STYLE;
                     } else if (customization === PresentationCustomization.Syntax) {
+                        removeSelections();
                         const selected = syntax ? getPreviousValue(Syntax, syntax) : Syntax.Present;
                         setSyntax(selected);
                         utterThis(`${selected} is selected.`);
-                        document.getElementById(selected).style.border = BORDER_STYLE;
+                        document.getElementById(selected).parentElement.style.border = BORDER_STYLE;
                     }
                     break;
                 }
                 case 'arrowright': {
                     console.log(`arrow right is pressed. (${new Date().toLocaleString()})`);
-                    removeSelections();
                     if (customization === ContentCustomization.VideoLength) {
+                        removeSelections();
                         const selected = videoLength ? getNextValue(VideoLength, videoLength) : VideoLength.Succinct;
                         setVideoLength(selected);
                         utterThis(`${selected} is selected.`);
-                        document.getElementById(selected).style.border = BORDER_STYLE;
+                        document.getElementById(selected).parentElement.style.border = BORDER_STYLE;
                     } else if (customization === ContentCustomization.InformationPreference) {
+                        removeSelections();
                         const selected = informationPreference ? getNextValue(InformationPreference, informationPreference) : InformationPreference.Activity;
                         setInformationPreference(selected);
                         if (selected === InformationPreference.None) {
                             utterThis('No information preference is selected.');
                         } else {
                             utterThis(`${selected} is selected.`);
-                            document.getElementById(selected).style.border = BORDER_STYLE;
+                            document.getElementById(selected).parentElement.style.border = BORDER_STYLE;
                         }
                     } else if (customization === PresentationCustomization.Speed && speed < Speed.MAX) {
+                        removeSelections();
                         const newSpeed = speed + Speed.STEP;
                         setSpeed(newSpeed);
                         utterThis(`Speed is ${newSpeed}`);
                         document.getElementById(Speed.ID).parentElement.style.border = BORDER_STYLE;
                     } else if (customization === PresentationCustomization.Tone) {
+                        removeSelections();
                         const selected = tone ? getNextValue(Tone, tone) : Tone.Monotonous;
                         setTone(selected);
                         utterThis(`${selected} is selected.`);
-                        document.getElementById(selected).style.border = BORDER_STYLE;
+                        document.getElementById(selected).parentElement.style.border = BORDER_STYLE;
                     } else if (customization === PresentationCustomization.Voice) {
+                        removeSelections();
                         const selected = voice ? getNextValue(Voice, voice) : Voice.Human;
                         setVoice(selected);
                         utterThis(`${selected} is selected.`);
-                        document.getElementById(selected).style.border = BORDER_STYLE;
+                        document.getElementById(selected).parentElement.style.border = BORDER_STYLE;
                     } else if (customization === PresentationCustomization.Gender) {
+                        removeSelections();
                         const selected = gender ? getNextValue(Gender, gender) : Gender.Male;
                         setGender(selected);
                         utterThis(`${selected} is selected.`);
-                        document.getElementById(selected).style.border = BORDER_STYLE;
+                        document.getElementById(selected).parentElement.style.border = BORDER_STYLE;
                     } else if (customization === PresentationCustomization.Syntax) {
+                        removeSelections();
                         const selected = syntax ? getNextValue(Syntax, syntax) : Syntax.Present;
                         setSyntax(selected);
                         utterThis(`${selected} is selected.`);
-                        document.getElementById(selected).style.border = BORDER_STYLE;
+                        document.getElementById(selected).parentElement.style.border = BORDER_STYLE;
                     }
                     break;
                 }
@@ -272,7 +305,7 @@ function Dashboard() {
                     break;
             }
         }
-    }, [customizationGroup, customization, videoLength, informationPreference, speed, tone, voice, gender, syntax]);
+    }, [isAudioDescriptionEnabled, customizationGroup, customization, videoLength, informationPreference, speed, tone, voice, gender, syntax]);
 
     useEffect(() => {
         // attach the event listener
