@@ -21,18 +21,8 @@ export const PresentationCustomization = Object.freeze({
     Syntax: 'Syntax',
 });
 
-export const Content = Object.freeze({
-    Succinct: 'inline',
-    Verbose: 'verbose',
-    VeryVerbose: 'veryVerbose',
-    Activity: 'activity',
-    Person: 'person',
-    Object: 'object',
-    Setting: 'setting',
-});
-
 export const VideoLength = Object.freeze({
-    Succinct: 'inline',
+    Succinct: 'succinct',
     Verbose: 'verbose',
     VeryVerbose: 'veryVerbose',
 });
@@ -81,9 +71,8 @@ export const utterThisProps = Object.freeze({
 function Dashboard() {
     const [customizationGroup, setCustomizationGroup] = useState(null);
     const [customization, setCustomization] = useState(null);
-    const [content, setContent] = useState(Content.Succinct);
     const [videoLength, setVideoLength] = useState(VideoLength.Succinct);
-    const [informationPreference, setInformationPreference] = useState(InformationPreference.Activity);
+    const [informationPreference, setInformationPreference] = useState(null);
     const [speed, setSpeed] = useState(Speed.DEFAULT);
     const [tone, setTone] = useState(Tone.Monotonous);
     const [voice, setVoice] = useState(Voice.Human);
@@ -186,11 +175,9 @@ function Dashboard() {
                 if (customization === ContentCustomization.VideoLength) {
                     selected = videoLength ? getPreviousValue(VideoLength, videoLength) : VideoLength.Succinct;
                     setVideoLength(selected);
-                    setContent(selected);
                 } else if (customization === ContentCustomization.InformationPreference) {
                     selected = informationPreference ? getPreviousValue(InformationPreference, informationPreference) : InformationPreference.Activity;
                     setInformationPreference(selected);
-                    setContent(selected);
                 } else if (customization === PresentationCustomization.Speed && speed > Speed.MIN) {
                     const newSpeed = speed - Speed.STEP;
                     setSpeed(newSpeed);
@@ -227,11 +214,9 @@ function Dashboard() {
                 if (customization === ContentCustomization.VideoLength) {
                     selected = videoLength ? getNextValue(VideoLength, videoLength) : VideoLength.Succinct;
                     setVideoLength(selected);
-                    setContent(selected);
                 } else if (customization === ContentCustomization.InformationPreference) {
                     selected = informationPreference ? getNextValue(InformationPreference, informationPreference) : InformationPreference.Activity;
                     setInformationPreference(selected);
-                    setContent(selected);
                 } else if (customization === PresentationCustomization.Speed && speed < Speed.MAX) {
                     const newSpeed = speed + Speed.STEP;
                     setSpeed(newSpeed);
@@ -282,8 +267,8 @@ function Dashboard() {
             <div className='columns'>
                 <div className='column col-8'>
                     <VideoPlayerContainer
-                        // videoLength={videoLength}
-                        content={content}
+                        videoLength={videoLength}
+                        informationPreference={informationPreference}
                         speed={speed}
                         voice={voice}
                         gender={gender}
@@ -292,17 +277,15 @@ function Dashboard() {
                 </div>
                 <div className='column col-4'>
                     <CustomizationContainer
-                        // videoLength={videoLength}
-                        // informationPreference={informationPreference}
-                        content={content}
+                        videoLength={videoLength}
+                        informationPreference={informationPreference}
                         speed={speed}
                         tone={tone}
                         voice={voice}
                         gender={gender}
                         syntax={syntax}
-                        // onVideoLengthChange={setVideoLength}
-                        // onInformationPreferenceChange={setInformationPreference}
-                        onContentChange={setContent}
+                        onVideoLengthChange={setVideoLength}
+                        onInformationPreferenceChange={setInformationPreference}
                         onSpeedChange={setSpeed}
                         onToneChange={setTone}
                         onVoiceChange={setVoice}

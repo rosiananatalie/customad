@@ -2,9 +2,8 @@ import React from "react";
 import VideoPlayerComponent from "../component/VideoPlayerComponent";
 
 const VideoPlayerContainer = ({
-    // videoLength,
-    // informationPreference,
-    content,
+    videoLength,
+    informationPreference,
     speed,
     voice,
     gender,
@@ -12,7 +11,10 @@ const VideoPlayerContainer = ({
 }) => {
     const videoType = "trial" // need to change to be props
     const videoId = 1 // need to change to be props
-    const srcPath = `assets/audios/${syntax}_${voice}_${gender}/${content}`;
+    const presentation = [syntax, voice, gender].join('_');
+    const content = [videoLength, informationPreference].filter(x => x).join('_');
+    const srcPath = `assets/audios/${presentation}/${content}`;
+    console.log(srcPath);
 
     return(
         <VideoPlayerComponent  

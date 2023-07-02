@@ -1,37 +1,29 @@
 import React, { useCallback } from "react";
-import { CustomizationGroup, ContentCustomization, PresentationCustomization, VideoLength, InformationPreference, Content, Speed, Tone, Voice, Gender, Syntax } from "./DashboardComponent";
+import { CustomizationGroup, ContentCustomization, PresentationCustomization, VideoLength, InformationPreference, Speed, Tone, Voice, Gender, Syntax } from "./DashboardComponent";
 
 function CustomizationComponentForm({
-    // videoLength,
-    // informationPreference,
-    content,
+    videoLength,
+    informationPreference,
     speed,
     tone,
     voice,
     gender,
     syntax,
-    // onVideoLengthChange,
-    // onInformationPreferenceChange,
-    onContentChange,
+    onVideoLengthChange,
+    onInformationPreferenceChange,
     onSpeedChange,
     onToneChange,
     onVoiceChange,
     onGenderChange,
     onSyntaxChange,
 }) {
-    /*
     const handleVideoLengthChange = useCallback((event) => {
         onVideoLengthChange(event.target.value);
     }, [onVideoLengthChange]);
 
     const handleInformationPreferenceChange = useCallback((event) => {
-        onInformationPreferenceChange(event.target.value);
-    }, [onInformationPreferenceChange]);
-    */
-
-    const handleContentChange = useCallback((event) => {
-        onContentChange(event.target.value);
-    }, [onContentChange]);
+        onInformationPreferenceChange(informationPreference === event.target.value ? null : event.target.value);
+    }, [informationPreference, onInformationPreferenceChange]);
 
     const handleSpeedChange = useCallback((event) => {
         onSpeedChange(Number(event.target.value));
@@ -69,39 +61,30 @@ function CustomizationComponentForm({
                         <label id={VideoLength.Succinct} className="form-radio form-inline">
                             <input
                                 type="radio"
-                                name="content"
-                                // value={VideoLength.Succinct}
-                                // checked={videoLength === VideoLength.Succinct}
-                                // onChange={handleVideoLengthChange}
-                                value={Content.Succinct}
-                                checked={content === Content.Succinct}
-                                onChange={handleContentChange}
+                                name="length"
+                                value={VideoLength.Succinct}
+                                checked={videoLength === VideoLength.Succinct}
+                                onChange={handleVideoLengthChange}
                             />
                             <i className="form-icon"></i> Succinct
                         </label>
                         <label id={VideoLength.Verbose} className="form-radio form-inline">
                             <input
                                 type="radio"
-                                name="content"
-                                // value={VideoLength.Verbose}
-                                // checked={videoLength === VideoLength.Verbose}
-                                // onChange={handleVideoLengthChange}
-                                value={Content.Verbose}
-                                checked={content === Content.Verbose}
-                                onChange={handleContentChange}
+                                name="length"
+                                value={VideoLength.Verbose}
+                                checked={videoLength === VideoLength.Verbose}
+                                onChange={handleVideoLengthChange}
                             />
                             <i className="form-icon"></i> Verbose
                         </label>
                         <label id={VideoLength.VeryVerbose} className="form-radio form-inline">
                             <input
                                 type="radio"
-                                name="content"
-                                // value={VideoLength.VeryVerbose}
-                                // checked={videoLength === VideoLength.VeryVerbose}
-                                // onChange={handleVideoLengthChange}
-                                value={Content.VeryVerbose}
-                                checked={content === Content.VeryVerbose}
-                                onChange={handleContentChange}
+                                name="length"
+                                value={VideoLength.VeryVerbose}
+                                checked={videoLength === VideoLength.VeryVerbose}
+                                onChange={handleVideoLengthChange}
                             />
                             <i className="form-icon"></i> Very Verbose
                         </label>
@@ -112,55 +95,43 @@ function CustomizationComponentForm({
                         <label id={ContentCustomization.InformationPreference} className="form-label" htmlFor="preference">Information Preference</label>
                     </div>
                     <div className="col-9 col-sm-12">
-                        <label id={InformationPreference.Activity} className="form-radio form-inline">
+                        <label id={InformationPreference.Activity} className="form-checkbox form-inline">
                             <input
-                                type="radio"
-                                name="content"
-                                // value={InformationPreference.Activity}
-                                // checked={informationPreference === InformationPreference.Activity}
-                                // onChange={handleInformationPreferenceChange}
-                                value={Content.Activity}
-                                checked={content === Content.Activity}
-                                onChange={handleContentChange}
+                                type="checkbox"
+                                name="preference"
+                                value={InformationPreference.Activity}
+                                checked={informationPreference === InformationPreference.Activity}
+                                onChange={handleInformationPreferenceChange}
                             />
                             <i className="form-icon"></i> Activity
                         </label>
-                        <label id={InformationPreference.Person} className="form-radio form-inline">
+                        <label id={InformationPreference.Person} className="form-checkbox form-inline">
                             <input
-                                type="radio"
-                                name="content"
-                                // value={InformationPreference.Person}
-                                // checked={informationPreference === InformationPreference.Person}
-                                // onChange={handleInformationPreferenceChange}
-                                value={Content.Person}
-                                checked={content === Content.Person}
-                                onChange={handleContentChange}
+                                type="checkbox"
+                                name="preference"
+                                value={InformationPreference.Person}
+                                checked={informationPreference === InformationPreference.Person}
+                                onChange={handleInformationPreferenceChange}
                             />
                             <i className="form-icon"></i> Person
                         </label>
-                        <label id={InformationPreference.Object} className="form-radio form-inline">
+                        <label id={InformationPreference.Object} className="form-checkbox form-inline">
                             <input
-                                type="radio"
-                                name="content"
-                                // value={InformationPreference.Object}
-                                // checked={informationPreference === InformationPreference.Object}
-                                // onChange={handleInformationPreferenceChange}
-                                value={Content.Object}
-                                checked={content === Content.Object}
-                                onChange={handleContentChange}
+                                type="checkbox"
+                                name="preference"
+                                value={InformationPreference.Object}
+                                checked={informationPreference === InformationPreference.Object}
+                                onChange={handleInformationPreferenceChange}
                             />
                             <i className="form-icon"></i> Object
                         </label>
-                        <label id={InformationPreference.Setting} className="form-radio form-inline">
+                        <label id={InformationPreference.Setting} className="form-checkbox form-inline">
                             <input
-                                type="radio"
-                                name="content"
-                                // value={InformationPreference.Setting}
-                                // checked={informationPreference === InformationPreference.Setting}
-                                // onChange={handleInformationPreferenceChange}
-                                value={Content.Setting}
-                                checked={content === Content.Setting}
-                                onChange={handleContentChange}
+                                type="checkbox"
+                                name="preference"
+                                value={InformationPreference.Setting}
+                                checked={informationPreference === InformationPreference.Setting}
+                                onChange={handleInformationPreferenceChange}
                             />
                             <i className="form-icon"></i> Setting
                         </label>
