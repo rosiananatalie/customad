@@ -5,9 +5,8 @@ import DashboardComponent from './component/DashboardComponent';
 import LoginComponent from './component/LoginComponent';
 
 function App() {
+  const [displayName, setDisplayName] = useState('');
   const [isAuthenticated, setAuthenticated] = useState(false);
-
-  const setAuth = (boolean) => setAuthenticated(boolean);
 
   async function verifyAuth() {
     const token = sessionStorage.getItem('token');
@@ -21,6 +20,7 @@ function App() {
         });
         const parseRes = await response.json();
         setAuthenticated(parseRes.verified);
+        setDisplayName(parseRes.displayName);
       } catch (error) {
         console.error('Verify auth failed:', error.message);        
       }
@@ -29,14 +29,21 @@ function App() {
     }
   }
 
+  const handleLogOut = (e) => {
+    e.preventDefault();
+    sessionStorage.removeItem("token");
+    setAuthenticated(false);
+    setDisplayName('');
+  }
+
   useEffect(() => {
     verifyAuth();
   });
 
   if (isAuthenticated) {
-    return <DashboardComponent />;
+    return <DashboardComponent displayName={displayName} handleLogOut={handleLogOut} />;
   } else {
-    return <LoginComponent setAuth={setAuth} />;
+    return <LoginComponent setAuthenticated={setAuthenticated} />;
   }
 }
 

@@ -73,7 +73,7 @@ export const utterThisProps = Object.freeze({
     volume: 0.6, // 0 ~ 1
 });
 
-function Dashboard() {
+function Dashboard({ displayName, handleLogOut }) {
     const [isAudioDescriptionEnabled, setAudioDescriptionIsEnabled] = useState(true);
     const [customizationGroup, setCustomizationGroup] = useState(null);
     const [customization, setCustomization] = useState(null);
@@ -318,9 +318,21 @@ function Dashboard() {
     }, [handleKeyPress]);
 
     return (
-        <div className='container'>
-            <div className='columns'>
-                <div className='column col-8'>
+        <div className="container">
+            <div className="columns col-gapless">
+                <div className="column text-right">
+                    Welcome, {displayName}
+                    &nbsp;
+                    <button className="btn btn-link" onClick={handleLogOut}>Logout</button>
+                </div>    
+            </div>
+            <div className="columns">
+                <div className="column col-12 vertical-align-middle">
+                    <h5>Some video title</h5>
+                </div>
+            </div>
+            <div className="columns">
+                <div className="column col-8">
                     <VideoPlayerContainer
                         isAudioDescriptionEnabled={isAudioDescriptionEnabled}                        
                         videoLength={videoLength}
@@ -331,7 +343,7 @@ function Dashboard() {
                         syntax={syntax}
                     />
                 </div>
-                <div className='column col-4'>
+                <div className="column col-4">
                     <CustomizationContainer
                         isAudioDescriptionEnabled={isAudioDescriptionEnabled}
                         videoLength={videoLength}

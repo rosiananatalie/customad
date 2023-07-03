@@ -41,6 +41,15 @@ hr {
     min-width: 160px;
 }
 
+.btn-link {
+    background: unset;
+    border: none;
+    padding: 0;
+    color: #0099B5 !important;
+    height: unset;
+    min-width: unset;
+}
+
 /* .btn:focus,
 .btn:hover {
     background: #707070;
