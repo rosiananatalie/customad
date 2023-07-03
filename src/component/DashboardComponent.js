@@ -48,8 +48,8 @@ export const Speed = Object.freeze({
 });
 
 export const Tone = Object.freeze({
-    Monotonous: 'Monotonous',
-    Dynamic: 'Dynamic',
+    Monotonous: 'mono',
+    Dynamic: 'dynamic',
 });
 
 export const Voice = Object.freeze({
@@ -338,6 +338,7 @@ function Dashboard({ displayName, handleLogOut }) {
                         videoLength={videoLength}
                         informationPreference={informationPreference}
                         speed={speed}
+                        tone={tone}
                         voice={voice}
                         gender={gender}
                         syntax={syntax}
