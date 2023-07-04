@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Player, BigPlayButton, ControlBar, ProgressControl, CurrentTimeDisplay, TimeDivider, DurationDisplay } from 'video-react';
 import PlayToggle from 'video-react/lib/components/control-bar/PlayToggle';
+import { SERVER_URL } from '../constants';
 
 const VIDEO_GAP_END_TIME = [
     10.400,
@@ -63,7 +64,7 @@ function VideoPlayerComponent({
     // Set audio description
     useEffect(() => {
         if (audioDescription) {
-            audioRef.current.src = audioDescription.src;
+            audioRef.current.src = SERVER_URL + audioDescription.src;
             playAudio();
             const videoState = videoRef.current.getState().player;
             // Make time comparison less sensitive to prevent unnecessary seeking

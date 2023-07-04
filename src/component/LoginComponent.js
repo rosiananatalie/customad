@@ -12,7 +12,9 @@ function LoginComponent ({ setAuthenticated }) {
 
             const response = await fetch(SERVER_URL + '/auth/login', {
                 method: 'POST',
-                headers: { 'Content-type' : 'application/json' },
+                headers: {
+                    'Content-type' : 'application/json'
+                },
                 body: JSON.stringify(formData),
             });
 

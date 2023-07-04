@@ -15,7 +15,7 @@ function App() {
         const response = await fetch(SERVER_URL + '/auth/verify', {
             method : 'POST',
             headers: {
-              'Authorization': 'Bearer ' + token,
+              Authorization: 'Bearer ' + token,
             }
         });
         const parseRes = await response.json();
