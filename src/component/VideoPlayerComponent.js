@@ -1,7 +1,6 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Player, BigPlayButton, ControlBar, ProgressControl, CurrentTimeDisplay, TimeDivider, DurationDisplay } from 'video-react';
 import PlayToggle from 'video-react/lib/components/control-bar/PlayToggle';
-// import videos from '../../assets/ed1.mp4';
 
 const VIDEO_GAP_END_TIME = [
     10.400,
@@ -13,21 +12,12 @@ const VIDEO_GAP_END_TIME = [
 ];
 
 function VideoPlayerComponent({
-    videoId,
-    videoType,
+    videoPoster,
+    videoSrc,
+    audioDescriptions,
     isAudioDescriptionEnabled,
-    srcPath,
     speed,
 }) {
-    const audioDescriptions = useMemo(() => [
-        { src: `${srcPath}/4.513569.mp3`, startTime: 4.513569 },
-        { src: `${srcPath}/24.540732.mp3`, startTime: 24.540732 },
-        { src: `${srcPath}/41.894735.mp3`, startTime: 41.894735 },
-        { src: `${srcPath}/56.394445.mp3`, startTime: 56.394445 },
-        { src: `${srcPath}/71.mp3`, startTime: 71 },
-        { src: `${srcPath}/80.mp3`, startTime: 80 },
-        { src: `${srcPath}/92.3.mp3`, startTime: 92.3 },
-    ], [srcPath]);
     const [audioDescription, setAudioDescription] = useState();
 
     const videoRef = useRef();
@@ -41,7 +31,6 @@ function VideoPlayerComponent({
     });
 
     const playAudio = useCallback(() => {
-        console.log('playAudio', audioRef.current.src, !!audioRef.current.src);
         if (isAudioDescriptionEnabled && audioRef.current.src) {
             audioRef.current.play();
         }
@@ -147,25 +136,22 @@ function VideoPlayerComponent({
     }, [handleStateChange, playAudio]);
 
     return (
-        <div>
-            <Player
-                ref={videoRef}
-                playsInline
-                poster = {"../../assets/trial1.png"}
-                controls
-            >
-                    {/* <source src={require("../assets/" + videoId + ".mp4")} type="video/mp4"/> */}
-                    <source src={"assets/" + videoType + videoId + ".mp4"} type="video/mp4" />
-                    <BigPlayButton position="center" />
-                    <ControlBar autoHide={false} disableDefaultControls>
-                        <PlayToggle />
-                        <CurrentTimeDisplay />
-                        <TimeDivider />
-                        <DurationDisplay />
-                        <ProgressControl />
-                    </ControlBar>
-            </Player>
-        </div>
+        <Player
+            ref={videoRef}
+            playsInline
+            poster={videoPoster}
+            controls
+        >
+            <source src={videoSrc} type="video/mp4" />
+            <BigPlayButton position="center" />
+            <ControlBar autoHide={false} disableDefaultControls>
+                <PlayToggle />
+                <CurrentTimeDisplay />
+                <TimeDivider />
+                <DurationDisplay />
+                <ProgressControl />
+            </ControlBar>
+        </Player>
     );
 }
 
