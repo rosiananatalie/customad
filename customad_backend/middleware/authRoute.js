@@ -20,6 +20,7 @@ module.exports = async (req, res, next) => {
 			});
 		}
 		const user = users.rows[0];
+		res.locals.userId = userId;
 		res.locals.displayName = user.display_name;
 		next();
 	} else {

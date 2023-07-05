@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from "react";
-import VideoPlayerComponent from "../component/VideoPlayerComponent";
+import React, { useEffect, useState } from 'react';
+import VideoPlayerComponent from '../component/VideoPlayerComponent';
 import { SERVER_URL } from '../constants';
 
 const VideoPlayerContainer = ({
+    videoName,
+    videoGapEndTimes,
     isAudioDescriptionEnabled,
     videoLength,
     informationPreference,
@@ -14,7 +16,6 @@ const VideoPlayerContainer = ({
 }) => {
     const [audioDescriptions, setAudioDescriptions] = useState([]);
 
-    const videoName = 'trial1';
     const videoPoster = `${SERVER_URL}/images/${videoName}.png`;
     const videoSrc = `${SERVER_URL}/videos/${videoName}.mp4`;
     const params = new URLSearchParams({ videoLength, informationPreference, syntax, voice, gender, tone });
@@ -44,6 +45,7 @@ const VideoPlayerContainer = ({
         <VideoPlayerComponent
             videoPoster={videoPoster}
             videoSrc={videoSrc}
+            videoGapEndTimes={videoGapEndTimes}
             audioDescriptions={audioDescriptions}
             isAudioDescriptionEnabled={isAudioDescriptionEnabled}
             speed={speed}

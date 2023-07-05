@@ -73,7 +73,8 @@ export const utterThisProps = Object.freeze({
     volume: 0.6, // 0 ~ 1
 });
 
-function Dashboard({ displayName, handleLogOut }) {
+function DashboardComponent({ displayName, videos, handleLogOut }) {
+    const [video, setVideo] = useState(videos[0]);
     const [isAudioDescriptionEnabled, setAudioDescriptionIsEnabled] = useState(true);
     const [customizationGroup, setCustomizationGroup] = useState(null);
     const [customization, setCustomization] = useState(null);
@@ -328,12 +329,14 @@ function Dashboard({ displayName, handleLogOut }) {
             </div>
             <div className="columns">
                 <div className="column col-12 vertical-align-middle">
-                    <h5>Some video title</h5>
+                    <h5>{video.displayName}</h5>
                 </div>
             </div>
             <div className="columns">
                 <div className="column col-8">
                     <VideoPlayerContainer
+                        videoName={video.filename}
+                        videoGapEndTimes={video.gapEndTimes}
                         isAudioDescriptionEnabled={isAudioDescriptionEnabled}                        
                         videoLength={videoLength}
                         informationPreference={informationPreference}
@@ -369,4 +372,4 @@ function Dashboard({ displayName, handleLogOut }) {
     );
 }
 
-export default Dashboard;
+export default DashboardComponent;

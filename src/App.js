@@ -7,44 +7,68 @@ import LoginComponent from './component/LoginComponent';
 function App() {
   const [displayName, setDisplayName] = useState('');
   const [isAuthenticated, setAuthenticated] = useState(false);
-
-  async function verifyAuth() {
-    const token = sessionStorage.getItem('token');
-    if (token) {
-      try {
-        const response = await fetch(SERVER_URL + '/auth/verify', {
-            method : 'POST',
-            headers: {
-              Authorization: 'Bearer ' + token,
-            }
-        });
-        const parseRes = await response.json();
-        setAuthenticated(parseRes.verified);
-        setDisplayName(parseRes.displayName);
-      } catch (error) {
-        console.error('Verify auth failed:', error.message);        
-      }
-    } else {
-      setAuthenticated(false);
-    }
-  }
+  const [videos, setVideos] = useState([]);
 
   const handleLogOut = (e) => {
     e.preventDefault();
-    sessionStorage.removeItem("token");
+    sessionStorage.removeItem('token');
     setAuthenticated(false);
     setDisplayName('');
   }
 
   useEffect(() => {
-    verifyAuth();
-  });
+    async function verifyAuth() {
+      const token = sessionStorage.getItem('token');
+      if (token) {
+        try {
+          const response = await fetch(SERVER_URL + '/auth/verify', {
+              method : 'POST',
+              headers: {
+                Authorization: 'Bearer ' + token,
+              }
+          });
+          const parseRes = await response.json();
+          setAuthenticated(parseRes.verified);
+          setDisplayName(parseRes.displayName);
+        } catch (error) {
+          console.error('Verify auth failed:', error.message);        
+        }
+      } else {
+        setAuthenticated(false);
+      }
+    }
+    async function getVideos() {
+      try {
+          const url = SERVER_URL + '/videos';
+          const token = sessionStorage.getItem('token');
+          const response = await fetch(url, {
+              method : 'GET',
+              headers: {
+                  Authorization: 'Bearer ' + token,
+                  'Content-type' : 'application/json'
+              }
+          });
+          const parseRes = await response.json();
+          setVideos(parseRes);
+      } catch (error) {
+          console.error('Get video failed:', error.message);        
+      }
+    }
+    verifyAuth()
+      .then(getVideos);
+  }, []);
 
   if (isAuthenticated) {
-    return <DashboardComponent displayName={displayName} handleLogOut={handleLogOut} />;
-  } else {
-    return <LoginComponent setAuthenticated={setAuthenticated} />;
+    if (videos.length === 0) {
+      return (
+        <div className="container">
+          <div className="loading loading-lg"></div>
+        </div>
+      );
+    }
+    return <DashboardComponent displayName={displayName} videos={videos} handleLogOut={handleLogOut} />;
   }
+  return <LoginComponent setAuthenticated={setAuthenticated} />;
 }
 
 export default App;

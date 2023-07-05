@@ -3,18 +3,10 @@ import { Player, BigPlayButton, ControlBar, ProgressControl, CurrentTimeDisplay,
 import PlayToggle from 'video-react/lib/components/control-bar/PlayToggle';
 import { SERVER_URL } from '../constants';
 
-const VIDEO_GAP_END_TIME = [
-    10.400,
-    32.500,
-    46.500,
-    62.500,
-    75.500,
-    85.000,
-];
-
 function VideoPlayerComponent({
     videoPoster,
     videoSrc,
+    videoGapEndTimes,
     audioDescriptions,
     isAudioDescriptionEnabled,
     speed,
@@ -81,7 +73,7 @@ function VideoPlayerComponent({
     const handleStateChange = useCallback((state, prevState) => {
         if (audioDescriptions) {
             const currentAD = audioDescriptions.findLast(ad => ad.startTime <= state.currentTime);
-            const videoGapEndTime = VIDEO_GAP_END_TIME.findLast(time => time <= state.currentTime);
+            const videoGapEndTime = videoGapEndTimes.findLast(time => time <= state.currentTime);
             setAudioDescription(currentAD);
 
             if (state.seeking) {
@@ -122,7 +114,7 @@ function VideoPlayerComponent({
             videoRef.current.video.handlePause = () => {
                 const videoState = videoRef.current.getState().player;
                 const videoCurrentTime = videoState.currentTime;
-                const videoGapEndTime = VIDEO_GAP_END_TIME.findLast(time => time <= videoCurrentTime);
+                const videoGapEndTime = videoGapEndTimes.findLast(time => time <= videoCurrentTime);
                 if (
                     audioRef.current.src !== ""
                     && !(videoCurrentTime < Math.floor(videoGapEndTime + 1) && audioRef.current.currentTime > 0)
