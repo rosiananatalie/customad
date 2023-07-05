@@ -18,7 +18,7 @@ const VideoPlayerContainer = ({
     const videoPoster = `${SERVER_URL}/images/${videoName}.png`;
     const videoSrc = `${SERVER_URL}/videos/${videoName}.mp4`;
     const params = new URLSearchParams({ videoLength, informationPreference, syntax, voice, gender, tone });
-    const url = SERVER_URL + '/ad/' + videoName + '?' + params.toString();
+    const url = SERVER_URL + '/videos/' + videoName + '/ad?' + params.toString();
 
     useEffect(() => {
         async function getAudioDescriptions() {

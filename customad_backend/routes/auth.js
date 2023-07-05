@@ -13,7 +13,7 @@ const router = express.Router();
 router.post('/login', async function (req, res) {
   const { username, password } = req.body;
   const users = await pool.query('SELECT user_id, password FROM users WHERE username = $1', [username]);
-  if (users.rows.length == 0) {
+  if (users.rows.length === 0) {
     return res.status(401).send({
       error: {
         code: 401,

@@ -11,7 +11,7 @@ module.exports = async (req, res, next) => {
 		const payload = jwt.verify(token, process.env.TOKEN_SECRET);
 		const userId = payload.id;
 		const users = await pool.query('SELECT display_name FROM users WHERE user_id = $1', [userId]);
-		if (users.rows.length == 0) {
+		if (users.rows.length === 0) {
 			return res.status(401).send({
 				error: {
 					code: 401,

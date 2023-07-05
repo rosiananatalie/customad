@@ -15,6 +15,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/auth', authRouter);
-app.use('/video', videoRouter);
+app.use('/videos', videoRouter);
 
 module.exports = app;
