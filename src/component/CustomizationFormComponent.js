@@ -41,6 +41,12 @@ function CustomizationComponentForm({
 
     const handleVoiceChange = useCallback((event) => {
         onVoiceChange(event.target.value);
+        if (event.target.value === Voice.Synthesizer) {
+            document.getElementById(Tone.Monotonous).click();
+            Object.values(Tone).forEach(tone => document.getElementById(tone).disabled = true);
+        } else {
+            Object.values(Tone).forEach(tone => document.getElementById(tone).disabled = false);
+        }
     }, [onVoiceChange]);
 
     const handleGenderChange = useCallback((event) => {
