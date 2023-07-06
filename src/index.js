@@ -13,11 +13,13 @@ import "./stylesheet/smu-hci.css"
 import "./stylesheet/customad-specific.css"
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
+// Only use StrictMode in debugging. It will cause logging to run twice.
+// root.render(
+//   <React.StrictMode>
+//     <App />
+//   </React.StrictMode>
+// );
+root.render(<App />);
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

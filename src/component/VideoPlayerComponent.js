@@ -11,6 +11,11 @@ function VideoPlayerComponent({
     isAudioDescriptionEnabled,
     speed,
 }) {
+    const logging = (message) => {
+        const currentTime = new Date().toLocaleString();
+        console.log(`[${currentTime}] ${message}`);
+    };
+
     const [audioDescription, setAudioDescription] = useState();
 
     const videoRef = useRef();
@@ -57,6 +62,7 @@ function VideoPlayerComponent({
     useEffect(() => {
         if (audioDescription) {
             audioRef.current.src = SERVER_URL + audioDescription.src;
+            logging(`Current audio description is ${audioDescription.src}`);
             playAudio();
             const videoState = videoRef.current.getState().player;
             // Make time comparison less sensitive to prevent unnecessary seeking
@@ -77,6 +83,8 @@ function VideoPlayerComponent({
             setAudioDescription(currentAD);
 
             if (state.seeking) {
+                // TODO: will run multiple time
+                logging(`Seeking at ${state.currentTime}`);
                 if (currentAD) {
                     if (state.currentTime > currentAD.startTime) {
                         audioRef.current.currentTime = 0;
@@ -105,7 +113,10 @@ function VideoPlayerComponent({
             }
             const prevHandlePlay = videoRef.current.video.handlePlay;
             videoRef.current.video.handlePlay = () => {
-                if (videoRef.current.getState().player.paused && !audioRef.current.ended) {
+                const videoState = videoRef.current.getState().player;
+                // TODO: play by code will log too. run multiple time.
+                logging(`Play video at ${videoState.currentTime}`);
+                if (videoState.paused && !audioRef.current.ended) {
                     playAudio();
                 }
                 prevHandlePlay();
@@ -114,6 +125,8 @@ function VideoPlayerComponent({
             videoRef.current.video.handlePause = () => {
                 const videoState = videoRef.current.getState().player;
                 const videoCurrentTime = videoState.currentTime;
+                // TODO: pause by code will log too. run multiple time.
+                logging(`Pause video at ${videoCurrentTime}`);
                 const videoGapEndTime = videoGapEndTimes.findLast(time => time <= videoCurrentTime);
                 if (
                     audioRef.current.src !== ""

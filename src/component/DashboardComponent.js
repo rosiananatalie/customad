@@ -74,6 +74,11 @@ export const utterThisProps = Object.freeze({
 });
 
 function DashboardComponent({ displayName, videos, handleLogOut }) {
+    const logging = (message) => {
+        const currentTime = new Date().toLocaleString();
+        console.log(`[${currentTime}] ${message}`);
+    };
+
     const [video, setVideo] = useState(videos[0]);
     const [isAudioDescriptionEnabled, setAudioDescriptionIsEnabled] = useState(true);
     const [customizationGroup, setCustomizationGroup] = useState(null);
@@ -139,7 +144,7 @@ function DashboardComponent({ displayName, videos, handleLogOut }) {
         if (event.shiftKey) {
             switch (event.key.toLowerCase()) {
                 case 'a': {
-                    console.log(`a is pressed. (${new Date().toLocaleString()})`);
+                    logging('a is pressed.');
                     removeSelections();
                     setCustomizationGroup(CustomizationGroup.Content);
                     setCustomization(null);
@@ -148,7 +153,7 @@ function DashboardComponent({ displayName, videos, handleLogOut }) {
                     break;
                 }
                 case 's': {
-                    console.log(`s is pressed. (${new Date().toLocaleString()})`);
+                    logging('s is pressed.');
                     removeSelections();
                     setCustomizationGroup(CustomizationGroup.Presentation);
                     setCustomization(null);
@@ -157,17 +162,18 @@ function DashboardComponent({ displayName, videos, handleLogOut }) {
                     break;
                 }
                 case 'm': {
-                    console.log(`m is pressed. (${new Date().toLocaleString()})`);
+                    logging('m is pressed.');
                     removeSelections();
                     setCustomizationGroup(null);
                     setCustomization(null);
-                    setAudioDescriptionIsEnabled(!isAudioDescriptionEnabled);
+                    const input = document.getElementById(ToggleAudioDescription.ID);
+                    input.click();
+                    input.parentElement.style.border = BORDER_STYLE;
                     utterThis(`Audio description is turn ${isAudioDescriptionEnabled ? 'off' : 'on'}.`);
-                    document.getElementById(ToggleAudioDescription.ID).parentElement.style.border = BORDER_STYLE;
                     break;
                 }
                 case 'arrowup': {
-                    console.log(`arrow up is pressed. (${new Date().toLocaleString()})`);
+                    logging('arrow up is pressed.');
                     if (customizationGroup === CustomizationGroup.Content) {
                         removeSelections();
                         const selected = customization ? getPreviousValue(ContentCustomization, customization) : ContentCustomization.VideoLength;
@@ -184,7 +190,7 @@ function DashboardComponent({ displayName, videos, handleLogOut }) {
                     break;
                 }
                 case 'arrowdown': {
-                    console.log(`arrow down is pressed. (${new Date().toLocaleString()})`);
+                    logging('arrow down is pressed.');
                     if (customizationGroup === CustomizationGroup.Content) {
                         removeSelections();
                         const selected = customization ? getNextValue(ContentCustomization, customization) : ContentCustomization.VideoLength;
@@ -201,13 +207,14 @@ function DashboardComponent({ displayName, videos, handleLogOut }) {
                     break;
                 }
                 case 'arrowleft': {
-                    console.log(`arrow left is pressed. (${new Date().toLocaleString()})`);
+                    logging('arrow left is pressed.');
                     if (customization === ContentCustomization.VideoLength) {
                         removeSelections();
                         const selected = videoLength ? getPreviousValue(VideoLength, videoLength) : VideoLength.Succinct;
-                        setVideoLength(selected);
+                        const input = document.getElementById(selected);
+                        input.click();
+                        input.parentElement.style.border = BORDER_STYLE;
                         utterThis(`${selected} is selected.`);
-                        document.getElementById(selected).parentElement.style.border = BORDER_STYLE;
                     } else if (customization === ContentCustomization.InformationPreference) {
                         removeSelections();
                         const selected = informationPreference ? getPreviousValue(InformationPreference, informationPreference) : InformationPreference.Activity;
@@ -227,38 +234,43 @@ function DashboardComponent({ displayName, videos, handleLogOut }) {
                     } else if (customization === PresentationCustomization.Tone) {
                         removeSelections();
                         const selected = tone ? getPreviousValue(Tone, tone) : Tone.Monotonous;
-                        setTone(selected);
+                        const input = document.getElementById(selected);
+                        input.click();
+                        input.parentElement.style.border = BORDER_STYLE;
                         utterThis(`${selected} is selected.`);
-                        document.getElementById(selected).parentElement.style.border = BORDER_STYLE;
                     } else if (customization === PresentationCustomization.Voice) {
                         removeSelections();
                         const selected = voice ? getPreviousValue(Voice, voice) : Voice.Human;
-                        setVoice(selected);
+                        const input = document.getElementById(selected);
+                        input.click();
+                        input.parentElement.style.border = BORDER_STYLE;
                         utterThis(`${selected} is selected.`);
-                        document.getElementById(selected).parentElement.style.border = BORDER_STYLE;
                     } else if (customization === PresentationCustomization.Gender) {
                         removeSelections();
                         const selected = gender ? getPreviousValue(Gender, gender) : Gender.Male;
-                        setGender(selected);
+                        const input = document.getElementById(selected);
+                        input.click();
+                        input.parentElement.style.border = BORDER_STYLE;
                         utterThis(`${selected} is selected.`);
-                        document.getElementById(selected).parentElement.style.border = BORDER_STYLE;
                     } else if (customization === PresentationCustomization.Syntax) {
                         removeSelections();
                         const selected = syntax ? getPreviousValue(Syntax, syntax) : Syntax.Present;
-                        setSyntax(selected);
+                        const input = document.getElementById(selected);
+                        input.click();
+                        input.parentElement.style.border = BORDER_STYLE;
                         utterThis(`${selected} is selected.`);
-                        document.getElementById(selected).parentElement.style.border = BORDER_STYLE;
                     }
                     break;
                 }
                 case 'arrowright': {
-                    console.log(`arrow right is pressed. (${new Date().toLocaleString()})`);
+                    logging('arrow right is pressed.');
                     if (customization === ContentCustomization.VideoLength) {
                         removeSelections();
                         const selected = videoLength ? getNextValue(VideoLength, videoLength) : VideoLength.Succinct;
-                        setVideoLength(selected);
+                        const input = document.getElementById(selected);
+                        input.click();
+                        input.parentElement.style.border = BORDER_STYLE;
                         utterThis(`${selected} is selected.`);
-                        document.getElementById(selected).parentElement.style.border = BORDER_STYLE;
                     } else if (customization === ContentCustomization.InformationPreference) {
                         removeSelections();
                         const selected = informationPreference ? getNextValue(InformationPreference, informationPreference) : InformationPreference.Activity;
@@ -278,27 +290,31 @@ function DashboardComponent({ displayName, videos, handleLogOut }) {
                     } else if (customization === PresentationCustomization.Tone) {
                         removeSelections();
                         const selected = tone ? getNextValue(Tone, tone) : Tone.Monotonous;
-                        setTone(selected);
+                        const input = document.getElementById(selected);
+                        input.click();
+                        input.parentElement.style.border = BORDER_STYLE;
                         utterThis(`${selected} is selected.`);
-                        document.getElementById(selected).parentElement.style.border = BORDER_STYLE;
                     } else if (customization === PresentationCustomization.Voice) {
                         removeSelections();
                         const selected = voice ? getNextValue(Voice, voice) : Voice.Human;
-                        setVoice(selected);
+                        const input = document.getElementById(selected);
+                        input.click();
+                        input.parentElement.style.border = BORDER_STYLE;
                         utterThis(`${selected} is selected.`);
-                        document.getElementById(selected).parentElement.style.border = BORDER_STYLE;
                     } else if (customization === PresentationCustomization.Gender) {
                         removeSelections();
                         const selected = gender ? getNextValue(Gender, gender) : Gender.Male;
-                        setGender(selected);
+                        const input = document.getElementById(selected);
+                        input.click();
+                        input.parentElement.style.border = BORDER_STYLE;
                         utterThis(`${selected} is selected.`);
-                        document.getElementById(selected).parentElement.style.border = BORDER_STYLE;
                     } else if (customization === PresentationCustomization.Syntax) {
                         removeSelections();
                         const selected = syntax ? getNextValue(Syntax, syntax) : Syntax.Present;
-                        setSyntax(selected);
+                        const input = document.getElementById(selected);
+                        input.click();
+                        input.parentElement.style.border = BORDER_STYLE;
                         utterThis(`${selected} is selected.`);
-                        document.getElementById(selected).parentElement.style.border = BORDER_STYLE;
                     }
                     break;
                 }
