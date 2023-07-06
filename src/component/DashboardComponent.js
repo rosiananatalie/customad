@@ -156,8 +156,8 @@ function DashboardComponent({ displayName, videos, handleLogOut }) {
                     document.getElementById(CustomizationGroup.Presentation).style.border = BORDER_STYLE;
                     break;
                 }
-                case 'd': {
-                    console.log(`d is pressed. (${new Date().toLocaleString()})`);
+                case 'm': {
+                    console.log(`m is pressed. (${new Date().toLocaleString()})`);
                     removeSelections();
                     setCustomizationGroup(null);
                     setCustomization(null);
