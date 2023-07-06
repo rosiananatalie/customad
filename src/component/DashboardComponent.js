@@ -161,9 +161,10 @@ function DashboardComponent({ displayName, videos, handleLogOut }) {
                     removeSelections();
                     setCustomizationGroup(null);
                     setCustomization(null);
-                    setAudioDescriptionIsEnabled(!isAudioDescriptionEnabled);
+                    const input = document.getElementById(ToggleAudioDescription.ID);
+                    input.click();
+                    input.parentElement.style.border = BORDER_STYLE;
                     utterThis(`Audio description is turn ${isAudioDescriptionEnabled ? 'off' : 'on'}.`);
-                    document.getElementById(ToggleAudioDescription.ID).parentElement.style.border = BORDER_STYLE;
                     break;
                 }
                 case 'arrowup': {
@@ -205,9 +206,10 @@ function DashboardComponent({ displayName, videos, handleLogOut }) {
                     if (customization === ContentCustomization.VideoLength) {
                         removeSelections();
                         const selected = videoLength ? getPreviousValue(VideoLength, videoLength) : VideoLength.Succinct;
-                        setVideoLength(selected);
+                        const input = document.getElementById(selected);
+                        input.click();
+                        input.parentElement.style.border = BORDER_STYLE;
                         utterThis(`${selected} is selected.`);
-                        document.getElementById(selected).parentElement.style.border = BORDER_STYLE;
                     } else if (customization === ContentCustomization.InformationPreference) {
                         removeSelections();
                         const selected = informationPreference ? getPreviousValue(InformationPreference, informationPreference) : InformationPreference.Activity;
@@ -227,27 +229,31 @@ function DashboardComponent({ displayName, videos, handleLogOut }) {
                     } else if (customization === PresentationCustomization.Tone) {
                         removeSelections();
                         const selected = tone ? getPreviousValue(Tone, tone) : Tone.Monotonous;
-                        setTone(selected);
+                        const input = document.getElementById(selected);
+                        input.click();
+                        input.parentElement.style.border = BORDER_STYLE;
                         utterThis(`${selected} is selected.`);
-                        document.getElementById(selected).parentElement.style.border = BORDER_STYLE;
                     } else if (customization === PresentationCustomization.Voice) {
                         removeSelections();
                         const selected = voice ? getPreviousValue(Voice, voice) : Voice.Human;
-                        setVoice(selected);
+                        const input = document.getElementById(selected);
+                        input.click();
+                        input.parentElement.style.border = BORDER_STYLE;
                         utterThis(`${selected} is selected.`);
-                        document.getElementById(selected).parentElement.style.border = BORDER_STYLE;
                     } else if (customization === PresentationCustomization.Gender) {
                         removeSelections();
                         const selected = gender ? getPreviousValue(Gender, gender) : Gender.Male;
-                        setGender(selected);
+                        const input = document.getElementById(selected);
+                        input.click();
+                        input.parentElement.style.border = BORDER_STYLE;
                         utterThis(`${selected} is selected.`);
-                        document.getElementById(selected).parentElement.style.border = BORDER_STYLE;
                     } else if (customization === PresentationCustomization.Syntax) {
                         removeSelections();
                         const selected = syntax ? getPreviousValue(Syntax, syntax) : Syntax.Present;
-                        setSyntax(selected);
+                        const input = document.getElementById(selected);
+                        input.click();
+                        input.parentElement.style.border = BORDER_STYLE;
                         utterThis(`${selected} is selected.`);
-                        document.getElementById(selected).parentElement.style.border = BORDER_STYLE;
                     }
                     break;
                 }
@@ -256,9 +262,10 @@ function DashboardComponent({ displayName, videos, handleLogOut }) {
                     if (customization === ContentCustomization.VideoLength) {
                         removeSelections();
                         const selected = videoLength ? getNextValue(VideoLength, videoLength) : VideoLength.Succinct;
-                        setVideoLength(selected);
+                        const input = document.getElementById(selected);
+                        input.click();
+                        input.parentElement.style.border = BORDER_STYLE;
                         utterThis(`${selected} is selected.`);
-                        document.getElementById(selected).parentElement.style.border = BORDER_STYLE;
                     } else if (customization === ContentCustomization.InformationPreference) {
                         removeSelections();
                         const selected = informationPreference ? getNextValue(InformationPreference, informationPreference) : InformationPreference.Activity;
@@ -278,27 +285,31 @@ function DashboardComponent({ displayName, videos, handleLogOut }) {
                     } else if (customization === PresentationCustomization.Tone) {
                         removeSelections();
                         const selected = tone ? getNextValue(Tone, tone) : Tone.Monotonous;
-                        setTone(selected);
+                        const input = document.getElementById(selected);
+                        input.click();
+                        input.parentElement.style.border = BORDER_STYLE;
                         utterThis(`${selected} is selected.`);
-                        document.getElementById(selected).parentElement.style.border = BORDER_STYLE;
                     } else if (customization === PresentationCustomization.Voice) {
                         removeSelections();
                         const selected = voice ? getNextValue(Voice, voice) : Voice.Human;
-                        setVoice(selected);
+                        const input = document.getElementById(selected);
+                        input.click();
+                        input.parentElement.style.border = BORDER_STYLE;
                         utterThis(`${selected} is selected.`);
-                        document.getElementById(selected).parentElement.style.border = BORDER_STYLE;
                     } else if (customization === PresentationCustomization.Gender) {
                         removeSelections();
                         const selected = gender ? getNextValue(Gender, gender) : Gender.Male;
-                        setGender(selected);
+                        const input = document.getElementById(selected);
+                        input.click();
+                        input.parentElement.style.border = BORDER_STYLE;
                         utterThis(`${selected} is selected.`);
-                        document.getElementById(selected).parentElement.style.border = BORDER_STYLE;
                     } else if (customization === PresentationCustomization.Syntax) {
                         removeSelections();
                         const selected = syntax ? getNextValue(Syntax, syntax) : Syntax.Present;
-                        setSyntax(selected);
+                        const input = document.getElementById(selected);
+                        input.click();
+                        input.parentElement.style.border = BORDER_STYLE;
                         utterThis(`${selected} is selected.`);
-                        document.getElementById(selected).parentElement.style.border = BORDER_STYLE;
                     }
                     break;
                 }
