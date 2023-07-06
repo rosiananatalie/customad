@@ -37,6 +37,10 @@ function App() {
         setAuthenticated(false);
       }
     }
+    verifyAuth();
+  }, []);
+
+  useEffect(() => {
     async function getVideos() {
       try {
           const url = SERVER_URL + '/videos';
@@ -54,9 +58,10 @@ function App() {
           console.error('Get video failed:', error.message);        
       }
     }
-    verifyAuth()
-      .then(getVideos);
-  }, []);
+    if (isAuthenticated) {
+      getVideos();
+    }
+  }, [isAuthenticated]);
 
   if (isAuthenticated) {
     if (videos.length === 0) {
