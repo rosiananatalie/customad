@@ -74,6 +74,11 @@ export const utterThisProps = Object.freeze({
 });
 
 function DashboardComponent({ displayName, videos, handleLogOut }) {
+    const logging = (message) => {
+        const currentTime = new Date().toLocaleString();
+        console.log(`[${currentTime}] ${message}`);
+    };
+
     const [video, setVideo] = useState(videos[0]);
     const [isAudioDescriptionEnabled, setAudioDescriptionIsEnabled] = useState(true);
     const [customizationGroup, setCustomizationGroup] = useState(null);
@@ -139,7 +144,7 @@ function DashboardComponent({ displayName, videos, handleLogOut }) {
         if (event.shiftKey) {
             switch (event.key.toLowerCase()) {
                 case 'a': {
-                    console.log(`a is pressed. (${new Date().toLocaleString()})`);
+                    logging('a is pressed.');
                     removeSelections();
                     setCustomizationGroup(CustomizationGroup.Content);
                     setCustomization(null);
@@ -148,7 +153,7 @@ function DashboardComponent({ displayName, videos, handleLogOut }) {
                     break;
                 }
                 case 's': {
-                    console.log(`s is pressed. (${new Date().toLocaleString()})`);
+                    logging('s is pressed.');
                     removeSelections();
                     setCustomizationGroup(CustomizationGroup.Presentation);
                     setCustomization(null);
@@ -157,7 +162,7 @@ function DashboardComponent({ displayName, videos, handleLogOut }) {
                     break;
                 }
                 case 'm': {
-                    console.log(`m is pressed. (${new Date().toLocaleString()})`);
+                    logging('m is pressed.');
                     removeSelections();
                     setCustomizationGroup(null);
                     setCustomization(null);
@@ -168,7 +173,7 @@ function DashboardComponent({ displayName, videos, handleLogOut }) {
                     break;
                 }
                 case 'arrowup': {
-                    console.log(`arrow up is pressed. (${new Date().toLocaleString()})`);
+                    logging('arrow up is pressed.');
                     if (customizationGroup === CustomizationGroup.Content) {
                         removeSelections();
                         const selected = customization ? getPreviousValue(ContentCustomization, customization) : ContentCustomization.VideoLength;
@@ -185,7 +190,7 @@ function DashboardComponent({ displayName, videos, handleLogOut }) {
                     break;
                 }
                 case 'arrowdown': {
-                    console.log(`arrow down is pressed. (${new Date().toLocaleString()})`);
+                    logging('arrow down is pressed.');
                     if (customizationGroup === CustomizationGroup.Content) {
                         removeSelections();
                         const selected = customization ? getNextValue(ContentCustomization, customization) : ContentCustomization.VideoLength;
@@ -202,7 +207,7 @@ function DashboardComponent({ displayName, videos, handleLogOut }) {
                     break;
                 }
                 case 'arrowleft': {
-                    console.log(`arrow left is pressed. (${new Date().toLocaleString()})`);
+                    logging('arrow left is pressed.');
                     if (customization === ContentCustomization.VideoLength) {
                         removeSelections();
                         const selected = videoLength ? getPreviousValue(VideoLength, videoLength) : VideoLength.Succinct;
@@ -258,7 +263,7 @@ function DashboardComponent({ displayName, videos, handleLogOut }) {
                     break;
                 }
                 case 'arrowright': {
-                    console.log(`arrow right is pressed. (${new Date().toLocaleString()})`);
+                    logging('arrow right is pressed.');
                     if (customization === ContentCustomization.VideoLength) {
                         removeSelections();
                         const selected = videoLength ? getNextValue(VideoLength, videoLength) : VideoLength.Succinct;
