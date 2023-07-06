@@ -210,35 +210,6 @@ function CustomizationComponentForm({
                         />
                     </div> */}
 
-                    {/* Tone Customization */}
-                    <div className="col-3 col-sm-12">
-                        <label id={PresentationCustomization.Tone} className="form-label" htmlFor="tone">Tone</label>
-                    </div>
-                    <div className="col-9 col-sm-12">
-                        <label className="form-radio form-inline">
-                            <input
-                                id={Tone.Monotonous}
-                                type="radio"
-                                name="tone"
-                                value={Tone.Monotonous}
-                                checked={tone === Tone.Monotonous}
-                                onChange={handleToneChange}
-                            />
-                            <i className="form-icon"></i> Monotonous
-                        </label>
-                        <label className="form-radio form-inline">
-                            <input
-                                id={Tone.Dynamic}
-                                type="radio"
-                                name="tone"
-                                value={Tone.Dynamic}
-                                checked={tone === Tone.Dynamic}
-                                onChange={handleToneChange}
-                            />
-                            <i className="form-icon"></i> Dynamic
-                        </label>
-                    </div>
-
                     {/* Voice Customization */}
                     <div className="col-3 col-sm-12">
                         <label id={PresentationCustomization.Voice} className="form-label" htmlFor="voice">Voice</label>
@@ -265,6 +236,35 @@ function CustomizationComponentForm({
                                 onChange={handleVoiceChange}
                             />
                             <i className="form-icon"></i> Synthesizer
+                        </label>
+                    </div>
+
+                    {/* Tone Customization */}
+                    <div className="col-3 col-sm-12">
+                        <label id={PresentationCustomization.Tone} className="form-label" htmlFor="tone">Tone</label>
+                    </div>
+                    <div className="col-9 col-sm-12">
+                        <label className="form-radio form-inline">
+                            <input
+                                id={Tone.Monotonous}
+                                type="radio"
+                                name="tone"
+                                value={Tone.Monotonous}
+                                checked={tone === Tone.Monotonous}
+                                onChange={handleToneChange}
+                            />
+                            <i className="form-icon"></i> Monotonous
+                        </label>
+                        <label className="form-radio form-inline">
+                            <input
+                                id={Tone.Dynamic}
+                                type="radio"
+                                name="tone"
+                                value={Tone.Dynamic}
+                                checked={tone === Tone.Dynamic}
+                                onChange={handleToneChange}
+                            />
+                            <i className="form-icon"></i> Dynamic
                         </label>
                     </div>
 

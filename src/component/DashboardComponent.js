@@ -15,8 +15,8 @@ export const ContentCustomization = Object.freeze({
 
 export const PresentationCustomization = Object.freeze({
     Speed: 'Speed',
-    Tone: 'Tone',
     Voice: 'Voice',
+    Tone: 'Tone',
     Gender: 'Gender',
     Syntax: 'Syntax',
 });
