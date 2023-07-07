@@ -73,7 +73,7 @@ function App() {
     }
     return <DashboardComponent displayName={displayName} videos={videos} handleLogOut={handleLogOut} />;
   }
-  return <LoginComponent setAuthenticated={setAuthenticated} />;
+  return <LoginComponent setAuthenticated={setAuthenticated} setDisplayName={setDisplayName} />;
 }
 
 export default App;

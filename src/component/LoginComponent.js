@@ -1,7 +1,7 @@
 import React from 'react'
 import { SERVER_URL } from '../Constants';
 
-function LoginComponent ({ setAuthenticated }) {
+function LoginComponent ({ setAuthenticated, setDisplayName }) {
     const handleFormSubmit = async (e) => {
         e.preventDefault();
         try {
@@ -21,9 +21,11 @@ function LoginComponent ({ setAuthenticated }) {
             const parseRes = await response.json();
             if (parseRes.token) {
                 setAuthenticated(true);
+                setDisplayName(parseRes.displayName);
                 sessionStorage.setItem('token', parseRes.token);
             } else {
                 setAuthenticated(false);
+                setDisplayName('');
                 const errorMessage = parseRes.error ? parseRes.error.message : 'Failed to login';
                 document.querySelector('.form-input-hint').innerText = errorMessage;
             }
