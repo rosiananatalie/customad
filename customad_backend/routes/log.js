@@ -1,11 +1,7 @@
 const express = require('express');
-const dotenv = require('dotenv');
 const fs = require('fs');
 const path = require('path');
 const authRoute = require('../middleware/authRoute');
-
-// get config vars
-dotenv.config();
 
 const router = express.Router();
 
