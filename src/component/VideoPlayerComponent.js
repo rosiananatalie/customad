@@ -13,6 +13,7 @@ function VideoPlayerComponent({
     speed,
 }) {
     const [audioDescription, setAudioDescription] = useState();
+    const [videoGapEndTime, setVideoGapEndTime] = useState();
 
     const videoRef = useRef();
 
@@ -23,6 +24,25 @@ function VideoPlayerComponent({
             videoRef.current.play();
         }
     });
+
+    const seekAt = useRef(null);
+    useEffect(() => {
+        if (seekAt.current) {
+            // Possible to log twice; first is seek by user, and second is seek by system to the start of ad
+            Utils.log(`Seeking at ${seekAt.current}`);
+            if (audioDescription) {
+                if (seekAt.current > audioDescription.startTime) {
+                    audioRef.current.currentTime = 0;
+                    videoRef.current.seek(audioDescription.startTime);
+                    videoRef.current.play();
+                } else if (seekAt.current < videoGapEndTime) {
+                    audioRef.current.pause();
+                }
+            } else {
+                audioRef.current.pause();
+            }
+        }
+    }, [seekAt.current])
 
     const playAudio = useCallback(() => {
         if (isAudioDescriptionEnabled && audioRef.current.src) {
@@ -75,26 +95,13 @@ function VideoPlayerComponent({
     const handleStateChange = useCallback((state, prevState) => {
         if (audioDescriptions) {
             const currentAD = audioDescriptions.findLast(ad => ad.startTime <= state.currentTime);
-            const videoGapEndTime = videoGapEndTimes.findLast(time => time <= state.currentTime);
+            const gapEndTime = videoGapEndTimes.findLast(time => time <= state.currentTime);
             setAudioDescription(currentAD);
+            setVideoGapEndTime(gapEndTime);
+            seekAt.current = state.seeking ? state.currentTime : null;
 
-            if (state.seeking) {
-                // TODO: will run multiple time
-                Utils.log(`Seeking at ${state.currentTime}`);
-                if (currentAD) {
-                    if (state.currentTime > currentAD.startTime) {
-                        audioRef.current.currentTime = 0;
-                        videoRef.current.seek(currentAD.startTime);
-                        videoRef.current.play();
-                    } else if (state.currentTime < videoGapEndTime) {
-                        audioRef.current.pause();
-                    }
-                } else {
-                    audioRef.current.pause();
-                }
-            }
             if (!audioRef.current.ended) {
-                if (state.currentTime < Math.floor(videoGapEndTime + 1) && audioRef.current.currentTime > 0) {
+                if (state.currentTime < Math.floor(gapEndTime + 1) && audioRef.current.currentTime > 0) {
                     videoRef.current.pause();
                 }
             }
@@ -123,10 +130,10 @@ function VideoPlayerComponent({
                 const videoCurrentTime = videoState.currentTime;
                 // TODO: pause by code will log too. run multiple time.
                 Utils.log(`Pause video at ${videoCurrentTime}`);
-                const videoGapEndTime = videoGapEndTimes.findLast(time => time <= videoCurrentTime);
+                const gapEndTime = videoGapEndTimes.findLast(time => time <= videoCurrentTime);
                 if (
                     audioRef.current.src !== ""
-                    && !(videoCurrentTime < Math.floor(videoGapEndTime + 1) && audioRef.current.currentTime > 0)
+                    && !(videoCurrentTime < Math.floor(gapEndTime + 1) && audioRef.current.currentTime > 0)
                     && !videoState.ended
                 ) {
                     audioRef.current.pause();
