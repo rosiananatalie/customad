@@ -12,7 +12,7 @@ const router = express.Router();
 
 router.post('/login', async function (req, res) {
   const { username, password } = req.body;
-  const users = await pool.query('SELECT user_id, password FROM users WHERE username = $1', [username]);
+  const users = await pool.query('SELECT user_id, password, display_name FROM users WHERE username = $1', [username]);
   if (users.rows.length === 0) {
     return res.status(401).send({
       error: {
@@ -33,7 +33,10 @@ router.post('/login', async function (req, res) {
   }
   const payload = { id: user.user_id };
   const jwtToken = jwt.sign(payload, process.env.TOKEN_SECRET, { expiresIn: '1800s' });
-  res.json({ token: jwtToken });
+  res.json({
+    token: jwtToken,
+    displayName: user.display_name,
+  });
 });
 
 router.post('/verify', authRoute, function (req, res) {

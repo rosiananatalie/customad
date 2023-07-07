@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { Player, BigPlayButton, ControlBar, ProgressControl, CurrentTimeDisplay, TimeDivider, DurationDisplay } from 'video-react';
+import { Player, BigPlayButton, ControlBar, ProgressControl, CurrentTimeDisplay, TimeDivider, DurationDisplay, Shortcut } from 'video-react';
 import PlayToggle from 'video-react/lib/components/control-bar/PlayToggle';
 import { SERVER_URL } from '../Constants';
 import { log } from '../Utils';
@@ -142,7 +142,16 @@ function VideoPlayerComponent({
             unsubscribe.current = videoRef.current.subscribeToStateChange(handleStateChange);
         }
     }, [handleStateChange, playAudio]);
-    
+
+    const playerShortcuts = [
+        { // Press number 0 to restart video
+            keyCode: 48,
+            handle: (player, actions) => {
+                actions.seek(0);
+            }
+        }
+    ];
+
     return (
         <Player
             key={videoName}
@@ -160,6 +169,7 @@ function VideoPlayerComponent({
                 <DurationDisplay />
                 <ProgressControl />
             </ControlBar>
+            <Shortcut shortcuts={playerShortcuts} />
         </Player>
     );
 }
