@@ -329,6 +329,22 @@ function DashboardComponent({ displayName, videos, handleLogOut }) {
         };
     }, [handleKeyPress]);
 
+    const renderNavigationButton = () => {
+        const handleClick = () => {
+            const nextIndex = videos.indexOf(video) + 1;
+            if (nextIndex < videos.length) {
+                setVideo(videos[nextIndex]);
+            }
+        };
+        if (videos.length < 2) {
+            return null;
+        }
+        if (videos.indexOf(video) + 1 === videos.length) {
+            return <button>Submit</button>
+        }
+        return <button onClick={handleClick}>Next</button>;
+    };
+
     return (
         <div className="container">
             <div className="columns col-gapless">
@@ -340,7 +356,7 @@ function DashboardComponent({ displayName, videos, handleLogOut }) {
             </div>
             <div className="columns">
                 <div className="column col-12 vertical-align-middle">
-                    <h5>{video.displayName}</h5>
+                    <h5>{video.displayName || video.filename}</h5>
                 </div>
             </div>
             <div className="columns">
@@ -357,6 +373,9 @@ function DashboardComponent({ displayName, videos, handleLogOut }) {
                         gender={gender}
                         syntax={syntax}
                     />
+                    <div className="text-right">
+                        {renderNavigationButton()}
+                    </div>
                 </div>
                 <div className="column col-4">
                     <CustomizationContainer

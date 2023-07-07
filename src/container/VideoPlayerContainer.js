@@ -16,8 +16,6 @@ const VideoPlayerContainer = ({
 }) => {
     const [audioDescriptions, setAudioDescriptions] = useState([]);
 
-    const videoPoster = `${SERVER_URL}/images/${videoName}.png`;
-    const videoSrc = `${SERVER_URL}/videos/${videoName}.mp4`;
     const params = new URLSearchParams({ videoLength, informationPreference, syntax, voice, gender, tone });
     const url = SERVER_URL + '/videos/' + videoName + '/ad?' + params.toString();
 
@@ -43,8 +41,7 @@ const VideoPlayerContainer = ({
 
     return(
         <VideoPlayerComponent
-            videoPoster={videoPoster}
-            videoSrc={videoSrc}
+            videoName={videoName}
             videoGapEndTimes={videoGapEndTimes}
             audioDescriptions={audioDescriptions}
             isAudioDescriptionEnabled={isAudioDescriptionEnabled}

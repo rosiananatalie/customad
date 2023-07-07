@@ -5,8 +5,7 @@ import { SERVER_URL } from '../Constants';
 import Utils from '../Utils';
 
 function VideoPlayerComponent({
-    videoPoster,
-    videoSrc,
+    videoName,
     videoGapEndTimes,
     audioDescriptions,
     isAudioDescriptionEnabled,
@@ -143,15 +142,16 @@ function VideoPlayerComponent({
             unsubscribe.current = videoRef.current.subscribeToStateChange(handleStateChange);
         }
     }, [handleStateChange, playAudio]);
-
+    
     return (
         <Player
+            key={videoName}
             ref={videoRef}
             playsInline
-            poster={videoPoster}
+            poster={`${SERVER_URL}/images/${videoName}.png`}
             controls
         >
-            <source src={videoSrc} type="video/mp4" />
+            <source src={`${SERVER_URL}/videos/${videoName}.mp4`} type="video/mp4" />
             <BigPlayButton position="center" />
             <ControlBar autoHide={false} disableDefaultControls>
                 <PlayToggle />
