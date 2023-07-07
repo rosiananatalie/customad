@@ -27,7 +27,6 @@ const VideoPlayerContainer = ({
                     method : 'GET',
                     headers: {
                         Authorization: 'Bearer ' + token,
-                        'Content-type' : 'application/json'
                     }
                 });
                 const parseRes = await response.json();

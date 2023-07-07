@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import CustomizationContainer from '../container/CustomizationContainer';
 import VideoPlayerContainer from '../container/VideoPlayerContainer';
-import Utils from '../Utils'
+import { log, sendLogsToServerAndClear } from '../Utils'
 
 export const CustomizationGroup = Object.freeze({
     Content: 'content',
@@ -139,7 +139,7 @@ function DashboardComponent({ displayName, videos, handleLogOut }) {
         if (event.shiftKey) {
             switch (event.key.toLowerCase()) {
                 case 'a': {
-                    Utils.log('Shift + A is pressed.');
+                    log('Shift + A is pressed.');
                     removeSelections();
                     setCustomizationGroup(CustomizationGroup.Content);
                     setCustomization(null);
@@ -148,7 +148,7 @@ function DashboardComponent({ displayName, videos, handleLogOut }) {
                     break;
                 }
                 case 's': {
-                    Utils.log('Shift + S is pressed.');
+                    log('Shift + S is pressed.');
                     removeSelections();
                     setCustomizationGroup(CustomizationGroup.Presentation);
                     setCustomization(null);
@@ -157,7 +157,7 @@ function DashboardComponent({ displayName, videos, handleLogOut }) {
                     break;
                 }
                 case 'm': {
-                    Utils.log('Shift + M is pressed.');
+                    log('Shift + M is pressed.');
                     removeSelections();
                     setCustomizationGroup(null);
                     setCustomization(null);
@@ -168,7 +168,7 @@ function DashboardComponent({ displayName, videos, handleLogOut }) {
                     break;
                 }
                 case 'arrowup': {
-                    Utils.log('Shift + Arrow Up is pressed.');
+                    log('Shift + Arrow Up is pressed.');
                     if (customizationGroup === CustomizationGroup.Content) {
                         removeSelections();
                         const selected = customization ? getPreviousValue(ContentCustomization, customization) : ContentCustomization.VideoLength;
@@ -185,7 +185,7 @@ function DashboardComponent({ displayName, videos, handleLogOut }) {
                     break;
                 }
                 case 'arrowdown': {
-                    Utils.log('Shift + Arrow Down is pressed.');
+                    log('Shift + Arrow Down is pressed.');
                     if (customizationGroup === CustomizationGroup.Content) {
                         removeSelections();
                         const selected = customization ? getNextValue(ContentCustomization, customization) : ContentCustomization.VideoLength;
@@ -202,7 +202,7 @@ function DashboardComponent({ displayName, videos, handleLogOut }) {
                     break;
                 }
                 case 'arrowleft': {
-                    Utils.log('Shift + Arrow Left is pressed.');
+                    log('Shift + Arrow Left is pressed.');
                     if (customization === ContentCustomization.VideoLength) {
                         removeSelections();
                         const selected = videoLength ? getPreviousValue(VideoLength, videoLength) : VideoLength.Succinct;
@@ -258,7 +258,7 @@ function DashboardComponent({ displayName, videos, handleLogOut }) {
                     break;
                 }
                 case 'arrowright': {
-                    Utils.log('Shift + Arrow Right is pressed.');
+                    log('Shift + Arrow Right is pressed.');
                     if (customization === ContentCustomization.VideoLength) {
                         removeSelections();
                         const selected = videoLength ? getNextValue(VideoLength, videoLength) : VideoLength.Succinct;
@@ -330,9 +330,11 @@ function DashboardComponent({ displayName, videos, handleLogOut }) {
     }, [handleKeyPress]);
 
     const renderNavigationButton = () => {
-        const handleClick = () => {
+        const handleClick = (e) => {
+            e.preventDefault();
             const nextIndex = videos.indexOf(video) + 1;
             if (nextIndex < videos.length) {
+                sendLogsToServerAndClear(video.filename);
                 setVideo(videos[nextIndex]);
             }
         };

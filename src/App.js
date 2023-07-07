@@ -25,6 +25,7 @@ function App() {
               method : 'POST',
               headers: {
                 Authorization: 'Bearer ' + token,
+                'Content-type' : 'application/json',
               }
           });
           const parseRes = await response.json();
@@ -49,7 +50,6 @@ function App() {
               method : 'GET',
               headers: {
                   Authorization: 'Bearer ' + token,
-                  'Content-type' : 'application/json'
               }
           });
           const parseRes = await response.json();
