@@ -1,5 +1,5 @@
 import React from 'react'
-import { SERVER_URL } from '../constants';
+import { SERVER_URL } from '../Constants';
 
 function LoginComponent ({ setAuthenticated }) {
     const handleFormSubmit = async (e) => {

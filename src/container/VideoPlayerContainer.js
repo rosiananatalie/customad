@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import VideoPlayerComponent from '../component/VideoPlayerComponent';
-import { SERVER_URL } from '../constants';
+import { SERVER_URL } from '../Constants';
 
 const VideoPlayerContainer = ({
     videoName,

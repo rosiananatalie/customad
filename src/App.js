@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
-import { SERVER_URL } from './constants';
+import { SERVER_URL } from './Constants';
 import DashboardComponent from './component/DashboardComponent';
 import LoginComponent from './component/LoginComponent';
 
