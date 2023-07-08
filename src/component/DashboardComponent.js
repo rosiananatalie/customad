@@ -74,6 +74,7 @@ export const utterThisProps = Object.freeze({
 });
 
 function DashboardComponent({ displayName, videos, handleLogOut }) {
+    const [isTaskCompleted, setTaskIsCompleted] = useState(false);
     const [video, setVideo] = useState(videos[0]);
     const [isAudioDescriptionEnabled, setAudioDescriptionIsEnabled] = useState(true);
     const [customizationGroup, setCustomizationGroup] = useState(null);
@@ -330,7 +331,7 @@ function DashboardComponent({ displayName, videos, handleLogOut }) {
     }, [handleKeyPress]);
 
     const renderNavigationButton = () => {
-        const handleClick = (e) => {
+        const handleNextVideo = (e) => {
             e.preventDefault();
             const nextIndex = videos.indexOf(video) + 1;
             if (nextIndex < videos.length) {
@@ -338,70 +339,99 @@ function DashboardComponent({ displayName, videos, handleLogOut }) {
                 setVideo(videos[nextIndex]);
             }
         };
+        const handleTaskComplete = (e) => {
+            e.preventDefault();
+            sendLogsToServerAndClear(video.filename);
+            setTaskIsCompleted(true);
+        };
         if (videos.length < 2) {
             return null;
         }
         if (videos.indexOf(video) + 1 === videos.length) {
-            return <button>Submit</button>
+            return <button onClick={handleTaskComplete}>Submit</button>
         }
-        return <button onClick={handleClick}>Next</button>;
+        return <button onClick={handleNextVideo}>Next</button>;
     };
 
-    return (
-        <div className="container">
-            <div className="columns col-gapless">
-                <div className="column text-right">
-                    Welcome, {displayName}
-                    &nbsp;
-                    <button className="btn btn-link" onClick={handleLogOut}>Logout</button>
-                </div>    
-            </div>
-            <div className="columns">
-                <div className="column col-12 vertical-align-middle">
-                    <h5>{video.displayName || video.filename}</h5>
-                </div>
-            </div>
-            <div className="columns">
-                <div className="column col-8">
-                    <VideoPlayerContainer
-                        videoName={video.filename}
-                        videoGapEndTimes={video.gapEndTimes}
-                        isAudioDescriptionEnabled={isAudioDescriptionEnabled}                        
-                        videoLength={videoLength}
-                        informationPreference={informationPreference}
-                        speed={speed}
-                        tone={tone}
-                        voice={voice}
-                        gender={gender}
-                        syntax={syntax}
-                    />
-                    <div className="text-right">
-                        {renderNavigationButton()}
+    if (isTaskCompleted) {
+        return (
+            <div className="container">
+                <div class="columns">
+                    <div class="column col-6 col-mx-auto">
+                        <div class="card m-2">
+                            <div class="card-header">
+                                <div class="card-title h5">Thank you</div>
+                            </div>
+                            <div class="card-body">
+                                <div>All tasks are completed.</div>
+                                <div>Please contact the person in charge for further instruction.</div>
+                                <div>Thank you for your time.</div>
+                            </div>
+                            <div class="card-footer">
+                                <button class="btn btn-primary float-right" onClick={handleLogOut}>Logout</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div className="column col-4">
-                    <CustomizationContainer
-                        isAudioDescriptionEnabled={isAudioDescriptionEnabled}
-                        videoLength={videoLength}
-                        informationPreference={informationPreference}
-                        speed={speed}
-                        tone={tone}
-                        voice={voice}
-                        gender={gender}
-                        syntax={syntax}
-                        onAudioDescriptionIsEnabledChange={setAudioDescriptionIsEnabled}                        
-                        onVideoLengthChange={setVideoLength}
-                        onInformationPreferenceChange={setInformationPreference}
-                        onSpeedChange={setSpeed}
-                        onToneChange={setTone}
-                        onVoiceChange={setVoice}
-                        onGenderChange={setGender}
-                        onSyntaxChange={setSyntax}
-                    />
+            </div>
+        );
+    } else {
+        return (
+            <div className="container">
+                <div className="columns col-gapless">
+                    <div className="column text-right">
+                        Welcome, {displayName}
+                        &nbsp;
+                        <button className="btn btn-link" onClick={handleLogOut}>Logout</button>
+                    </div>    
+                </div>
+                <div className="columns">
+                    <div className="column col-12 vertical-align-middle">
+                        <h5>{video.displayName || video.filename}</h5>
+                    </div>
+                </div>
+                <div className="columns">
+                    <div className="column col-8">
+                        <VideoPlayerContainer
+                            videoName={video.filename}
+                            videoGapEndTimes={video.gapEndTimes}
+                            isAudioDescriptionEnabled={isAudioDescriptionEnabled}                        
+                            videoLength={videoLength}
+                            informationPreference={informationPreference}
+                            speed={speed}
+                            tone={tone}
+                            voice={voice}
+                            gender={gender}
+                            syntax={syntax}
+                        />
+                        <div className="text-right">
+                            {renderNavigationButton()}
+                        </div>
+                    </div>
+                    <div className="column col-4">
+                        <CustomizationContainer
+                            isAudioDescriptionEnabled={isAudioDescriptionEnabled}
+                            videoLength={videoLength}
+                            informationPreference={informationPreference}
+                            speed={speed}
+                            tone={tone}
+                            voice={voice}
+                            gender={gender}
+                            syntax={syntax}
+                            onAudioDescriptionIsEnabledChange={setAudioDescriptionIsEnabled}                        
+                            onVideoLengthChange={setVideoLength}
+                            onInformationPreferenceChange={setInformationPreference}
+                            onSpeedChange={setSpeed}
+                            onToneChange={setTone}
+                            onVoiceChange={setVoice}
+                            onGenderChange={setGender}
+                            onSyntaxChange={setSyntax}
+                        />
+                    </div>
                 </div>
             </div>
-        </div>
-    );
+        );
+    }
 }
 
 export default DashboardComponent;
