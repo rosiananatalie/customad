@@ -143,13 +143,121 @@ function VideoPlayerComponent({
         }
     }, [handleStateChange, playAudio]);
 
-    const playerShortcuts = [
-        { // Press number 0 to restart video
-            keyCode: 48,
-            handle: (player, actions) => {
-                actions.seek(0);
+    // https://github.com/video-react/video-react/blob/master/src/components/Shortcut.js
+    const handleKeyPress = useCallback((event) => {
+        const togglePlay = () => {
+            const player = videoRef.current.getState().player;
+            if (player.paused) {
+                videoRef.current.play({
+                    action: 'play',
+                    source: 'shortcut'
+                });
+            } else {
+                videoRef.current.pause({
+                    action: 'pause',
+                    source: 'shortcut'
+                });
+            }
+            if (audioRef.current.src) {
+                if (audioRef.current.paused) {
+                    audioRef.current.play();
+                } else {
+                    audioRef.current.pause();
+                }
+            }
+        };
+        if (!event.shiftKey) {
+            switch (event.keyCode) {
+                case 32: {
+                    log('Spacebar is pressed.');
+                    event.preventDefault(); // prevent scroll down
+                    togglePlay();
+                    break;
+                }
+                case 37: {
+                    log('Arrow Left is pressed.');
+                    const player = videoRef.current.getState().player;
+                    if (player.hasStarted) {
+                        videoRef.current.replay(5, {
+                            action: 'replay-5',
+                            source: 'shortcut'
+                        });
+                    }
+                    break;
+                }
+                case 39: {
+                    log('Arrow Right is pressed.');
+                    event.preventDefault(); // prevent scroll down
+                    const player = videoRef.current.getState().player;
+                    if (player.hasStarted) {
+                        videoRef.current.forward(5, {
+                            action: 'forward-5',
+                            source: 'shortcut'
+                        });
+                    }
+                    break;
+                }
+                case 48: {
+                    log('0 is pressed.');
+                    const player = videoRef.current.getState().player;
+                    if (player.hasStarted) {
+                        videoRef.current.seek(0);
+                    }
+                    break;
+                }
+                case 74: {
+                    log('j is pressed.');
+                    const player = videoRef.current.getState().player;
+                    if (player.hasStarted) {
+                        videoRef.current.replay(10, {
+                            action: 'replay-10',
+                            source: 'shortcut'
+                        });
+                    }
+                    break;
+                }
+                case 75: {
+                    log('k is pressed.');
+                    togglePlay();
+                    break;
+                }
+                case 76: {
+                    log('l is pressed.');
+                    const player = videoRef.current.getState().player;
+                    if (player.hasStarted) {
+                        videoRef.current.forward(10, {
+                            action: 'forward-10',
+                            source: 'shortcut'
+                        });
+                    }
+                    break;
+                }
+                default:
+                    break;
             }
         }
+    }, []);
+
+    useEffect(() => {
+        // attach the event listener
+        document.addEventListener('keydown', handleKeyPress);
+    
+        // remove the event listener
+        return () => {
+            document.removeEventListener('keydown', handleKeyPress);
+        };
+    }, [handleKeyPress]);
+
+    // https://video-react.js.org/components/shortcut/
+    const playerShortcuts = [
+        { keyCode: 16, handle: () => {} },  // Disable Shift (Increase/Decrease speed)
+        { keyCode: 32, handle: () => {} },  // Disable Spacebar (Toggle play/pause the video)
+        { keyCode: 36, handle: () => {} },  // Disable Home (Restart video)
+        { keyCode: 37, handle: () => {} },  // Disable Left arrow (Go back 5 seconds)
+        { keyCode: 39, handle: () => {} },  // Disable Right arrow (Go forward 5 seconds)
+        { keyCode: 74, handle: () => {} },  // Disable j (Go back 10 seconds)
+        { keyCode: 75, handle: () => {} },  // Disable k (Toggle play/pause the video)
+        { keyCode: 76, handle: () => {} },  // Disable l (Go forward 10 seconds)
     ];
 
     return (
