@@ -13,6 +13,7 @@ function VideoPlayerComponent({
 }) {
     const [audioDescription, setAudioDescription] = useState();
     const [videoGapEndTime, setVideoGapEndTime] = useState();
+    const [seekAt, setSeekAt] = useState();
 
     const videoRef = useRef();
 
@@ -24,24 +25,23 @@ function VideoPlayerComponent({
         }
     });
 
-    const seekAt = useRef(null);
     useEffect(() => {
-        if (seekAt.current) {
+        if (seekAt) {
             // Possible to log twice; first is seek by user, and second is seek by system to the start of ad
-            log(`Seeking at ${seekAt.current}`);
+            log(`Seeking at ${seekAt}`);
             if (audioDescription) {
-                if (seekAt.current > audioDescription.startTime) {
+                if (seekAt > audioDescription.startTime) {
                     audioRef.current.currentTime = 0;
                     videoRef.current.seek(audioDescription.startTime);
                     videoRef.current.play();
-                } else if (seekAt.current < videoGapEndTime) {
+                } else if (seekAt < videoGapEndTime) {
                     audioRef.current.pause();
                 }
             } else {
                 audioRef.current.pause();
             }
         }
-    }, [seekAt.current])
+    }, [seekAt])
 
     const playAudio = useCallback(() => {
         if (isAudioDescriptionEnabled && audioRef.current.src) {
@@ -97,7 +97,7 @@ function VideoPlayerComponent({
             const gapEndTime = videoGapEndTimes.findLast(time => time <= state.currentTime);
             setAudioDescription(currentAD);
             setVideoGapEndTime(gapEndTime);
-            seekAt.current = state.seeking ? state.currentTime : null;
+            setSeekAt(state.seeking ? state.currentTime : null);
 
             if (!audioRef.current.ended) {
                 if (state.currentTime < Math.floor(gapEndTime + 1) && audioRef.current.currentTime > 0) {
