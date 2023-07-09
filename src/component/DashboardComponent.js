@@ -333,6 +333,7 @@ function DashboardComponent({ displayName, videos, handleLogOut }) {
     const renderNavigationButton = () => {
         const handleNextVideo = (e) => {
             e.preventDefault();
+            log('Next button is clicked.')
             const nextIndex = videos.indexOf(video) + 1;
             if (nextIndex < videos.length) {
                 sendLogsToServerAndClear(video.filename);
@@ -341,6 +342,7 @@ function DashboardComponent({ displayName, videos, handleLogOut }) {
         };
         const handleTaskComplete = (e) => {
             e.preventDefault();
+            log('Submit button is clicked.')
             sendLogsToServerAndClear(video.filename);
             setTaskIsCompleted(true);
         };

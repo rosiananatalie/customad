@@ -3,6 +3,7 @@ import './App.css';
 import { SERVER_URL } from './Constants';
 import DashboardComponent from './component/DashboardComponent';
 import LoginComponent from './component/LoginComponent';
+import { log } from '../Utils'
 
 function App() {
   const [displayName, setDisplayName] = useState('');
@@ -11,6 +12,7 @@ function App() {
 
   const handleLogOut = (e) => {
     e.preventDefault();
+    log(`User ${displayName} has logged out.`)
     sessionStorage.removeItem('token');
     setAuthenticated(false);
     setDisplayName('');
