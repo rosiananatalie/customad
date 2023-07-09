@@ -189,6 +189,22 @@ function VideoPlayerComponent({
                     }
                     break;
                 }
+                case 38: {
+                    log('Arrow Up is pressed.');
+                    if (document.activeElement === videoRef.current.video.video) {
+                        const player = videoRef.current.getState().player;
+                        const actions = videoRef.current.actions;
+                        let volume = player.volume + 0.05;
+                        if (volume > 1) {
+                          volume = 1;
+                        }
+                        actions.changeVolume(volume, {
+                          action: 'volume-up',
+                          source: 'shortcut'
+                        });
+                    }
+                    break;
+                }
                 case 39: {
                     log('Arrow Right is pressed.');
                     event.preventDefault(); // prevent scroll down
@@ -196,6 +212,22 @@ function VideoPlayerComponent({
                     if (player.hasStarted) {
                         videoRef.current.forward(5, {
                             action: 'forward-5',
+                            source: 'shortcut'
+                        });
+                    }
+                    break;
+                }
+                case 40: {
+                    log('Arrow Down is pressed.');
+                    if (document.activeElement === videoRef.current.video.video) {
+                        const player = videoRef.current.getState().player;
+                        const actions = videoRef.current.actions;
+                        let volume = player.volume - 0.05;
+                        if (volume < 0) {
+                            volume = 0;
+                        }
+                        actions.changeVolume(volume, {
+                            action: volume > 0 ? 'volume-down' : 'volume-off',
                             source: 'shortcut'
                         });
                     }
@@ -254,14 +286,16 @@ function VideoPlayerComponent({
 
     // https://video-react.js.org/components/shortcut/
     const playerShortcuts = [
-        { keyCode: 16, handle: () => {} },  // Disable Shift (Increase/Decrease speed)
-        { keyCode: 32, handle: () => {} },  // Disable Spacebar (Toggle play/pause the video)
-        { keyCode: 36, handle: () => {} },  // Disable Home (Restart video)
-        { keyCode: 37, handle: () => {} },  // Disable Left arrow (Go back 5 seconds)
-        { keyCode: 39, handle: () => {} },  // Disable Right arrow (Go forward 5 seconds)
-        { keyCode: 74, handle: () => {} },  // Disable j (Go back 10 seconds)
-        { keyCode: 75, handle: () => {} },  // Disable k (Toggle play/pause the video)
-        { keyCode: 76, handle: () => {} },  // Disable l (Go forward 10 seconds)
+        { keyCode: 16, handle: () => {} }, // Disable Shift (Increase/Decrease speed)
+        { keyCode: 32, handle: () => {} }, // Disable Spacebar (Toggle play/pause the video)
+        { keyCode: 36, handle: () => {} }, // Disable Home (Restart video)
+        { keyCode: 37, handle: () => {} }, // Disable Left arrow (Go back 5 seconds)
+        { keyCode: 38, handle: () => {} }, // Disable Up arrow (Increase volume 5%)
+        { keyCode: 39, handle: () => {} }, // Disable Right arrow (Go forward 5 seconds)
+        { keyCode: 40, handle: () => {} }, // Disable Down arrow (Decrease volume 5%)
+        { keyCode: 74, handle: () => {} }, // Disable j (Go back 10 seconds)
+        { keyCode: 75, handle: () => {} }, // Disable k (Toggle play/pause the video)
+        { keyCode: 76, handle: () => {} }, // Disable l (Go forward 10 seconds)
     ];
 
     return (
