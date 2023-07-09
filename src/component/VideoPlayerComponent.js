@@ -162,7 +162,7 @@ function VideoPlayerComponent({
                     source: 'shortcut'
                 });
             }
-            if (audioRef.current.src) {
+            if (audioRef.current.src && !audioRef.current.ended) {
                 if (audioRef.current.paused) {
                     audioRef.current.play();
                 } else {
