@@ -25,24 +25,6 @@ function VideoPlayerComponent({
         }
     });
 
-    useEffect(() => {
-        if (seekAt) {
-            // Possible to log twice; first is seek by user, and second is seek by system to the start of ad
-            log(`Seeking at ${seekAt}`);
-            if (audioDescription) {
-                if (seekAt > audioDescription.startTime) {
-                    audioRef.current.currentTime = 0;
-                    videoRef.current.seek(audioDescription.startTime);
-                    videoRef.current.play();
-                } else if (seekAt < videoGapEndTime) {
-                    audioRef.current.pause();
-                }
-            } else {
-                audioRef.current.pause();
-            }
-        }
-    }, [seekAt])
-
     const playAudio = useCallback(() => {
         if (isAudioDescriptionEnabled && audioRef.current.src) {
             audioRef.current.play();
@@ -58,6 +40,13 @@ function VideoPlayerComponent({
         }
     }, [audioDescriptions]);
 
+    // Pause audio if audio description is disabled
+    useEffect(()=> {
+        if (!isAudioDescriptionEnabled) {
+            audioRef.current.pause();
+        }
+    }, [isAudioDescriptionEnabled]);
+
     // Set video and audio playback rate
     useEffect(()=> {
         if (videoRef.current.video) {
@@ -66,30 +55,48 @@ function VideoPlayerComponent({
         audioRef.current.playbackRate = speed
     }, [speed]);
 
-    // Pause audio if audio description is disabled
-    useEffect(()=> {
-        if (!isAudioDescriptionEnabled) {
-            audioRef.current.pause();
-        }
-    }, [isAudioDescriptionEnabled]);
-
     // Set audio description
     useEffect(() => {
         if (audioDescription) {
             audioRef.current.src = SERVER_URL + audioDescription.src;
             log(`Current audio description is ${audioDescription.src}`);
-            playAudio();
-            const videoState = videoRef.current.getState().player;
+            const player = videoRef.current.getState().player;
             // Make time comparison less sensitive to prevent unnecessary seeking
-            if (Math.floor(videoState.currentTime) > Math.ceil(audioDescription.startTime)) {
+            if (Math.floor(player.currentTime) > Math.ceil(audioDescription.startTime)) {
                 videoRef.current.seek(audioDescription.startTime);
             }
-            videoRef.current.play();
+            if (!player.paused) {
+                videoRef.current.play();
+                playAudio();
+            }
         } else {
             audioRef.current.removeAttribute('src');
             audioRef.current.pause();
         }
     }, [audioDescription, playAudio]);
+
+    useEffect(() => {
+        if (seekAt) {
+            // Possible to log twice; first is seek by user, and second is seek by system to the start of ad
+            log(`Seeking at ${seekAt}`);
+            if (audioDescription) {
+                if (seekAt > audioDescription.startTime) {
+                    audioRef.current.currentTime = 0;
+                    videoRef.current.seek(audioDescription.startTime);
+
+                    const player = videoRef.current.getState().player;
+                    if (!player.paused) {
+                        videoRef.current.play();
+                        playAudio();
+                    }
+                } else if (seekAt < videoGapEndTime) {
+                    audioRef.current.pause();
+                }
+            } else {
+                audioRef.current.pause();
+            }
+        }
+    }, [seekAt, playAudio]);
 
     const handleStateChange = useCallback((state, prevState) => {
         if (audioDescriptions) {
@@ -105,7 +112,7 @@ function VideoPlayerComponent({
                 }
             }
         }
-    }, [audioDescriptions]);
+    }, [audioDescriptions, videoGapEndTimes]);
 
     const unsubscribe = useRef(null);
     useEffect(() => {
@@ -113,32 +120,29 @@ function VideoPlayerComponent({
             if (unsubscribe.current) {
                 unsubscribe.current();
             }
-            const prevHandlePlay = videoRef.current.video.handlePlay;
-            videoRef.current.video.handlePlay = () => {
-                const videoState = videoRef.current.getState().player;
+            const videoElement = videoRef.current.video.video;
+            videoElement.addEventListener('play', (e) => {
+                const player = videoRef.current.getState().player;
                 // TODO: play by code will log too. run multiple time.
-                log(`Play video at ${videoState.currentTime}`);
-                if (videoState.paused && !audioRef.current.ended) {
+                log(`Play video at ${player.currentTime}`);
+                if (!audioRef.current.ended) {
                     playAudio();
                 }
-                prevHandlePlay();
-            };
-            const prevPauseHandler = videoRef.current.video.handlePause;
-            videoRef.current.video.handlePause = () => {
-                const videoState = videoRef.current.getState().player;
-                const videoCurrentTime = videoState.currentTime;
+            });
+            videoElement.addEventListener('pause', (e) => {
+                const player = videoRef.current.getState().player;
+                const videoCurrentTime = player.currentTime;
                 // TODO: pause by code will log too. run multiple time.
                 log(`Pause video at ${videoCurrentTime}`);
                 const gapEndTime = videoGapEndTimes.findLast(time => time <= videoCurrentTime);
                 if (
-                    audioRef.current.src !== ""
-                    && !(videoCurrentTime < Math.floor(gapEndTime + 1) && audioRef.current.currentTime > 0)
-                    && !videoState.ended
+                    !player.ended
+                    && audioRef.current.src !== ""
+                    && !(videoCurrentTime < Math.floor(gapEndTime + 1) && audioRef.current.currentTime > 0) 
                 ) {
                     audioRef.current.pause();
                 }
-                prevPauseHandler();
-            };
+            });
             unsubscribe.current = videoRef.current.subscribeToStateChange(handleStateChange);
         }
     }, [handleStateChange, playAudio]);

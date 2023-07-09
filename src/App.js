@@ -3,7 +3,7 @@ import './App.css';
 import { SERVER_URL } from './Constants';
 import DashboardComponent from './component/DashboardComponent';
 import LoginComponent from './component/LoginComponent';
-import { log } from '../Utils'
+import { log } from './Utils'
 
 function App() {
   const [displayName, setDisplayName] = useState('');
