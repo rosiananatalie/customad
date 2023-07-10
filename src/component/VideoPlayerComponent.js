@@ -106,10 +106,12 @@ function VideoPlayerComponent({
             setVideoGapEndTime(gapEndTime);
             setSeekAt(state.seeking ? state.currentTime : null);
 
-            if (!audioRef.current.ended) {
-                if (state.currentTime < Math.floor(gapEndTime + 1) && audioRef.current.currentTime > 0) {
-                    videoRef.current.pause();
-                }
+            if (
+                !audioRef.current.ended
+                && audioRef.current.currentTime > 0
+                && state.currentTime < Math.ceil(gapEndTime)
+            ) {
+                videoRef.current.pause();
             }
         }
     }, [audioDescriptions, videoGapEndTimes]);
