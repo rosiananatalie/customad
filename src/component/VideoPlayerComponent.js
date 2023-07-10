@@ -121,15 +121,20 @@ function VideoPlayerComponent({
                 unsubscribe.current();
             }
             const videoElement = videoRef.current.video.video;
-            videoElement.addEventListener('play', (e) => {
+            const handlePlay = () => {
                 const player = videoRef.current.getState().player;
                 // TODO: play by code will log too. run multiple time.
                 log(`Play video at ${player.currentTime}`);
                 if (!audioRef.current.ended) {
                     playAudio();
                 }
-            });
-            videoElement.addEventListener('pause', (e) => {
+            };
+            if (videoElement.lastPlayEventListener) {
+                videoElement.removeEventListener('play', videoElement.lastPlayEventListener);
+            }
+            videoElement.addEventListener('play', handlePlay);
+            videoElement.lastPlayEventListener = handlePlay;
+            const handlePause = () => {
                 const player = videoRef.current.getState().player;
                 const videoCurrentTime = player.currentTime;
                 // TODO: pause by code will log too. run multiple time.
@@ -142,10 +147,15 @@ function VideoPlayerComponent({
                 ) {
                     audioRef.current.pause();
                 }
-            });
+            };
+            if (videoElement.lastPauseEventListener) {
+                videoElement.removeEventListener('pause', videoElement.lastPauseEventListener);
+            }
+            videoElement.addEventListener('pause', handlePause);
+            videoElement.lastPauseEventListener = handlePause;
             unsubscribe.current = videoRef.current.subscribeToStateChange(handleStateChange);
         }
-    }, [handleStateChange, playAudio]);
+    }, [handleStateChange, videoGapEndTimes, isAudioDescriptionEnabled, playAudio]);
 
     // https://github.com/video-react/video-react/blob/master/src/components/Shortcut.js
     const handleKeyPress = useCallback((event) => {
@@ -161,13 +171,6 @@ function VideoPlayerComponent({
                     action: 'pause',
                     source: 'shortcut'
                 });
-            }
-            if (audioRef.current.src && !audioRef.current.ended) {
-                if (audioRef.current.paused) {
-                    audioRef.current.play();
-                } else {
-                    audioRef.current.pause();
-                }
             }
         };
         if (!event.shiftKey) {
