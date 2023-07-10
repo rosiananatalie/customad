@@ -162,13 +162,14 @@ function VideoPlayerComponent({
     const handleKeyPress = useCallback((event) => {
         const togglePlay = () => {
             const player = videoRef.current.getState().player;
+            const actions = videoRef.current.actions;
             if (player.paused) {
-                videoRef.current.play({
+                actions.play({
                     action: 'play',
                     source: 'shortcut'
                 });
             } else {
-                videoRef.current.pause({
+                actions.pause({
                     action: 'pause',
                     source: 'shortcut'
                 });
@@ -185,8 +186,9 @@ function VideoPlayerComponent({
                 case 37: {
                     log('Arrow Left is pressed.');
                     const player = videoRef.current.getState().player;
+                    const actions = videoRef.current.actions;
                     if (player.hasStarted) {
-                        videoRef.current.replay(5, {
+                        actions.replay(5, {
                             action: 'replay-5',
                             source: 'shortcut'
                         });
@@ -213,8 +215,9 @@ function VideoPlayerComponent({
                     log('Arrow Right is pressed.');
                     event.preventDefault(); // prevent scroll down
                     const player = videoRef.current.getState().player;
+                    const actions = videoRef.current.actions;
                     if (player.hasStarted) {
-                        videoRef.current.forward(5, {
+                        actions.forward(5, {
                             action: 'forward-5',
                             source: 'shortcut'
                         });
@@ -240,16 +243,18 @@ function VideoPlayerComponent({
                 case 48: {
                     log('0 is pressed.');
                     const player = videoRef.current.getState().player;
+                    const actions = videoRef.current.actions;
                     if (player.hasStarted) {
-                        videoRef.current.seek(0);
+                        actions.seek(0);
                     }
                     break;
                 }
                 case 74: {
                     log('j is pressed.');
                     const player = videoRef.current.getState().player;
+                    const actions = videoRef.current.actions;
                     if (player.hasStarted) {
-                        videoRef.current.replay(10, {
+                        actions.replay(10, {
                             action: 'replay-10',
                             source: 'shortcut'
                         });
@@ -264,8 +269,9 @@ function VideoPlayerComponent({
                 case 76: {
                     log('l is pressed.');
                     const player = videoRef.current.getState().player;
+                    const actions = videoRef.current.actions;
                     if (player.hasStarted) {
-                        videoRef.current.forward(10, {
+                        actions.forward(10, {
                             action: 'forward-10',
                             source: 'shortcut'
                         });
