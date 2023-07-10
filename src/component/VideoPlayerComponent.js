@@ -139,11 +139,10 @@ function VideoPlayerComponent({
                 const videoCurrentTime = player.currentTime;
                 // TODO: pause by code will log too. run multiple time.
                 log(`Pause video at ${videoCurrentTime}`);
-                const gapEndTime = videoGapEndTimes.findLast(time => time <= videoCurrentTime);
                 if (
                     !player.ended
-                    && audioRef.current.src !== ""
-                    && !(videoCurrentTime < Math.floor(gapEndTime + 1) && audioRef.current.currentTime > 0) 
+                    && audioRef.current.src
+                    && !(videoCurrentTime < Math.ceil(videoGapEndTime) && audioRef.current.currentTime > 0) 
                 ) {
                     audioRef.current.pause();
                 }
@@ -155,7 +154,7 @@ function VideoPlayerComponent({
             videoElement.lastPauseEventListener = handlePause;
             unsubscribe.current = videoRef.current.subscribeToStateChange(handleStateChange);
         }
-    }, [handleStateChange, videoGapEndTimes, isAudioDescriptionEnabled, playAudio]);
+    }, [handleStateChange, videoGapEndTime, playAudio]);
 
     // https://github.com/video-react/video-react/blob/master/src/components/Shortcut.js
     const handleKeyPress = useCallback((event) => {
