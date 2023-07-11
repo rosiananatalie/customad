@@ -168,6 +168,14 @@ function DashboardComponent({ displayName, videos, handleLogOut }) {
                     utterThis(`Audio description is turn ${isAudioDescriptionEnabled ? 'off' : 'on'}.`);
                     break;
                 }
+                case 'n': {
+                    log('Shift + N is pressed.');
+                    const navigationButton = document.getElementById('navigationButton');
+                    if (navigationButton) {
+                        navigationButton.click();
+                    }
+                    break;
+                }
                 case 'arrowup': {
                     log('Shift + Arrow Up is pressed.');
                     if (customizationGroup === CustomizationGroup.Content) {
@@ -331,6 +339,18 @@ function DashboardComponent({ displayName, videos, handleLogOut }) {
     }, [handleKeyPress]);
 
     const renderNavigationButton = () => {
+        if (videos.length < 2) {
+            return null;
+        }
+        if (videos.indexOf(video) + 1 === videos.length) {
+            const handleTaskComplete = (e) => {
+                e.preventDefault();
+                log('Submit button is clicked.')
+                sendLogsToServerAndClear(video.filename);
+                setTaskIsCompleted(true);
+            };
+            return <button id="navigationButton" className="btn btn-primary" onClick={handleTaskComplete}>Submit</button>;
+        }
         const handleNextVideo = (e) => {
             e.preventDefault();
             log('Next button is clicked.')
@@ -340,37 +360,25 @@ function DashboardComponent({ displayName, videos, handleLogOut }) {
                 setVideo(videos[nextIndex]);
             }
         };
-        const handleTaskComplete = (e) => {
-            e.preventDefault();
-            log('Submit button is clicked.')
-            sendLogsToServerAndClear(video.filename);
-            setTaskIsCompleted(true);
-        };
-        if (videos.length < 2) {
-            return null;
-        }
-        if (videos.indexOf(video) + 1 === videos.length) {
-            return <button onClick={handleTaskComplete}>Submit</button>
-        }
-        return <button onClick={handleNextVideo}>Next</button>;
+        return <button id="navigationButton" className="btn btn-primary" onClick={handleNextVideo}>Next</button>;
     };
 
     if (isTaskCompleted) {
         return (
             <div className="container">
-                <div class="columns">
-                    <div class="column col-6 col-mx-auto">
-                        <div class="card m-2">
-                            <div class="card-header">
-                                <div class="card-title h5">Thank you</div>
+                <div className="columns">
+                    <div className="column col-6 col-mx-auto">
+                        <div className="card m-2">
+                            <div className="card-header">
+                                <div className="card-title h5">Thank you</div>
                             </div>
-                            <div class="card-body">
+                            <div className="card-body">
                                 <div>All tasks are completed.</div>
                                 <div>Please contact the person in charge for further instruction.</div>
                                 <div>Thank you for your time.</div>
                             </div>
-                            <div class="card-footer">
-                                <button class="btn btn-primary float-right" onClick={handleLogOut}>Logout</button>
+                            <div className="card-footer">
+                                <button className="btn btn-primary float-right" onClick={handleLogOut}>Logout</button>
                             </div>
                         </div>
                     </div>
