@@ -155,7 +155,7 @@ function VideoPlayerComponent({
                 videoElement.removeEventListener('pause', handlePause);
             };
         }
-    }, [handleStateChange, videoGapEndTime, playAudio]);
+    }, [handlePlay, handlePause, handleStateChange]);
 
     // https://github.com/video-react/video-react/blob/master/src/components/Shortcut.js
     const handleKeyPress = useCallback((event) => {
