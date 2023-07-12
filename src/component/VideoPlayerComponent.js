@@ -116,6 +116,29 @@ function VideoPlayerComponent({
         }
     }, [audioDescriptions, videoGapEndTimes]);
 
+    const handlePlay = useCallback(() => {
+        const player = videoRef.current.getState().player;
+        // TODO: play by code will log too. run multiple time.
+        log(`Play video at ${player.currentTime}`);
+        if (!audioRef.current.ended) {
+            playAudio();
+        }
+    }, [playAudio]);
+
+    const handlePause = useCallback(() => {
+        const player = videoRef.current.getState().player;
+        const videoCurrentTime = player.currentTime;
+        // TODO: pause by code will log too. run multiple time.
+        log(`Pause video at ${videoCurrentTime}`);
+        if (
+            !player.ended
+            && audioRef.current.src
+            && !(videoCurrentTime < Math.ceil(videoGapEndTime) && audioRef.current.currentTime > 0) 
+        ) {
+            audioRef.current.pause();
+        }
+    }, [videoGapEndTime]);
+
     const unsubscribe = useRef(null);
     useEffect(() => {
         if (videoRef.current) {
@@ -123,38 +146,14 @@ function VideoPlayerComponent({
                 unsubscribe.current();
             }
             const videoElement = videoRef.current.video.video;
-            const handlePlay = () => {
-                const player = videoRef.current.getState().player;
-                // TODO: play by code will log too. run multiple time.
-                log(`Play video at ${player.currentTime}`);
-                if (!audioRef.current.ended) {
-                    playAudio();
-                }
-            };
-            if (videoElement.lastPlayEventListener) {
-                videoElement.removeEventListener('play', videoElement.lastPlayEventListener);
-            }
             videoElement.addEventListener('play', handlePlay);
-            videoElement.lastPlayEventListener = handlePlay;
-            const handlePause = () => {
-                const player = videoRef.current.getState().player;
-                const videoCurrentTime = player.currentTime;
-                // TODO: pause by code will log too. run multiple time.
-                log(`Pause video at ${videoCurrentTime}`);
-                if (
-                    !player.ended
-                    && audioRef.current.src
-                    && !(videoCurrentTime < Math.ceil(videoGapEndTime) && audioRef.current.currentTime > 0) 
-                ) {
-                    audioRef.current.pause();
-                }
-            };
-            if (videoElement.lastPauseEventListener) {
-                videoElement.removeEventListener('pause', videoElement.lastPauseEventListener);
-            }
             videoElement.addEventListener('pause', handlePause);
-            videoElement.lastPauseEventListener = handlePause;
             unsubscribe.current = videoRef.current.subscribeToStateChange(handleStateChange);
+
+            return () => {
+                videoElement.removeEventListener('play', handlePlay);
+                videoElement.removeEventListener('pause', handlePause);
+            };
         }
     }, [handleStateChange, videoGapEndTime, playAudio]);
 
