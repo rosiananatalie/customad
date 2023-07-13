@@ -109,7 +109,7 @@ function VideoPlayerComponent({
             if (
                 !audioRef.current.ended
                 && audioRef.current.currentTime > 0
-                && state.currentTime < Math.ceil(gapEndTime)
+                && Math.floor(state.currentTime) <= Math.ceil(gapEndTime)
             ) {
                 videoRef.current.pause();
             }
@@ -133,7 +133,7 @@ function VideoPlayerComponent({
         if (
             !player.ended
             && audioRef.current.src
-            && !(videoCurrentTime < Math.ceil(videoGapEndTime) && audioRef.current.currentTime > 0) 
+            && !(Math.floor(videoCurrentTime) <= Math.ceil(videoGapEndTime) && audioRef.current.currentTime > 0) 
         ) {
             audioRef.current.pause();
         }
