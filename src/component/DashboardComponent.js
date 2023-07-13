@@ -69,7 +69,7 @@ export const Syntax = Object.freeze({
 
 // https://developer.mozilla.org/en-US/docs/Web/API/SpeechSynthesisUtterance/rate
 export const utterThisProps = Object.freeze({
-    rate: 1, // 0.1 ~ 10
+    rate: 1.5, // 0.1 ~ 10
     volume: 0.6, // 0 ~ 1
 });
 
