@@ -32,7 +32,8 @@ const VideoPlayerContainer = ({
                 const parseRes = await response.json();
                 setAudioDescriptions(parseRes);
             } catch (error) {
-                console.error('Get audio description failed:', error.message);        
+                console.error('Get audio description failed:', error.message);
+                setAudioDescriptions([]);
             }
         }
         getAudioDescriptions();
