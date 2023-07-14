@@ -207,6 +207,9 @@ function VideoPlayerComponent({
                           action: 'volume-up',
                           source: 'shortcut'
                         });
+                        if (audioRef.current) {
+                            audioRef.current.volume = volume;
+                        }
                     }
                     break;
                 }
@@ -236,6 +239,9 @@ function VideoPlayerComponent({
                             action: volume > 0 ? 'volume-down' : 'volume-off',
                             source: 'shortcut'
                         });
+                        if (audioRef.current) {
+                            audioRef.current.volume = volume;
+                        }
                     }
                     break;
                 }
