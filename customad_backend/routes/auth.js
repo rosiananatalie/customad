@@ -32,7 +32,7 @@ router.post('/login', async function (req, res) {
     });
   }
   const payload = { id: user.user_id };
-  const jwtToken = jwt.sign(payload, process.env.TOKEN_SECRET, { expiresIn: '1800s' });
+  const jwtToken = jwt.sign(payload, process.env.TOKEN_SECRET, { expiresIn: '43200s' });
   res.json({
     token: jwtToken,
     displayName: user.display_name,
@@ -43,6 +43,31 @@ router.post('/verify', authRoute, function (req, res) {
   res.json({
     verified: true,
     displayName: res.locals.displayName,
+  });
+});
+
+router.post('/signUp', async function (req, res) {
+  const { username, password, name } = req.body;
+  const saltRounds = 10;
+  const hashedPassword = await bcrypt.hash(password, saltRounds);
+  const queryText = 'INSERT INTO users(username, password, display_name) VALUES ($1, $2, $3) RETURNING *';
+  const values = [username, hashedPassword, name];
+  pool.query(queryText, values, function (err, result) {
+    if (err) {
+      return res.status(500).send({
+        error: {
+          code: 500,
+          message: err.detail,
+        }
+      });
+    }
+    const user = result.rows[0];
+    const payload = { id: user.user_id };
+    const jwtToken = jwt.sign(payload, process.env.TOKEN_SECRET, { expiresIn: '43200s' });
+    return res.json({
+      token: jwtToken,
+      displayName: user.display_name,
+    });
   });
 });
 
