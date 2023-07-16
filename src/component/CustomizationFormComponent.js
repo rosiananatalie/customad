@@ -1,7 +1,8 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import { ToggleAudioDescription, CustomizationGroup, ContentCustomization, PresentationCustomization, VideoLength, InformationPreference, Speed, Tone, Voice, Gender, Syntax } from "./DashboardComponent";
 
 function CustomizationComponentForm({
+    isCustomisable,
     isAudioDescriptionEnabled,
     videoLength,
     informationPreference,
@@ -57,6 +58,27 @@ function CustomizationComponentForm({
         onSyntaxChange(event.target.value);
     }, [onSyntaxChange]);
 
+    useEffect(() => {
+        onAudioDescriptionIsEnabledChange(true);
+        onVideoLengthChange(VideoLength.Succinct);
+        onInformationPreferenceChange(null);
+        onSpeedChange(Speed.DEFAULT);
+        onToneChange(Tone.Monotonous);
+        onVoiceChange(Voice.Human);
+        onGenderChange(Gender.Male);
+        onSyntaxChange(Syntax.Present);
+    }, [
+        isCustomisable,
+        onAudioDescriptionIsEnabledChange,
+        onVideoLengthChange,
+        onInformationPreferenceChange,
+        onSpeedChange,
+        onToneChange,
+        onVoiceChange,
+        onGenderChange,
+        onSyntaxChange,
+    ]);
+
     const audioDescriptionToggleLabel = isAudioDescriptionEnabled ? 'Audio Description ON' : 'Audio Description OFF';
 
     return (
@@ -70,6 +92,7 @@ function CustomizationComponentForm({
                             type="checkbox"
                             checked={isAudioDescriptionEnabled}
                             onChange={handleAudioDescriptionIsEnabledChange}
+                            disabled={!isCustomisable}
                         />
                         <i className="form-icon"></i> {audioDescriptionToggleLabel}
                     </label>
@@ -91,6 +114,7 @@ function CustomizationComponentForm({
                                 value={VideoLength.Succinct}
                                 checked={videoLength === VideoLength.Succinct}
                                 onChange={handleVideoLengthChange}
+                                disabled={!isCustomisable}
                             />
                             <i className="form-icon"></i> Succinct
                         </label>
@@ -102,6 +126,7 @@ function CustomizationComponentForm({
                                 value={VideoLength.Verbose}
                                 checked={videoLength === VideoLength.Verbose}
                                 onChange={handleVideoLengthChange}
+                                disabled={!isCustomisable}
                             />
                             <i className="form-icon"></i> Verbose
                         </label>
@@ -113,6 +138,7 @@ function CustomizationComponentForm({
                                 value={VideoLength.VeryVerbose}
                                 checked={videoLength === VideoLength.VeryVerbose}
                                 onChange={handleVideoLengthChange}
+                                disabled={!isCustomisable}
                             />
                             <i className="form-icon"></i> Very Verbose
                         </label>
@@ -131,6 +157,7 @@ function CustomizationComponentForm({
                                 value={InformationPreference.Activity}
                                 checked={informationPreference === InformationPreference.Activity}
                                 onChange={handleInformationPreferenceChange}
+                                disabled={!isCustomisable}
                             />
                             <i className="form-icon"></i> Activity
                         </label>
@@ -142,6 +169,7 @@ function CustomizationComponentForm({
                                 value={InformationPreference.Person}
                                 checked={informationPreference === InformationPreference.Person}
                                 onChange={handleInformationPreferenceChange}
+                                disabled={!isCustomisable}
                             />
                             <i className="form-icon"></i> Person
                         </label>
@@ -153,6 +181,7 @@ function CustomizationComponentForm({
                                 value={InformationPreference.Object}
                                 checked={informationPreference === InformationPreference.Object}
                                 onChange={handleInformationPreferenceChange}
+                                disabled={!isCustomisable}
                             />
                             <i className="form-icon"></i> Object
                         </label>
@@ -164,6 +193,7 @@ function CustomizationComponentForm({
                                 value={InformationPreference.Setting}
                                 checked={informationPreference === InformationPreference.Setting}
                                 onChange={handleInformationPreferenceChange}
+                                disabled={!isCustomisable}
                             />
                             <i className="form-icon"></i> Setting
                         </label>
@@ -188,6 +218,7 @@ function CustomizationComponentForm({
                                 step={Speed.STEP}
                                 value={speed}
                                 onChange={handleSpeedChange}
+                                disabled={!isCustomisable}
                             />
                         </div>
                     </div>
@@ -223,6 +254,7 @@ function CustomizationComponentForm({
                                 value={Voice.Human}
                                 checked={voice === Voice.Human}
                                 onChange={handleVoiceChange}
+                                disabled={!isCustomisable}
                             />
                             <i className="form-icon"></i> Human
                         </label>
@@ -234,6 +266,7 @@ function CustomizationComponentForm({
                                 value={Voice.Synthesizer}
                                 checked={voice === Voice.Synthesizer}
                                 onChange={handleVoiceChange}
+                                disabled={!isCustomisable}
                             />
                             <i className="form-icon"></i> Synthesizer
                         </label>
@@ -252,6 +285,7 @@ function CustomizationComponentForm({
                                 value={Tone.Monotonous}
                                 checked={tone === Tone.Monotonous}
                                 onChange={handleToneChange}
+                                disabled={!isCustomisable}
                             />
                             <i className="form-icon"></i> Monotonous
                         </label>
@@ -263,6 +297,7 @@ function CustomizationComponentForm({
                                 value={Tone.Dynamic}
                                 checked={tone === Tone.Dynamic}
                                 onChange={handleToneChange}
+                                disabled={!isCustomisable}
                             />
                             <i className="form-icon"></i> Dynamic
                         </label>
@@ -281,6 +316,7 @@ function CustomizationComponentForm({
                                 value={Gender.Male}
                                 checked={gender === Gender.Male}
                                 onChange={handleGenderChange}
+                                disabled={!isCustomisable}
                             />
                             <i className="form-icon"></i> Male
                         </label>
@@ -292,6 +328,7 @@ function CustomizationComponentForm({
                                 value={Gender.Female}
                                 checked={gender === Gender.Female}
                                 onChange={handleGenderChange}
+                                disabled={!isCustomisable}
                             />
                             <i className="form-icon"></i> Female
                         </label>
@@ -310,6 +347,7 @@ function CustomizationComponentForm({
                                 value={Syntax.Present}
                                 checked={syntax === Syntax.Present}
                                 onChange={handleSyntaxChange}
+                                disabled={!isCustomisable}
                             />
                             <i className="form-icon"></i> Present
                         </label>
@@ -321,6 +359,7 @@ function CustomizationComponentForm({
                                 value={Syntax.Past}
                                 checked={syntax === Syntax.Past}
                                 onChange={handleSyntaxChange}
+                                disabled={!isCustomisable}
                             />
                             <i className="form-icon"></i> Past
                         </label>

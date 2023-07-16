@@ -354,6 +354,17 @@ function DashboardComponent({ displayName, videos, handleLogOut }) {
         const handleNextVideo = (e) => {
             e.preventDefault();
             log('Next button is clicked.')
+            log(`Result: ${JSON.stringify({
+                video: video.filename,
+                isAudioDescriptionEnabled,
+                videoLength,
+                informationPreference,
+                speed,
+                tone,
+                voice,
+                gender,
+                syntax,
+            })}`);
             const nextIndex = videos.indexOf(video) + 1;
             if (nextIndex < videos.length) {
                 sendLogsToServerAndClear(video.filename);
@@ -420,6 +431,7 @@ function DashboardComponent({ displayName, videos, handleLogOut }) {
                     </div>
                     <div className="column col-4">
                         <CustomizationContainer
+                            isCustomisable={video.isCustomisable}
                             isAudioDescriptionEnabled={isAudioDescriptionEnabled}
                             videoLength={videoLength}
                             informationPreference={informationPreference}
