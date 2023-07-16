@@ -50,25 +50,30 @@ router.post('/signUp', async function (req, res) {
   const { username, password, name } = req.body;
   const saltRounds = 10;
   const hashedPassword = await bcrypt.hash(password, saltRounds);
-  const queryText = 'INSERT INTO users(username, password, display_name) VALUES ($1, $2, $3) RETURNING *';
-  const values = [username, hashedPassword, name];
-  pool.query(queryText, values, function (err, result) {
-    if (err) {
-      return res.status(500).send({
-        error: {
-          code: 500,
-          message: err.detail,
-        }
-      });
-    }
+  const client = await pool.connect();
+  try {
+    await client.query('BEGIN');
+    const result = await pool.query('INSERT INTO users(username, password, display_name) VALUES ($1, $2, $3) RETURNING *', [username, hashedPassword, name]);
     const user = result.rows[0];
+    await pool.query('INSERT INTO user_video(user_id, video_id, ordinal_position, is_customisable) VALUES ($1, $2, $3, $4)', [user.user_id, 1, 10, true]);
+    await client.query('COMMIT');
     const payload = { id: user.user_id };
     const jwtToken = jwt.sign(payload, process.env.TOKEN_SECRET, { expiresIn: '43200s' });
     return res.json({
       token: jwtToken,
       displayName: user.display_name,
     });
-  });
+  } catch (e) {
+    await client.query('ROLLBACK');
+    return res.status(500).send({
+      error: {
+        code: 500,
+        message: e.detail,
+      }
+    });
+  } finally {
+    client.release();
+  }
 });
 
 module.exports = router;
