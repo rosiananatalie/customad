@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect } from "react";
 import { ToggleAudioDescription, CustomizationGroup, ContentCustomization, PresentationCustomization, VideoLength, InformationPreference, Speed, Tone, Voice, Gender, Syntax } from "./DashboardComponent";
+import { log } from '../Utils';
 
 function CustomizationComponentForm({
     isCustomisable,
@@ -21,28 +22,40 @@ function CustomizationComponentForm({
     onSyntaxChange,
 }) {
     const handleAudioDescriptionIsEnabledChange = useCallback((event) => {
-        onAudioDescriptionIsEnabledChange(event.target.checked);
+        const value = event.target.checked;
+        console.log('Audio description is ' + (value ? 'enabled' : 'disabled'));
+        onAudioDescriptionIsEnabledChange(value);
     }, [onAudioDescriptionIsEnabledChange]);
 
     const handleVideoLengthChange = useCallback((event) => {
-        onVideoLengthChange(event.target.value);
+        const value = event.target.value;
+        log('Video length is set to ' + value);
+        onVideoLengthChange(value);
     }, [onVideoLengthChange]);
 
     const handleInformationPreferenceChange = useCallback((event) => {
-        onInformationPreferenceChange(informationPreference === event.target.value ? null : event.target.value);
+        const value = informationPreference === event.target.value ? null : event.target.value;
+        log('Information preference is set to ' + value);
+        onInformationPreferenceChange(value);
     }, [informationPreference, onInformationPreferenceChange]);
 
     const handleSpeedChange = useCallback((event) => {
-        onSpeedChange(Number(event.target.value));
+        const value = Number(event.target.value);
+        log('Speed is set to ' + value);
+        onSpeedChange(value);
     }, [onSpeedChange]);
 
     const handleToneChange = useCallback((event) => {
-        onToneChange(event.target.value);
+        const value = event.target.value;
+        log('Tone is set to ' + value);
+        onToneChange(value);
     }, [onToneChange]);
 
     const handleVoiceChange = useCallback((event) => {
-        onVoiceChange(event.target.value);
-        if (event.target.value === Voice.Synthesizer) {
+        const value = event.target.value;
+        log('Voice is set to ' + value);
+        onVoiceChange(value);
+        if (value === Voice.Synthesizer) {
             document.getElementById(Tone.Monotonous).click();
             Object.values(Tone).forEach(tone => document.getElementById(tone).disabled = true);
         } else {
@@ -51,11 +64,15 @@ function CustomizationComponentForm({
     }, [onVoiceChange]);
 
     const handleGenderChange = useCallback((event) => {
-        onGenderChange(event.target.value);
+        const value = event.target.value;
+        log('Gender is set to ' + value);
+        onGenderChange(value);
     }, [onGenderChange]);
 
     const handleSyntaxChange = useCallback((event) => {
-        onSyntaxChange(event.target.value);
+        const value = event.target.value;
+        log('Syntax is set to ' + value);
+        onSyntaxChange(value);
     }, [onSyntaxChange]);
 
     useEffect(() => {

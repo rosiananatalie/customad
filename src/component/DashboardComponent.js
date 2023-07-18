@@ -135,7 +135,6 @@ function DashboardComponent({ displayName, videos, handleLogOut }) {
             utterance.rate = utterThisProps.rate;
             utterance.volume = utterThisProps.volume;
             speechSynthesis.speak(utterance);
-            log(utterance);
         };
 
         if (event.shiftKey) {
@@ -222,11 +221,14 @@ function DashboardComponent({ displayName, videos, handleLogOut }) {
                         utterThis(`${selected} is selected.`);
                     } else if (customization === ContentCustomization.InformationPreference) {
                         removeSelections();
-                        const selected = informationPreference ? getPreviousValue(InformationPreference, informationPreference) : InformationPreference.Activity;
-                        setInformationPreference(selected);
+                        const selected = getPreviousValue(InformationPreference, informationPreference);
                         if (selected === InformationPreference.None) {
+                            const input = document.getElementById(informationPreference);
+                            input.click();
                             utterThis('No information preference is selected.');
                         } else {
+                            const input = document.getElementById(selected);
+                            input.click();
                             utterThis(`${selected} is selected.`);
                             document.getElementById(selected).parentElement.style.border = BORDER_STYLE;
                         }
@@ -234,6 +236,7 @@ function DashboardComponent({ displayName, videos, handleLogOut }) {
                         removeSelections();
                         const newSpeed = speed - Speed.STEP;
                         setSpeed(newSpeed);
+                        log('Speed is set to ' + newSpeed);
                         utterThis(`Speed is ${newSpeed}`);
                         document.getElementById(Speed.ID).parentElement.style.border = BORDER_STYLE;
                     } else if (customization === PresentationCustomization.Tone) {
@@ -279,10 +282,13 @@ function DashboardComponent({ displayName, videos, handleLogOut }) {
                     } else if (customization === ContentCustomization.InformationPreference) {
                         removeSelections();
                         const selected = informationPreference ? getNextValue(InformationPreference, informationPreference) : InformationPreference.Activity;
-                        setInformationPreference(selected);
                         if (selected === InformationPreference.None) {
+                            const input = document.getElementById(informationPreference);
+                            input.click();
                             utterThis('No information preference is selected.');
                         } else {
+                            const input = document.getElementById(selected);
+                            input.click();
                             utterThis(`${selected} is selected.`);
                             document.getElementById(selected).parentElement.style.border = BORDER_STYLE;
                         }
@@ -290,6 +296,7 @@ function DashboardComponent({ displayName, videos, handleLogOut }) {
                         removeSelections();
                         const newSpeed = speed + Speed.STEP;
                         setSpeed(newSpeed);
+                        log('Speed is set to ' + newSpeed);
                         utterThis(`Speed is ${newSpeed}`);
                         document.getElementById(Speed.ID).parentElement.style.border = BORDER_STYLE;
                     } else if (customization === PresentationCustomization.Tone) {
