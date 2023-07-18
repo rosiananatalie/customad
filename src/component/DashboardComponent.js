@@ -135,6 +135,7 @@ function DashboardComponent({ displayName, videos, handleLogOut }) {
             utterance.rate = utterThisProps.rate;
             utterance.volume = utterThisProps.volume;
             speechSynthesis.speak(utterance);
+            log(utterance);
         };
 
         if (event.shiftKey) {
