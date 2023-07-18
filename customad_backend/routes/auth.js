@@ -56,6 +56,12 @@ router.post('/signUp', async function (req, res) {
     const result = await pool.query('INSERT INTO users(username, password, display_name) VALUES ($1, $2, $3) RETURNING *', [username, hashedPassword, name]);
     const user = result.rows[0];
     await pool.query('INSERT INTO user_video(user_id, video_id, ordinal_position, is_customisable) VALUES ($1, $2, $3, $4)', [user.user_id, 1, 10, true]);
+    await pool.query('INSERT INTO user_video(user_id, video_id, ordinal_position, is_customisable) VALUES ($1, $2, $3, $4)', [user.user_id, 3, 20, true]);
+    await pool.query('INSERT INTO user_video(user_id, video_id, ordinal_position, is_customisable) VALUES ($1, $2, $3, $4)', [user.user_id, 8, 30, true]);
+    await pool.query('INSERT INTO user_video(user_id, video_id, ordinal_position, is_customisable) VALUES ($1, $2, $3, $4)', [user.user_id, 4, 40, true]);
+    await pool.query('INSERT INTO user_video(user_id, video_id, ordinal_position, is_customisable) VALUES ($1, $2, $3, $4)', [user.user_id, 5, 50, true]);
+    await pool.query('INSERT INTO user_video(user_id, video_id, ordinal_position, is_customisable) VALUES ($1, $2, $3, $4)', [user.user_id, 7, 60, true]);
+    await pool.query('INSERT INTO user_video(user_id, video_id, ordinal_position, is_customisable) VALUES ($1, $2, $3, $4)', [user.user_id, 9, 70, true]);
     await client.query('COMMIT');
     const payload = { id: user.user_id };
     const jwtToken = jwt.sign(payload, process.env.TOKEN_SECRET, { expiresIn: '43200s' });
