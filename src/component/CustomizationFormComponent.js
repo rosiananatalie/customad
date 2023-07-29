@@ -29,7 +29,7 @@ function CustomizationComponentForm({
 
     const handleVideoLengthChange = useCallback((event) => {
         const value = event.target.value;
-        log('Video length is set to ' + value);
+        log('Length is set to ' + value);
         onVideoLengthChange(value);
     }, [onVideoLengthChange]);
 
@@ -53,12 +53,13 @@ function CustomizationComponentForm({
 
     const handleVoiceChange = useCallback((event) => {
         const value = event.target.value;
-        log('Voice is set to ' + value);
         onVoiceChange(value);
         if (value === Voice.Synthesizer) {
+            log('Voice is set to synthesizer');
             document.getElementById(Tone.Monotonous).click();
             Object.values(Tone).forEach(tone => document.getElementById(tone).disabled = true);
         } else {
+            log('Voice is set to ' + value);
             Object.values(Tone).forEach(tone => document.getElementById(tone).disabled = false);
         }
     }, [onVoiceChange]);
