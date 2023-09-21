@@ -10,7 +10,7 @@ export const CustomizationGroup = Object.freeze({
 
 export const ContentCustomization = Object.freeze({
     VideoLength: 'Length',
-    InformationPreference: 'InformationPreference',
+    Emphasis: 'Emphasis',
 });
 
 export const PresentationCustomization = Object.freeze({
@@ -31,7 +31,7 @@ export const VideoLength = Object.freeze({
     VeryVerbose: 'veryVerbose',
 });
 
-export const InformationPreference = Object.freeze({
+export const Emphasis = Object.freeze({
     None: 'none',
     Activity: 'activity',
     Person: 'person',
@@ -114,7 +114,7 @@ function DashboardComponent({ displayName, videos, handleLogOut }) {
             });
             const inputIds = [
                 VideoLength,
-                InformationPreference,
+                Emphasis,
                 Tone,
                 Voice,
                 Gender,
@@ -219,10 +219,10 @@ function DashboardComponent({ displayName, videos, handleLogOut }) {
                         input.click();
                         input.parentElement.style.border = BORDER_STYLE;
                         utterThis(`${selected} is selected.`);
-                    } else if (customization === ContentCustomization.InformationPreference) {
+                    } else if (customization === ContentCustomization.Emphasis) {
                         removeSelections();
-                        const selected = getPreviousValue(InformationPreference, informationPreference);
-                        if (selected === InformationPreference.None) {
+                        const selected = getPreviousValue(Emphasis, informationPreference);
+                        if (selected === Emphasis.None) {
                             const input = document.getElementById(informationPreference);
                             input.click();
                             utterThis('No information preference is selected.');
@@ -280,10 +280,10 @@ function DashboardComponent({ displayName, videos, handleLogOut }) {
                         input.click();
                         input.parentElement.style.border = BORDER_STYLE;
                         utterThis(`${selected} is selected.`);
-                    } else if (customization === ContentCustomization.InformationPreference) {
+                    } else if (customization === ContentCustomization.Emphasis) {
                         removeSelections();
-                        const selected = informationPreference ? getNextValue(InformationPreference, informationPreference) : InformationPreference.Activity;
-                        if (selected === InformationPreference.None) {
+                        const selected = informationPreference ? getNextValue(Emphasis, informationPreference) : Emphasis.Activity;
+                        if (selected === Emphasis.None) {
                             const input = document.getElementById(informationPreference);
                             input.click();
                             utterThis('No information preference is selected.');

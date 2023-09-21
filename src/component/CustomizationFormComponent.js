@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect } from "react";
-import { ToggleAudioDescription, CustomizationGroup, ContentCustomization, PresentationCustomization, VideoLength, InformationPreference, Speed, Tone, Voice, Gender, Syntax } from "./DashboardComponent";
+import { ToggleAudioDescription, CustomizationGroup, ContentCustomization, PresentationCustomization, VideoLength, Emphasis, Speed, Tone, Voice, Gender, Syntax } from "./DashboardComponent";
 import { log } from '../Utils';
 
 function CustomizationComponentForm({
@@ -162,18 +162,18 @@ function CustomizationComponentForm({
                         </label>
                     </div>
 
-                    {/* Information Preference Customization */}
+                    {/* Emphasis Customization */}
                     <div className="col-3 col-sm-12">
-                        <label id={ContentCustomization.InformationPreference} className="form-label" htmlFor="preference">Information Preference</label>
+                        <label id={ContentCustomization.Emphasis} className="form-label" htmlFor="preference">Emphasis</label>
                     </div>
                     <div className="col-9 col-sm-12">
                         <label className="form-checkbox form-inline">
                             <input
-                                id={InformationPreference.Activity}
+                                id={Emphasis.Activity}
                                 type="checkbox"
                                 name="preference"
-                                value={InformationPreference.Activity}
-                                checked={informationPreference === InformationPreference.Activity}
+                                value={Emphasis.Activity}
+                                checked={informationPreference === Emphasis.Activity}
                                 onChange={handleInformationPreferenceChange}
                                 disabled={!isCustomisable}
                             />
@@ -181,11 +181,11 @@ function CustomizationComponentForm({
                         </label>
                         <label className="form-checkbox form-inline">
                             <input
-                                id={InformationPreference.Person}
+                                id={Emphasis.Person}
                                 type="checkbox"
                                 name="preference"
-                                value={InformationPreference.Person}
-                                checked={informationPreference === InformationPreference.Person}
+                                value={Emphasis.Person}
+                                checked={informationPreference === Emphasis.Person}
                                 onChange={handleInformationPreferenceChange}
                                 disabled={!isCustomisable}
                             />
@@ -193,11 +193,11 @@ function CustomizationComponentForm({
                         </label>
                         <label className="form-checkbox form-inline">
                             <input
-                                id={InformationPreference.Object}
+                                id={Emphasis.Object}
                                 type="checkbox"
                                 name="preference"
-                                value={InformationPreference.Object}
-                                checked={informationPreference === InformationPreference.Object}
+                                value={Emphasis.Object}
+                                checked={informationPreference === Emphasis.Object}
                                 onChange={handleInformationPreferenceChange}
                                 disabled={!isCustomisable}
                             />
@@ -205,11 +205,11 @@ function CustomizationComponentForm({
                         </label>
                         <label className="form-checkbox form-inline">
                             <input
-                                id={InformationPreference.Setting}
+                                id={Emphasis.Setting}
                                 type="checkbox"
                                 name="preference"
-                                value={InformationPreference.Setting}
-                                checked={informationPreference === InformationPreference.Setting}
+                                value={Emphasis.Setting}
+                                checked={informationPreference === Emphasis.Setting}
                                 onChange={handleInformationPreferenceChange}
                                 disabled={!isCustomisable}
                             />
