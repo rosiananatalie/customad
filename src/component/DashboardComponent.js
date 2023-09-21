@@ -9,7 +9,7 @@ export const CustomizationGroup = Object.freeze({
 });
 
 export const ContentCustomization = Object.freeze({
-    VideoLength: 'VideoLength',
+    VideoLength: 'Length',
     InformationPreference: 'InformationPreference',
 });
 
@@ -252,7 +252,8 @@ function DashboardComponent({ displayName, videos, handleLogOut }) {
                         const input = document.getElementById(selected);
                         input.click();
                         input.parentElement.style.border = BORDER_STYLE;
-                        utterThis(`${selected} is selected.`);
+                        const utterSelection = selected === voice.Synthesizer ? "synthesizer" : selected ; 
+                        utterThis(`${utterSelection} is selected.`);
                     } else if (customization === PresentationCustomization.Gender) {
                         removeSelections();
                         const selected = gender ? getPreviousValue(Gender, gender) : Gender.Male;
@@ -312,7 +313,8 @@ function DashboardComponent({ displayName, videos, handleLogOut }) {
                         const input = document.getElementById(selected);
                         input.click();
                         input.parentElement.style.border = BORDER_STYLE;
-                        utterThis(`${selected} is selected.`);
+                        const utterSelection = selected === voice.Synthesizer ? "synthesizer" : selected ;
+                        utterThis(`${utterSelection} is selected.`);
                     } else if (customization === PresentationCustomization.Gender) {
                         removeSelections();
                         const selected = gender ? getNextValue(Gender, gender) : Gender.Male;
