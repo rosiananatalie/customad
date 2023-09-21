@@ -252,11 +252,7 @@ function DashboardComponent({ displayName, videos, handleLogOut }) {
                         const input = document.getElementById(selected);
                         input.click();
                         input.parentElement.style.border = BORDER_STYLE;
-<<<<<<< HEAD
-                        const utterSelection = selected === voice.Synthesizer ? "synthesizer" : selected ; 
-=======
-                        const utterSelection = voice === Voice.Synthesizer ? 'synthesizer' : voice;
->>>>>>> 32ff1185368ee6687a04bc30ca5542633db54484
+                        const utterSelection = selected === Voice.Synthesizer ? 'synthesizer' : selected;
                         utterThis(`${utterSelection} is selected.`);
                     } else if (customization === PresentationCustomization.Gender) {
                         removeSelections();
@@ -317,11 +313,7 @@ function DashboardComponent({ displayName, videos, handleLogOut }) {
                         const input = document.getElementById(selected);
                         input.click();
                         input.parentElement.style.border = BORDER_STYLE;
-<<<<<<< HEAD
-                        const utterSelection = selected === voice.Synthesizer ? "synthesizer" : selected ;
-=======
-                        const utterSelection = voice === Voice.Synthesizer ? 'synthesizer' : voice;
->>>>>>> 32ff1185368ee6687a04bc30ca5542633db54484
+                        const utterSelection = selected === Voice.Synthesizer ? 'synthesizer' : selected;
                         utterThis(`${utterSelection} is selected.`);
                     } else if (customization === PresentationCustomization.Gender) {
                         removeSelections();
