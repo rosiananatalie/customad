@@ -7,7 +7,7 @@ const VideoPlayerContainer = ({
     videoGapEndTimes,
     isAudioDescriptionEnabled,
     videoLength,
-    informationPreference,
+    emphasis,
     speed,
     tone,
     voice,
@@ -16,7 +16,7 @@ const VideoPlayerContainer = ({
 }) => {
     const [audioDescriptions, setAudioDescriptions] = useState([]);
 
-    const params = new URLSearchParams({ videoLength, informationPreference, syntax, voice, gender, tone });
+    const params = new URLSearchParams({ videoLength, emphasis, syntax, voice, gender, tone });
     const url = SERVER_URL + '/videos/' + videoName + '/ad?' + params.toString();
 
     useEffect(() => {

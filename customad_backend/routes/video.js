@@ -24,10 +24,10 @@ router.get('/', authRoute, async function (req, res) {
 
 router.get('/:videoName/ad', authRoute, function (req, res) {
     const { videoName } = req.params;
-    const { videoLength, informationPreference, syntax, voice, gender, tone } = req.query;
+    const { videoLength, emphasis, syntax, voice, gender, tone } = req.query;
     
     const presentation = [syntax, voice, gender, tone].join('_');
-    const content = [videoLength, informationPreference].filter(x => x !== 'null').join('_');
+    const content = [videoLength, emphasis].filter(x => x !== 'null').join('_');
     const srcPath = `/audios/${videoName}/${presentation}/${content}`;
 
     const audioPath = path.join(__dirname, `../public/${srcPath}`);

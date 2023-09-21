@@ -6,7 +6,7 @@ function CustomizationComponentForm({
     isCustomisable,
     isAudioDescriptionEnabled,
     videoLength,
-    informationPreference,
+    emphasis,
     speed,
     tone,
     voice,
@@ -14,7 +14,7 @@ function CustomizationComponentForm({
     syntax,
     onAudioDescriptionIsEnabledChange,
     onVideoLengthChange,
-    onInformationPreferenceChange,
+    onEmphasisChange,
     onSpeedChange,
     onToneChange,
     onVoiceChange,
@@ -33,11 +33,11 @@ function CustomizationComponentForm({
         onVideoLengthChange(value);
     }, [onVideoLengthChange]);
 
-    const handleInformationPreferenceChange = useCallback((event) => {
-        const value = informationPreference === event.target.value ? null : event.target.value;
-        log('Information preference is set to ' + value);
-        onInformationPreferenceChange(value);
-    }, [informationPreference, onInformationPreferenceChange]);
+    const handleEmphasisChange = useCallback((event) => {
+        const value = emphasis === event.target.value ? null : event.target.value;
+        log('Emphasis is set to ' + value);
+        onEmphasisChange(value);
+    }, [emphasis, onEmphasisChange]);
 
     const handleSpeedChange = useCallback((event) => {
         const value = Number(event.target.value);
@@ -79,7 +79,7 @@ function CustomizationComponentForm({
     useEffect(() => {
         onAudioDescriptionIsEnabledChange(true);
         onVideoLengthChange(VideoLength.Succinct);
-        onInformationPreferenceChange(null);
+        onEmphasisChange(null);
         onSpeedChange(Speed.DEFAULT);
         onToneChange(Tone.Monotonous);
         onVoiceChange(Voice.Human);
@@ -89,7 +89,7 @@ function CustomizationComponentForm({
         isCustomisable,
         onAudioDescriptionIsEnabledChange,
         onVideoLengthChange,
-        onInformationPreferenceChange,
+        onEmphasisChange,
         onSpeedChange,
         onToneChange,
         onVoiceChange,
@@ -164,17 +164,17 @@ function CustomizationComponentForm({
 
                     {/* Emphasis Customization */}
                     <div className="col-3 col-sm-12">
-                        <label id={ContentCustomization.Emphasis} className="form-label" htmlFor="preference">Emphasis</label>
+                        <label id={ContentCustomization.Emphasis} className="form-label" htmlFor="emphasis">Emphasis</label>
                     </div>
                     <div className="col-9 col-sm-12">
                         <label className="form-checkbox form-inline">
                             <input
                                 id={Emphasis.Activity}
                                 type="checkbox"
-                                name="preference"
+                                name="emphasis"
                                 value={Emphasis.Activity}
-                                checked={informationPreference === Emphasis.Activity}
-                                onChange={handleInformationPreferenceChange}
+                                checked={emphasis === Emphasis.Activity}
+                                onChange={handleEmphasisChange}
                                 disabled={!isCustomisable}
                             />
                             <i className="form-icon"></i> Activity
@@ -183,10 +183,10 @@ function CustomizationComponentForm({
                             <input
                                 id={Emphasis.Person}
                                 type="checkbox"
-                                name="preference"
+                                name="emphasis"
                                 value={Emphasis.Person}
-                                checked={informationPreference === Emphasis.Person}
-                                onChange={handleInformationPreferenceChange}
+                                checked={emphasis === Emphasis.Person}
+                                onChange={handleEmphasisChange}
                                 disabled={!isCustomisable}
                             />
                             <i className="form-icon"></i> Person
@@ -195,10 +195,10 @@ function CustomizationComponentForm({
                             <input
                                 id={Emphasis.Object}
                                 type="checkbox"
-                                name="preference"
+                                name="emphasis"
                                 value={Emphasis.Object}
-                                checked={informationPreference === Emphasis.Object}
-                                onChange={handleInformationPreferenceChange}
+                                checked={emphasis === Emphasis.Object}
+                                onChange={handleEmphasisChange}
                                 disabled={!isCustomisable}
                             />
                             <i className="form-icon"></i> Object
@@ -207,10 +207,10 @@ function CustomizationComponentForm({
                             <input
                                 id={Emphasis.Setting}
                                 type="checkbox"
-                                name="preference"
+                                name="emphasis"
                                 value={Emphasis.Setting}
-                                checked={informationPreference === Emphasis.Setting}
-                                onChange={handleInformationPreferenceChange}
+                                checked={emphasis === Emphasis.Setting}
+                                onChange={handleEmphasisChange}
                                 disabled={!isCustomisable}
                             />
                             <i className="form-icon"></i> Setting

@@ -80,7 +80,7 @@ function DashboardComponent({ displayName, videos, handleLogOut }) {
     const [customizationGroup, setCustomizationGroup] = useState(null);
     const [customization, setCustomization] = useState(null);
     const [videoLength, setVideoLength] = useState(VideoLength.Succinct);
-    const [informationPreference, setInformationPreference] = useState(null);
+    const [emphasis, setEmphasis] = useState(null);
     const [speed, setSpeed] = useState(Speed.DEFAULT);
     const [tone, setTone] = useState(Tone.Monotonous);
     const [voice, setVoice] = useState(Voice.Human);
@@ -221,11 +221,11 @@ function DashboardComponent({ displayName, videos, handleLogOut }) {
                         utterThis(`${selected} is selected.`);
                     } else if (customization === ContentCustomization.Emphasis) {
                         removeSelections();
-                        const selected = getPreviousValue(Emphasis, informationPreference);
+                        const selected = getPreviousValue(Emphasis, emphasis);
                         if (selected === Emphasis.None) {
-                            const input = document.getElementById(informationPreference);
+                            const input = document.getElementById(emphasis);
                             input.click();
-                            utterThis('No information preference is selected.');
+                            utterThis('No emphasis is selected.');
                         } else {
                             const input = document.getElementById(selected);
                             input.click();
@@ -282,11 +282,11 @@ function DashboardComponent({ displayName, videos, handleLogOut }) {
                         utterThis(`${selected} is selected.`);
                     } else if (customization === ContentCustomization.Emphasis) {
                         removeSelections();
-                        const selected = informationPreference ? getNextValue(Emphasis, informationPreference) : Emphasis.Activity;
+                        const selected = emphasis ? getNextValue(Emphasis, emphasis) : Emphasis.Activity;
                         if (selected === Emphasis.None) {
-                            const input = document.getElementById(informationPreference);
+                            const input = document.getElementById(emphasis);
                             input.click();
-                            utterThis('No information preference is selected.');
+                            utterThis('No emphasis is selected.');
                         } else {
                             const input = document.getElementById(selected);
                             input.click();
@@ -336,7 +336,7 @@ function DashboardComponent({ displayName, videos, handleLogOut }) {
                     break;
             }
         }
-    }, [isAudioDescriptionEnabled, customizationGroup, customization, videoLength, informationPreference, speed, tone, voice, gender, syntax]);
+    }, [isAudioDescriptionEnabled, customizationGroup, customization, videoLength, emphasis, speed, tone, voice, gender, syntax]);
 
     useEffect(() => {
         // attach the event listener
@@ -368,7 +368,7 @@ function DashboardComponent({ displayName, videos, handleLogOut }) {
                 video: video.filename,
                 isAudioDescriptionEnabled,
                 videoLength,
-                informationPreference,
+                emphasis,
                 speed,
                 tone,
                 voice,
@@ -428,7 +428,7 @@ function DashboardComponent({ displayName, videos, handleLogOut }) {
                             videoGapEndTimes={video.gapEndTimes}
                             isAudioDescriptionEnabled={isAudioDescriptionEnabled}                        
                             videoLength={videoLength}
-                            informationPreference={informationPreference}
+                            emphasis={emphasis}
                             speed={speed}
                             tone={tone}
                             voice={voice}
@@ -444,7 +444,7 @@ function DashboardComponent({ displayName, videos, handleLogOut }) {
                             isCustomisable={video.isCustomisable}
                             isAudioDescriptionEnabled={isAudioDescriptionEnabled}
                             videoLength={videoLength}
-                            informationPreference={informationPreference}
+                            emphasis={emphasis}
                             speed={speed}
                             tone={tone}
                             voice={voice}
@@ -452,7 +452,7 @@ function DashboardComponent({ displayName, videos, handleLogOut }) {
                             syntax={syntax}
                             onAudioDescriptionIsEnabledChange={setAudioDescriptionIsEnabled}                        
                             onVideoLengthChange={setVideoLength}
-                            onInformationPreferenceChange={setInformationPreference}
+                            onEmphasisChange={setEmphasis}
                             onSpeedChange={setSpeed}
                             onToneChange={setTone}
                             onVoiceChange={setVoice}

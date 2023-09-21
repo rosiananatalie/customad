@@ -113,7 +113,7 @@ function CustomizationComponent(props) {
                 
                 {/* Eight customization */}
                 <div className='column col-5'>
-                    <h2>Information Preference</h2>
+                    <h2>Emphasis</h2>
                 </div>
                 <div className='column col-7'>
                     <div className="form-group">
