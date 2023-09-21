@@ -306,7 +306,8 @@ function DashboardComponent({ displayName, videos, handleLogOut }) {
                         const input = document.getElementById(selected);
                         input.click();
                         input.parentElement.style.border = BORDER_STYLE;
-                        utterThis(`${selected} is selected.`);
+                        const utterSelection = selected === Tone.Monotonous ? 'monotonous' : selected;
+                        utterThis(`${utterSelection} is selected.`);
                     } else if (customization === PresentationCustomization.Voice) {
                         removeSelections();
                         const selected = voice ? getNextValue(Voice, voice) : Voice.Human;
