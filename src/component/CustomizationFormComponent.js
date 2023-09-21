@@ -55,11 +55,19 @@ function CustomizationComponentForm({
         const value = event.target.value;
         onVoiceChange(value);
         if (value === Voice.Synthesizer) {
+<<<<<<< HEAD
             log('Voice is set to synthesizer')
             document.getElementById(Tone.Monotonous).click();
             Object.values(Tone).forEach(tone => document.getElementById(tone).disabled = true);
         } else {
             log('Voice is set to ' + value)
+=======
+            log('Voice is set to synthesizer');
+            document.getElementById(Tone.Monotonous).click();
+            Object.values(Tone).forEach(tone => document.getElementById(tone).disabled = true);
+        } else {
+            log('Voice is set to ' + value);
+>>>>>>> 32ff1185368ee6687a04bc30ca5542633db54484
             Object.values(Tone).forEach(tone => document.getElementById(tone).disabled = false);
         }
     }, [onVoiceChange]);
